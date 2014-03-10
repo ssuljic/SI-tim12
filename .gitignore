@@ -1,0 +1,15 @@
+.settings/
+.classpath
+.idea
+.project
+target/
+*.iml
+atlassian*.xml
+*.versionsBackup
+*.swp
+*.swo
+tags
+.metadata/*
+*.ipr
+*.iml
+*.iws
