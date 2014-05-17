@@ -1,5 +1,4 @@
 package ba.etf.unsa.si.tim12.bakersoft;
-
 /**
  * Hello world!
  *

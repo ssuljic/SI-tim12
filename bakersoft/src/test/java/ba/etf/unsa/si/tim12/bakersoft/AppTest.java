@@ -1,5 +1,4 @@
 package ba.etf.unsa.si.tim12.bakersoft;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
