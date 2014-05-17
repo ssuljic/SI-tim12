@@ -1,8 +1,4 @@
-.settings/
-.classpath
 .idea
-.project
-target/
 *.iml
 atlassian*.xml
 *.versionsBackup
