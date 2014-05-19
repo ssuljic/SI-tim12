@@ -1,6 +1,9 @@
 # Created by http://www.gitignore.io
 # http://www.gitignore.io/api/java,maven,intellij,eclipse,netbeans
 
+### Izbjegavanje push-anja persistence.xml-a ###
+src/java/resources/META-INF/
+
 ### Java ###
 *.class
 
