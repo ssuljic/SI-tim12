@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
+
+    <persistence-unit name="bakersoftPersistenceUnit" transaction-type="RESOURCE_LOCAL">
+        <class>entities.ProdajnoMjesto</class>
+        <class>entities.Klijent</class>
+        <class>entities.Racun</class>
+        <class>entities.Korisnik</class>
+        <class>entities.Status</class>
+        <class>entities.Tip</class>
+        <class>entities.Dostava</class>
+        <class>entities.PecivoUDostavi</class>
+        <class>entities.Pecivo</class>
+
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/si_test" />
+            <property name="javax.persistence.jdbc.user" value="root" />
+            <property name="javax.persistence.jdbc.password" value="" />
+
+            <!-- Hibernate should create the database schema automatically -->
+            <property name="hibernate.hbm2ddl.auto" value="create-drop" />
+        </properties>
+    </persistence-unit>
+</persistence>
