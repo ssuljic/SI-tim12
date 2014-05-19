@@ -2,7 +2,7 @@
 # http://www.gitignore.io/api/java,maven,intellij,eclipse,netbeans
 
 ### Izbjegavanje push-anja persistence.xml-a ###
-bakersoft/src/java/resources/META-INF/
+bakersoft/src/java/resources/META-INF/persistence.xml
 
 ### Java ###
 *.class
