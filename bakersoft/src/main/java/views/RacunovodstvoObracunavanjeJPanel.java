@@ -1,10 +1,23 @@
 package views;
 
+import controllers.RacunovodstvoObracunavanjeController;
+import entities.Dostava;
+import entities.Klijent;
+import entities.Racun;
+import exceptions.NePostojiUBaziStavkaSaDatomIdVrijednosti;
+import utilities.Baza;
+import utilities.JComboBoxItem;
+import utilities.JTableItem;
+
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.*;
+import java.awt.event.ItemListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RacunovodstvoObracunavanjeJPanel extends JPanel {
     private JTable dostaveJTable;
@@ -20,6 +33,7 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
     private JLabel zaradaIspisJLabel;
     private JButton obrisiJButton;
     private JButton dodajJButton;
+    private JButton filtrirajListuJButton;
 
     /**
      * Create the panel.
@@ -73,9 +87,9 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
         add(podaciZaObracunJPanel, gbc_podaciZaObracunJPanel);
         GridBagLayout gbl_podaciZaObracunJPanel = new GridBagLayout();
         gbl_podaciZaObracunJPanel.columnWidths = new int[]{0, 0, 0};
-        gbl_podaciZaObracunJPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
+        gbl_podaciZaObracunJPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
         gbl_podaciZaObracunJPanel.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-        gbl_podaciZaObracunJPanel.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+        gbl_podaciZaObracunJPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         podaciZaObracunJPanel.setLayout(gbl_podaciZaObracunJPanel);
 
         JLabel odDatumaJLabel = new JLabel("Od datuma:");
@@ -222,13 +236,20 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
         gbc_doDatumaGodinaJComboBox.gridy = 0;
         doDatumaDanMjesecGodinaSadrzajniJPanel.add(doDatumaGodinaJComboBox, gbc_doDatumaGodinaJComboBox);
 
+        filtrirajListuJButton = new JButton("Filtriraj listu");
+        GridBagConstraints gbc_filtrirajListuJButton = new GridBagConstraints();
+        gbc_filtrirajListuJButton.insets = new Insets(0, 0, 5, 0);
+        gbc_filtrirajListuJButton.gridx = 1;
+        gbc_filtrirajListuJButton.gridy = 2;
+        podaciZaObracunJPanel.add(filtrirajListuJButton, gbc_filtrirajListuJButton);
+
         JLabel dostaveJLabel = new JLabel("Dostave:");
         dostaveJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         GridBagConstraints gbc_dostaveJLabel = new GridBagConstraints();
         gbc_dostaveJLabel.insets = new Insets(0, 0, 5, 5);
         gbc_dostaveJLabel.anchor = GridBagConstraints.EAST;
         gbc_dostaveJLabel.gridx = 0;
-        gbc_dostaveJLabel.gridy = 2;
+        gbc_dostaveJLabel.gridy = 3;
         podaciZaObracunJPanel.add(dostaveJLabel, gbc_dostaveJLabel);
 
         JScrollPane dostaveJScrollPane = new JScrollPane();
@@ -236,7 +257,7 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
         gbc_dostaveJScrollPane.insets = new Insets(0, 0, 5, 0);
         gbc_dostaveJScrollPane.fill = GridBagConstraints.BOTH;
         gbc_dostaveJScrollPane.gridx = 1;
-        gbc_dostaveJScrollPane.gridy = 2;
+        gbc_dostaveJScrollPane.gridy = 3;
         podaciZaObracunJPanel.add(dostaveJScrollPane, gbc_dostaveJScrollPane);
 
         dostaveJTable = new JTable();
@@ -255,14 +276,14 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
         gbc_brojDostavaJLabel.insets = new Insets(0, 0, 5, 5);
         gbc_brojDostavaJLabel.anchor = GridBagConstraints.EAST;
         gbc_brojDostavaJLabel.gridx = 0;
-        gbc_brojDostavaJLabel.gridy = 3;
+        gbc_brojDostavaJLabel.gridy = 4;
         podaciZaObracunJPanel.add(brojDostavaJLabel, gbc_brojDostavaJLabel);
 
         brojDostavaIspisJLabel = new JLabel("");
         GridBagConstraints gbc_brojDostavaIspisJLabel = new GridBagConstraints();
         gbc_brojDostavaIspisJLabel.insets = new Insets(0, 0, 5, 0);
         gbc_brojDostavaIspisJLabel.gridx = 1;
-        gbc_brojDostavaIspisJLabel.gridy = 3;
+        gbc_brojDostavaIspisJLabel.gridy = 4;
         podaciZaObracunJPanel.add(brojDostavaIspisJLabel, gbc_brojDostavaIspisJLabel);
 
         JLabel brojPovrataJLabel = new JLabel("Broj povrata:");
@@ -271,14 +292,14 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
         gbc_brojPovrataJLabel.insets = new Insets(0, 0, 5, 5);
         gbc_brojPovrataJLabel.anchor = GridBagConstraints.EAST;
         gbc_brojPovrataJLabel.gridx = 0;
-        gbc_brojPovrataJLabel.gridy = 4;
+        gbc_brojPovrataJLabel.gridy = 5;
         podaciZaObracunJPanel.add(brojPovrataJLabel, gbc_brojPovrataJLabel);
 
         brojPovrataIspisJLabel = new JLabel("");
         GridBagConstraints gbc_brojPovrataIspisJLabel = new GridBagConstraints();
         gbc_brojPovrataIspisJLabel.insets = new Insets(0, 0, 5, 0);
         gbc_brojPovrataIspisJLabel.gridx = 1;
-        gbc_brojPovrataIspisJLabel.gridy = 4;
+        gbc_brojPovrataIspisJLabel.gridy = 5;
         podaciZaObracunJPanel.add(brojPovrataIspisJLabel, gbc_brojPovrataIspisJLabel);
 
         JLabel zaradaJLabel = new JLabel("Zarada:");
@@ -287,13 +308,13 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
         gbc_zaradaJLabel.insets = new Insets(0, 0, 0, 5);
         gbc_zaradaJLabel.anchor = GridBagConstraints.EAST;
         gbc_zaradaJLabel.gridx = 0;
-        gbc_zaradaJLabel.gridy = 5;
+        gbc_zaradaJLabel.gridy = 6;
         podaciZaObracunJPanel.add(zaradaJLabel, gbc_zaradaJLabel);
 
         zaradaIspisJLabel = new JLabel("");
         GridBagConstraints gbc_zaradaIspisJLabel = new GridBagConstraints();
         gbc_zaradaIspisJLabel.gridx = 1;
-        gbc_zaradaIspisJLabel.gridy = 5;
+        gbc_zaradaIspisJLabel.gridy = 6;
         podaciZaObracunJPanel.add(zaradaIspisJLabel, gbc_zaradaIspisJLabel);
 
         JPanel dugmadJPanel = new JPanel();
@@ -326,6 +347,7 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
         gbc_dodajJButton.gridy = 0;
         dugmadJPanel.add(dodajJButton, gbc_dodajJButton);
 
+        dodajListeners();
     }
 
     public JComboBox getObracunZaJComboBox() {
@@ -380,7 +402,141 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
         return dodajJButton;
     }
 
-    public void popuniSaSvimPodacimaIzBaze() {
+    public JButton getFiltrirajListuJButton() {
+        return filtrirajListuJButton;
+    }
 
+    public void setFiltrirajListuJButton(JButton filtrirajListuJButton) {
+        this.filtrirajListuJButton = filtrirajListuJButton;
+    }
+
+    private void dodajListeners() {
+        RacunovodstvoObracunavanjeController racunovodstvoObracunavanjeController = new RacunovodstvoObracunavanjeController(this);
+
+        obracunZaJComboBox.addItemListener(racunovodstvoObracunavanjeController.getRacunovodstvoObracunZaJComboBoxItemListener());
+    }
+
+    private List<JComboBoxItem> napraviJComboBoxItemoveOdListeTipova(List<Klijent> sviKlijenti) {
+        List<JComboBoxItem> sviKlijentiJComboBoxItemi = new ArrayList<JComboBoxItem>();
+        for (Klijent k : sviKlijenti) {
+            sviKlijentiJComboBoxItemi.add(new JComboBoxItem(k.getId(), k.getIme()));
+        }
+        return sviKlijentiJComboBoxItemi;
+    }
+
+    public void popuniSaSvimPodacimaIzBaze() {
+        Baza baza = Baza.getBaza();
+        List<Klijent> sviKlijenti = baza.dajSve(Klijent.class);
+        long idSelektiranogKlijenta = 0;
+        if (sviKlijenti.size() > 0) {
+            idSelektiranogKlijenta = sviKlijenti.get(0).getId();
+        }
+        pupuniObracunZaJComboBoxSa(sviKlijenti, idSelektiranogKlijenta);
+
+        popuniSaPodacima(idSelektiranogKlijenta);
+    }
+
+    public void popuniSaPodacima(long idSelektiranogKlijenta) {
+        Baza baza = Baza.getBaza();
+        List<Racun> sviRacuni = baza.dajSve(Racun.class);
+        List<Racun> sviRacuniZaKlijenta = new ArrayList<Racun>();
+        double zarada = 0.0;
+        for(Racun r : sviRacuni) {
+            if(r.getKlijent().getId() == idSelektiranogKlijenta) {
+                sviRacuniZaKlijenta.add(r);
+                zarada += r.getIznos();
+            }
+        }
+
+        List<Dostava> sveDostave = baza.dajSve(Dostava.class);
+        List<Dostava> sveDostaveZaOvogKlijenta = new ArrayList<Dostava>();
+        for(Dostava d : sveDostave) {
+            if(d.getKlijent().getId() == idSelektiranogKlijenta) {
+                sveDostaveZaOvogKlijenta.add(d);
+            }
+        }
+
+        popuniJTable(dostaveJTable, sveDostaveZaOvogKlijenta);
+
+        brojDostavaIspisJLabel.setText(String.valueOf(sveDostaveZaOvogKlijenta.size()));
+        zaradaIspisJLabel.setText(String.valueOf(zarada));
+        pupuniObracunZaJComboBoxSa(baza.dajSve(Klijent.class), idSelektiranogKlijenta);
+    }
+
+    private void popuniJTable(JTable dostaveJTable, List<Dostava> sveDostave) {
+        int brojRedovaUTabeli = sveDostave.size();
+        Object[][] redoviUTabeli = new Object[brojRedovaUTabeli][4];
+        for(int i=0; i<brojRedovaUTabeli; i++) {
+            redoviUTabeli[i][0] = (Object)((sveDostave.get(i)).getKlijent().getIme());
+            redoviUTabeli[i][1] = (Object)((sveDostave.get(i)).getDatum());
+            redoviUTabeli[i][2] = (Object)((sveDostave.get(i)).getNaziv());
+        }
+
+        Object[] nasloviKolona = new Object[] { "Klijent", "Vrijeme dostave", "Vrsta peciva" };
+
+        if(redoviUTabeli.length <= 0) {
+            dostaveJTable.setModel(new DefaultTableModel(null, new Object[] {"Klijent", "Vrijeme dostave" }));
+        } else {
+            TableModel tableModel = new DefaultTableModel(redoviUTabeli, nasloviKolona);
+            dostaveJTable.setModel(tableModel);
+        }
+        dostaveJTable.validate();
+        dostaveJTable.repaint();
+    }
+
+    public void pupuniJTable(List<JTableItem> jTableStavke, List<String> nasloviKolona) {
+        int brojRedovaUTabeli = jTableStavke.size();
+        Object[][] redoviUTabeli = new Object[brojRedovaUTabeli][4];
+        for(int i=0; i<brojRedovaUTabeli; i++) {
+            List<String> red = jTableStavke.get(i).getSadrzajJednogReda();
+            redoviUTabeli[i][0] = red.get(0);
+            redoviUTabeli[i][1] = red.get(1);
+            redoviUTabeli[i][2] = red.get(2);
+            redoviUTabeli[i][3] = red.get(2);
+        }
+
+        if(redoviUTabeli.length <= 0) {
+            dostaveJTable.setModel(new DefaultTableModel(null, nasloviKolona.toArray()));
+        } else {
+            TableModel tableModel = new DefaultTableModel(redoviUTabeli, nasloviKolona.toArray());
+            dostaveJTable.setModel(tableModel);
+        }
+        dostaveJTable.validate();
+        dostaveJTable.repaint();
+    }
+
+    private Klijent pupuniObracunZaJComboBoxSa(List<Klijent> sviKlijenti, long idSelektovanogKlijenta) {
+        Klijent selektovaniKlijent = null;
+        // Izbjegavanje okidanja eventa SELECTED prilikom dinamickog dodavanja itemova
+        ItemListener[] itemListeners = obracunZaJComboBox.getItemListeners();
+        for (int i = 0; i < itemListeners.length; i++) {
+            obracunZaJComboBox.removeItemListener(itemListeners[i]);
+        }
+
+        int indexSelektovanogKlijentaUJComboBox = 0;
+        int index = 0;
+        obracunZaJComboBox.removeAllItems();
+        for (Klijent k : sviKlijenti) {
+            obracunZaJComboBox.addItem(new JComboBoxItem(k.getId(), k.getIme()));
+            if (k.getId() == idSelektovanogKlijenta) {
+                selektovaniKlijent = k;
+                indexSelektovanogKlijentaUJComboBox = index;
+            }
+            index++;
+        }
+
+        if (selektovaniKlijent == null) {
+            throw new NePostojiUBaziStavkaSaDatomIdVrijednosti("Pokusavate popuniti formu za " +
+                    "upravljanje obracunima. Id koji ste proslijedili za klijenta ne postoji u bazi. " +
+                    "Taj id je: " + idSelektovanogKlijenta);
+        }
+
+        obracunZaJComboBox.setSelectedIndex(indexSelektovanogKlijentaUJComboBox);
+
+        // Vracanje EventListener-a na JComboBox
+        for (int i = 0; i < itemListeners.length; i++) {
+            obracunZaJComboBox.addItemListener(itemListeners[i]);
+        }
+        return selektovaniKlijent;
     }
 }

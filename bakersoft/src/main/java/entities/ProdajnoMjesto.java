@@ -10,7 +10,7 @@ public class ProdajnoMjesto {
 
     private String mjesto;
     private String adresa;
-    @ManyToOne(cascade = CascadeType.DETACH, optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
     private Klijent klijent;
 
     public long getId() {

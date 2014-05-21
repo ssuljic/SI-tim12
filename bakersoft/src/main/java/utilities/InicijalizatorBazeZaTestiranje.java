@@ -1,9 +1,6 @@
 package utilities;
 
-import entities.Korisnik;
-import entities.Klijent;
-import entities.Status;
-import entities.Tip;
+import entities.*;
 
 import java.util.Date;
 
@@ -49,7 +46,7 @@ public class InicijalizatorBazeZaTestiranje {
         korisnik2.setAdresa("Marin Dvor 23");
         korisnik2.setTip(tipKorisnika1);
         korisnik2.setStatus(statusKorisnika1);
-        
+
         // Klijenti
         Klijent klijent1 = new Klijent();
         klijent1.setIme("Mesnica Kengur");
@@ -58,6 +55,24 @@ public class InicijalizatorBazeZaTestiranje {
         klijent2.setIme("Mesnica Noj");
         klijent2.setTelefon("062/225-883");
 
+        // Racuni
+        Racun racun1 = new Racun();
+        racun1.setDatum(new Date());
+        racun1.setKlijent(klijent1);
+        racun1.setObracunao(korisnik2);
+        racun1.setPocetak(new Date(1992, 8, 10));
+        racun1.setKraj(new Date(1992, 8, 12));
+        racun1.setBroj(1234);
+        racun1.setJePlacen(true);
+        racun1.setIznos(1845);
+
+        // Dostave
+        Dostava dostava1 = new Dostava();
+        dostava1.setDatum(new Date());
+        dostava1.setKlijent(klijent1);
+        dostava1.setNaziv("Krofna");
+        dostava1.setPreuzeo(korisnik1);
+        dostava1.setJeIsporuceno(true);
         
         // Spasavanje u bazu
         baza.spasiUBazu(tipKorisnika1);
@@ -71,5 +86,9 @@ public class InicijalizatorBazeZaTestiranje {
         
         baza.spasiUBazu(klijent1);
         baza.spasiUBazu(klijent2);
+
+        baza.spasiUBazu(racun1);
+
+        baza.spasiUBazu(dostava1);
     }
 }

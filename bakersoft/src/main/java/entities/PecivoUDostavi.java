@@ -11,9 +11,9 @@ public class PecivoUDostavi {
 
     private double kolicinaPreuzetog;
     private double kolicinaDostavljenog;
-    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER, mappedBy = "peciva")
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "peciva")
     private Collection<Dostava> dostave;
-    @ManyToOne(cascade = CascadeType.DETACH, optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
     private Pecivo pecivo;
 
     public long getId() {

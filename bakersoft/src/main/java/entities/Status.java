@@ -13,7 +13,7 @@ public class Status {
     private long id;
 
     private String status;
-    @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER, mappedBy = "status")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "status")
     private Collection<Korisnik> korisnici;
 
     public long getId() {

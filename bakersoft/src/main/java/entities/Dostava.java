@@ -14,11 +14,11 @@ public class Dostava {
     private boolean jeIsporuceno;
     @Temporal(TemporalType.DATE)
     private Date datum;
-    @ManyToOne(cascade = CascadeType.DETACH, optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
     private Klijent klijent;
-    @ManyToOne(cascade = CascadeType.DETACH, optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
     private Korisnik preuzeo;
-    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Collection<PecivoUDostavi> peciva;
 
     public long getId() {

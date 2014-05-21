@@ -1,9 +1,12 @@
 package controllers;
 
+import entities.Klijent;
 import entities.Korisnik;
+import entities.Racun;
 import utilities.Baza;
 import utilities.JComboBoxItem;
 import views.RacunovodstvoKorisnickiRacuniJPanel;
+import views.RacunovodstvoObracunavanjeJPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -12,33 +15,31 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.List;
 
-public class RacunovodstvoKorisnickiRacuniController {
-    private RacunovodstvoKorisnickiRacuniJPanel racunovodstvoKorisnickiRacuniJPanel;
+public class RacunovodstvoObracunavanjeController {
+    private RacunovodstvoObracunavanjeJPanel racunovodstvoObracunavanjeJPanel;
 
-    public RacunovodstvoKorisnickiRacuniController(RacunovodstvoKorisnickiRacuniJPanel racunovodstvoKorisnickiRacuniJPanel) {
-        this.racunovodstvoKorisnickiRacuniJPanel = racunovodstvoKorisnickiRacuniJPanel;
+    public RacunovodstvoObracunavanjeController(RacunovodstvoObracunavanjeJPanel racunovodstvoObracunavanjeJPanel) {
+        this.racunovodstvoObracunavanjeJPanel = racunovodstvoObracunavanjeJPanel;
     }
 
-    public ItemListener getKorisnickiRacuniTraziJComboBoxItemListener() {
+    public ItemListener getRacunovodstvoObracunZaJComboBoxItemListener() {
         return new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    long idSelektiranogKorisnika = ((JComboBoxItem) racunovodstvoKorisnickiRacuniJPanel.getTraziJComboBox().getSelectedItem()).getId();
-                    Baza baza = Baza.getBaza();
-                    List<Korisnik> sviKorisnici = baza.dajSve(Korisnik.class);
-                    racunovodstvoKorisnickiRacuniJPanel.popuniSaPodacima(sviKorisnici, idSelektiranogKorisnika);
+                    long idSelektiranogKlijenta = ((JComboBoxItem) racunovodstvoObracunavanjeJPanel.getObracunZaJComboBox().getSelectedItem()).getId();
+                    racunovodstvoObracunavanjeJPanel.popuniSaPodacima(idSelektiranogKlijenta);
                 }
             }
         };
     }
-
+/*
     public ActionListener getKorisnickiRacuniObrisiJButtonActionListener() {
         return new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 long idSelektiranogKorisnika = 0;
-                if (racunovodstvoKorisnickiRacuniJPanel.getTraziJComboBox().getItemCount() > 0) {
-                    idSelektiranogKorisnika = ((JComboBoxItem) racunovodstvoKorisnickiRacuniJPanel.getTraziJComboBox().getSelectedItem()).getId();
+                if (racunovodstvoObracunavanjeJPanel.getTraziJComboBox().getItemCount() > 0) {
+                    idSelektiranogKorisnika = ((JComboBoxItem) racunovodstvoObracunavanjeJPanel.getTraziJComboBox().getSelectedItem()).getId();
                 }
 
                 Baza baza = Baza.getBaza();
@@ -51,7 +52,7 @@ public class RacunovodstvoKorisnickiRacuniController {
                 if (sviKorisnici.size() > 0) {
                     idPrvogKorisnika = sviKorisnici.get(0).getId();
                 }
-                racunovodstvoKorisnickiRacuniJPanel.popuniSaPodacima(sviKorisnici, idPrvogKorisnika);
+                racunovodstvoObracunavanjeJPanel.popuniSaPodacima(sviKorisnici, idPrvogKorisnika);
             }
         };
     }
@@ -59,7 +60,7 @@ public class RacunovodstvoKorisnickiRacuniController {
     public ActionListener getKorisnickiRacuniDodajJButtonActionListener() {
         return new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
-                Korisnik noviKorisnik = racunovodstvoKorisnickiRacuniJPanel.dajPodatkeONovomKorisniku();
+                Korisnik noviKorisnik = racunovodstvoObracunavanjeJPanel.dajPodatkeONovomKorisniku();
                 Baza baza = Baza.getBaza();
                 baza.spasiUBazu(noviKorisnik);
             }
@@ -70,19 +71,19 @@ public class RacunovodstvoKorisnickiRacuniController {
         return new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 long idSelektiranogKorisnika = 0;
-                if (racunovodstvoKorisnickiRacuniJPanel.getTraziJComboBox().getItemCount() > 0) {
-                    idSelektiranogKorisnika = ((JComboBoxItem) racunovodstvoKorisnickiRacuniJPanel.getTraziJComboBox().getSelectedItem()).getId();
+                if (racunovodstvoObracunavanjeJPanel.getTraziJComboBox().getItemCount() > 0) {
+                    idSelektiranogKorisnika = ((JComboBoxItem) racunovodstvoObracunavanjeJPanel.getTraziJComboBox().getSelectedItem()).getId();
                 }
-                Korisnik noviKorisnik = racunovodstvoKorisnickiRacuniJPanel.dajPodatkeONovomKorisniku();
+                Korisnik noviKorisnik = racunovodstvoObracunavanjeJPanel.dajPodatkeONovomKorisniku();
                 if (idSelektiranogKorisnika > 0) {
                     noviKorisnik.setId(idSelektiranogKorisnika);
                     Baza baza = Baza.getBaza();
                     baza.azuriraj(noviKorisnik);
                 } else {
-                    JOptionPane.showMessageDialog(racunovodstvoKorisnickiRacuniJPanel.getParent(),
+                    JOptionPane.showMessageDialog(racunovodstvoObracunavanjeJPanel.getParent(),
                             "Ne može se ažurirati korisnik. Nema selektiranih korisnika.");
                 }
             }
         };
-    }
+    }*/
 }

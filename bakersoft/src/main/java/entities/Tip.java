@@ -14,7 +14,7 @@ public class Tip {
     private long id;
 
     private String tip;
-    @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER, mappedBy = "tip")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "tip")
     private Collection<Korisnik> korisnici;
 
     public long getId() {

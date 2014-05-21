@@ -14,7 +14,7 @@ public class Pecivo {
     private String tezina;
     private double cijena;
     private boolean jeUProdaji;
-    @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER, mappedBy = "pecivo")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "pecivo")
     private Collection<PecivoUDostavi> preuzetaPeciva;
 
     public long getId() {

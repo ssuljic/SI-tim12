@@ -20,13 +20,13 @@ public class Korisnik {
     private String brojTelefona;
     @Temporal(TemporalType.DATE)
     private Date datumRodjenja;
-    @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER, mappedBy = "obracunao")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "obracunao")
     private Collection<Racun> obracunatiRacuni;
-    @ManyToOne(cascade = CascadeType.DETACH, optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
     private Status status;
-    @ManyToOne(cascade = CascadeType.DETACH, optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
     private Tip tip;
-    @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER, mappedBy = "preuzeo")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "preuzeo")
     private Collection<Dostava> dostave;
 
     public long getId() {
