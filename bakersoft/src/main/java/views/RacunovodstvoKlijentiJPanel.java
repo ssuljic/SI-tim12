@@ -5,6 +5,8 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 import entities.Korisnik;
+import entities.Status;
+import entities.Tip;
 import utilities.Baza;
 import utilities.GuiUtilities;
 import utilities.JComboBoxItem;
@@ -280,9 +282,8 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
         RacunovodstvoKlijentiController racunovodstvoKlijentiController = new RacunovodstvoKlijentiController(this);
 
         getTraziJComboBox().addItemListener(racunovodstvoKlijentiController.getKlijentiTraziJComboBoxItemListener());
-        /*getPrivilegijeJComboBox().addActionListener(racunovodstvoKlijentiController.getKorisnickiRacuniPrivilegijeJComboBoxActionListener());*/
-        //getObrisiJButton().addActionListener(racunovodstvoKlijentiController.getKlijentiObrisiJButtonActionListener());
-        //getDodajJButton().addActionListener(racunovodstvoKlijentiController.getKlijentiRacuniDodajJButtonActionListener());
+        getObrisiJButton().addActionListener(racunovodstvoKlijentiController.getKlijentiObrisiJButtonActionListener());
+        getDodajJButton().addActionListener(racunovodstvoKlijentiController.getKlijentiDodajJButtonActionListener());
     }
     
     public void popuniSaPodacima(List<Klijent> sviKlijenti, long idSelektovanogKlijenta) {
@@ -317,7 +318,7 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
         int index = 0;
         comboBoxKlijenti.removeAllItems();
         for (Klijent k : sviKlijenti) {
-            comboBoxKlijenti.addItem(new JComboBoxItem(k.getId(), k.getIme() + " hehe"));
+            comboBoxKlijenti.addItem(new JComboBoxItem(k.getId(), k.getIme()));
             if (k.getId() == idSelektovanogKlijenta) {
                 selektovaniKlijent = k;
                 indexSelektovanogKlijentaUJComboBox = index;
@@ -349,6 +350,26 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
         kontaktPodaciEmailJTextField.setText("");
         kontaktPodaciTelefonJTextField.setText("");
        
+    }
+    
+    public Klijent dajPodatkeONovomKlijentu() {
+        Klijent klijent = new Klijent();
+        klijent.setIme(getNazivFirmeJTextField().getText());
+        klijent.setTelefon(getKontaktPodaciTelefonJTextField().getText());
+        /*klijent.setIme(getImeJTextField().getText());
+        klijent.setPrezime(getPrezimeJTextField().getText());
+        klijent.setKorisnickoIme(getKorisnickoImeJTextField().getText());
+        klijent.setLozinka(getLozinkaJTextField().getText());
+        klijent.setEmail(getEmailJTextField().getText());
+        klijent.setBrojTelefona(telefonJTextField.getText());
+        klijent.setBrojMobitela(mobitelJTextField.getText());
+        klijent.setAdresa(adresaJTextField.getText());
+        Date date = new Date(Integer.parseInt(datumRodjenjaGodinaJComboBox.getSelectedItem().toString()),
+                Integer.parseInt(datumRodjenjaMjesecJComboBox.getSelectedItem().toString()),
+                Integer.parseInt(datumRodjenjaDanJComboBox.getSelectedItem().toString()));
+        klijent.setDatumRodjenja(date);*/
+        
+        return klijent;
     }
 
     public void popuniSaSvimPodacimaIzBaze() {
