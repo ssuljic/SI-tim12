@@ -5,6 +5,7 @@ import utilities.Baza;
 import utilities.JComboBoxItem;
 import views.RacunovodstvoKorisnickiRacuniJPanel;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -58,16 +59,29 @@ public class RacunovodstvoKorisnickiRacuniController {
     public ActionListener getKorisnickiRacuniDodajJButtonActionListener() {
         return new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
-                /*JOptionPane.showMessageDialog(racunovodstvoKorisnickiRacuniJPanel.getParent(), "Nije implementirano");*/
                 Korisnik noviKorisnik = racunovodstvoKorisnickiRacuniJPanel.dajPodatkeONovomKorisniku();
-                System.out.println(noviKorisnik);
-                // TODO: Dovrsiti ovu metodu
-                /*if(KorisnikUtilities.suPodaciOKorisnikuValidni(noviKorisnik)) {
+                Baza baza = Baza.getBaza();
+                baza.spasiUBazu(noviKorisnik);
+            }
+        };
+    }
+
+    public ActionListener getKorisnickiRacuniPrepraviJButtonActionListener() {
+        return new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                long idSelektiranogKorisnika = 0;
+                if (racunovodstvoKorisnickiRacuniJPanel.getTraziJComboBox().getItemCount() > 0) {
+                    idSelektiranogKorisnika = ((JComboBoxItem) racunovodstvoKorisnickiRacuniJPanel.getTraziJComboBox().getSelectedItem()).getId();
+                }
+                Korisnik noviKorisnik = racunovodstvoKorisnickiRacuniJPanel.dajPodatkeONovomKorisniku();
+                if(idSelektiranogKorisnika > 0) {
+                    noviKorisnik.setId(idSelektiranogKorisnika);
                     Baza baza = Baza.getBaza();
-                    baza.spasiKorisnika(noviKorisnik);
+                    baza.azuriraj(noviKorisnik);
                 } else {
-                    JOptionPane.showMessageDialog(racunovodstvoKorisnickiRacuniJPanel.getParent(), "Pogrešni podaci unešeni!");
-                }*/
+                    JOptionPane.showMessageDialog(racunovodstvoKorisnickiRacuniJPanel.getParent(),
+                            "Ne može se ažurirati korisnik. Nema selektiranih korisnika.");
+                }
             }
         };
     }

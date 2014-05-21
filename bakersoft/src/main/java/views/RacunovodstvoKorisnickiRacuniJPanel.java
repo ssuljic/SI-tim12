@@ -47,6 +47,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
     private JLabel statusJLabel;
     private JComboBox statusJComboBox;
     private JLabel privilegijeJLabel;
+    private JButton prepraviJButton;
 
     /**
      * Create the panel.
@@ -246,7 +247,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         podaciOKorisnikuJPanel.add(adresaJTextField, gbc_adresaJTextField);
         adresaJTextField.setColumns(10);
 
-        datumRodjenjaJLabel = new JLabel("Datum rođenja:");
+        datumRodjenjaJLabel = new JLabel("Datum roÄ‘enja:");
         GridBagConstraints gbc_datumRodjenjaJLabel = new GridBagConstraints();
         gbc_datumRodjenjaJLabel.insets = new Insets(0, 0, 5, 5);
         gbc_datumRodjenjaJLabel.gridx = 0;
@@ -354,26 +355,35 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         add(dugmadJPanel, gbc_dugmadJPanel);
         GridBagLayout gbl_dugmadJPanel = new GridBagLayout();
         gbl_dugmadJPanel.columnWidths = new int[]{0, 0, 0};
-        gbl_dugmadJPanel.rowHeights = new int[]{0, 0};
+        gbl_dugmadJPanel.rowHeights = new int[]{0, 0, 0};
         gbl_dugmadJPanel.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
-        gbl_dugmadJPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+        gbl_dugmadJPanel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
         dugmadJPanel.setLayout(gbl_dugmadJPanel);
 
         obrisiJButton = new JButton("Obri\u0161i");
         GridBagConstraints gbc_obrisiJButton = new GridBagConstraints();
         gbc_obrisiJButton.anchor = GridBagConstraints.SOUTH;
         gbc_obrisiJButton.fill = GridBagConstraints.HORIZONTAL;
-        gbc_obrisiJButton.insets = new Insets(0, 0, 0, 5);
+        gbc_obrisiJButton.insets = new Insets(0, 0, 5, 5);
         gbc_obrisiJButton.gridx = 0;
         gbc_obrisiJButton.gridy = 0;
         dugmadJPanel.add(obrisiJButton, gbc_obrisiJButton);
 
+        prepraviJButton = new JButton("Prepravi");
+        GridBagConstraints gbc_prepraviJButton = new GridBagConstraints();
+        gbc_prepraviJButton.fill = GridBagConstraints.HORIZONTAL;
+        gbc_prepraviJButton.insets = new Insets(0, 0, 5, 0);
+        gbc_prepraviJButton.gridx = 1;
+        gbc_prepraviJButton.gridy = 0;
+        dugmadJPanel.add(prepraviJButton, gbc_prepraviJButton);
+
         dodajJButton = new JButton("Dodaj");
         GridBagConstraints gbc_dodajJButton = new GridBagConstraints();
+        gbc_dodajJButton.gridwidth = 2;
         gbc_dodajJButton.anchor = GridBagConstraints.SOUTH;
         gbc_dodajJButton.fill = GridBagConstraints.HORIZONTAL;
-        gbc_dodajJButton.gridx = 1;
-        gbc_dodajJButton.gridy = 0;
+        gbc_dodajJButton.gridx = 0;
+        gbc_dodajJButton.gridy = 1;
         dugmadJPanel.add(dodajJButton, gbc_dodajJButton);
 
         dodajListeners();
@@ -492,6 +502,14 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         return privilegijeJLabel;
     }
 
+    public JButton getPrepraviJButton() {
+        return prepraviJButton;
+    }
+
+    public void setPrepraviJButton(JButton prepraviJButton) {
+        this.prepraviJButton = prepraviJButton;
+    }
+
     public void dodajListeners() {
         RacunovodstvoKorisnickiRacuniController racunovodstvoKorisnickiRacuniController = new RacunovodstvoKorisnickiRacuniController(this);
 
@@ -499,6 +517,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         /*getPrivilegijeJComboBox().addActionListener(racunovodstvoKorisnickiRacuniController.getKorisnickiRacuniPrivilegijeJComboBoxActionListener());*/
         getObrisiJButton().addActionListener(racunovodstvoKorisnickiRacuniController.getKorisnickiRacuniObrisiJButtonActionListener());
         getDodajJButton().addActionListener(racunovodstvoKorisnickiRacuniController.getKorisnickiRacuniDodajJButtonActionListener());
+        getPrepraviJButton().addActionListener(racunovodstvoKorisnickiRacuniController.getKorisnickiRacuniPrepraviJButtonActionListener());
     }
 
     public void popuniSaPodacima(List<Korisnik> sviKorisnici, long idSelektovanogKorisnika) {

@@ -65,71 +65,10 @@ public class Baza {
         E objekat = entityManager.find(klasaObjekta, idObjekta);
         return objekat;
     }
-/*
-    public List<Korisnik> dajSveKorisnike() {
-        Query query = entityManager.createQuery("SELECT k FROM Korisnik k");
-        List<Korisnik> sviKorisnici = query.getResultList();
-        return sviKorisnici;
-    }
 
-    public void obrisiKorisnikaIzBaze(long idSelektiranogKorisnika) {
-        Korisnik korisnik = entityManager.find(Korisnik.class, idSelektiranogKorisnika);
+    public <E> void azuriraj(E objekat) {
         entityManager.getTransaction().begin();
-        entityManager.remove(korisnik);
+        entityManager.merge(objekat);
         entityManager.getTransaction().commit();
     }
-
-    public void spasiTipKorisnika(Tip tipKorisnika) {
-        entityManager.getTransaction().begin();
-        entityManager.persist(tipKorisnika);
-        entityManager.getTransaction().commit();
-    }
-
-    public void spasiStatusKorisnika(Status statusKorisnika) {
-        entityManager.getTransaction().begin();
-        entityManager.persist(statusKorisnika);
-        entityManager.getTransaction().commit();
-    }
-
-    public void spasiKorisnika(Korisnik korisnik) {
-        entityManager.getTransaction().begin();
-        entityManager.persist(korisnik);
-        entityManager.getTransaction().commit();
-    }
-
-    public List<Tip> dajSveTipoveKorisnika() {
-        Query query = entityManager.createQuery("SELECT t FROM Tip t");
-        List<Tip> sviTipoviKorisnika = query.getResultList();
-        return sviTipoviKorisnika;
-    }
-
-    public List<Status> getSviStatusiKorisnika() {
-        Query query = entityManager.createQuery("SELECT s FROM Status s");
-        List<Status> sviStatusiKorisnika = query.getResultList();
-        return sviStatusiKorisnika;
-    }
-
-    public Status getStatusKorisnika(long id) {
-        Status status = entityManager.find(Status.class, id);
-        return status;
-    }
-
-    public Tip getTipKorisnika(long id) {
-        Tip tip = entityManager.find(Tip.class, id);
-        return tip;
-    }
-    
-    public List<Klijent> dajSveKlijente() {
-        Query query = entityManager.createQuery("SELECT k FROM Klijent k");
-        List<Klijent> sviKlijenti = query.getResultList();
-        return sviKlijenti;
-    }
-    
-    public void spasiKlijenta(Klijent klijent) {
-        entityManager.getTransaction().begin();
-        entityManager.persist(klijent);
-        entityManager.getTransaction().commit();
-    }
-    
-    */
 }
