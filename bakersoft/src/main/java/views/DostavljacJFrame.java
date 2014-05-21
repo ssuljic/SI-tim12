@@ -1,6 +1,6 @@
 package views;
 
-import controllers.DostavljacController;
+import controllers.DostavljacIzbornikController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,33 +41,40 @@ public class DostavljacJFrame extends JFrame {
     }
 
     public void postaviPreuzimanjePecivaJPanel() {
-        contentPane.remove(dostavljacPotvrdaDostaveJPanel);
+        ukloniPostojecePanele();
+        dostavljacPreuzimanjePecivaJPanel.popuniSaSvimPodacimaIzBaze();
         contentPane.add(dostavljacPreuzimanjePecivaJPanel, BorderLayout.CENTER);
         this.validate();
         this.repaint();
     }
 
-    public void postaviPotvrdaDostaveJPanel() {
+    private void ukloniPostojecePanele() {
+        contentPane.remove(dostavljacPotvrdaDostaveJPanel);
         contentPane.remove(dostavljacPreuzimanjePecivaJPanel);
+    }
+
+    public void postaviPotvrdaDostaveJPanel() {
+        ukloniPostojecePanele();
+        dostavljacPotvrdaDostaveJPanel.popuniSaSvimPodacimaIzBaze();
         contentPane.add(dostavljacPotvrdaDostaveJPanel, BorderLayout.CENTER);
         this.validate();
         this.repaint();
     }
 
     public void dodajListeners() {
-        DostavljacController dostavljacController = new DostavljacController(this);
+        DostavljacIzbornikController dostavljacIzbornikController = new DostavljacIzbornikController(this);
 
-        this.addWindowListener(dostavljacController.getZatvorenJFrameActionListener());
+        this.addWindowListener(dostavljacIzbornikController.getZatvorenJFrameActionListener());
 
-        dostavljacIzbornikJPanel.getPreuzimanjePecivaJButton().addActionListener(dostavljacController.getIzbornikPreuzimanjePecivaJButtonActionListener());
-        dostavljacIzbornikJPanel.getPotvrdaDostaveJButton().addActionListener(dostavljacController.getIzbornikPotvrdaDostaveJButtonActionListener());
-        dostavljacIzbornikJPanel.getOdjavaJButton().addActionListener(dostavljacController.getIzbornikOdjavaJButtonActionListener());
+        dostavljacIzbornikJPanel.getPreuzimanjePecivaJButton().addActionListener(dostavljacIzbornikController.getIzbornikPreuzimanjePecivaJButtonActionListener());
+        dostavljacIzbornikJPanel.getPotvrdaDostaveJButton().addActionListener(dostavljacIzbornikController.getIzbornikPotvrdaDostaveJButtonActionListener());
+        dostavljacIzbornikJPanel.getOdjavaJButton().addActionListener(dostavljacIzbornikController.getIzbornikOdjavaJButtonActionListener());
 
-        dostavljacPotvrdaDostaveJPanel.getDostavaIzvrsenaJButton().addActionListener(dostavljacController.getPotvrdaDostaveDostavaIzvrsenaJButtonActionListener());
+        /*dostavljacPotvrdaDostaveJPanel.getDostavaIzvrsenaJButton().addActionListener(dostavljacController.getPotvrdaDostaveDostavaIzvrsenaJButtonActionListener());
 
         dostavljacPreuzimanjePecivaJPanel.getUkloniPecivoJButton().addActionListener(dostavljacController.getPreuzimanjePecivaUkloniPecivoJButtonActionListener());
         dostavljacPreuzimanjePecivaJPanel.getDodajPecivoJButton().addActionListener(dostavljacController.getPreuzimanjePecivaDodajPecivoJButtonActionListener());
-        dostavljacPreuzimanjePecivaJPanel.getPreuzmiDostavuJButton().addActionListener(dostavljacController.getPreuzimanjePecivaPreuzmiDostavuJButtonActionListener());
+        dostavljacPreuzimanjePecivaJPanel.getPreuzmiDostavuJButton().addActionListener(dostavljacController.getPreuzimanjePecivaPreuzmiDostavuJButtonActionListener());*/
     }
 
     public JFrame getPozivaocJFrame() {

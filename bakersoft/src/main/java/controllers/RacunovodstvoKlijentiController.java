@@ -25,7 +25,7 @@ public class RacunovodstvoKlijentiController {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     long idSelektiranogKlijenta = ((JComboBoxItem) racunovodstvoKlijentiJPanel.getTraziJComboBox().getSelectedItem()).getId();
                     Baza baza = Baza.getBaza();
-                    List<Klijent> sviKlijenti = baza.dajSveKlijente();
+                    List<Klijent> sviKlijenti = baza.dajSve(Klijent.class);
                     racunovodstvoKlijentiJPanel.popuniSaPodacima(sviKlijenti, idSelektiranogKlijenta);
                 }
             }

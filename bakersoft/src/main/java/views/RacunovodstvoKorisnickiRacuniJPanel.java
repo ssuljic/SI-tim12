@@ -524,12 +524,12 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
                 datumRodjenjaDanJComboBox, datumRodjenjaMjesecJComboBox, datumRodjenjaGodinaJComboBox);
 
         Baza baza = Baza.getBaza();
-        List<Status> sviStatusiKorisnika = baza.getSviStatusiKorisnika();
+        List<Status> sviStatusiKorisnika = baza.dajSve(Status.class);
         List<JComboBoxItem> sviStatusiKorisnikaJComboBoxItemi = napraviJComboBoxItemoveOdListeStatus(sviStatusiKorisnika);
         GuiUtilities.popuniJComboBoxListom(sviStatusiKorisnikaJComboBoxItemi, statusJComboBox);
         GuiUtilities.selektirajStavkuComboBoxaKojaImaId(selektovaniKorisnik.getStatus().getId(), statusJComboBox);
 
-        List<Tip> sviTipoviKorisnika = baza.dajSveTipoveKorisnika();
+        List<Tip> sviTipoviKorisnika = baza.dajSve(Tip.class);
         List<JComboBoxItem> sviTipoviKorisnikaJComboBoxItemi = napraviJComboBoxItemoveOdListeTipova(sviTipoviKorisnika);
         GuiUtilities.popuniJComboBoxListom(sviTipoviKorisnikaJComboBoxItemi, privilegijeJComboBox);
         GuiUtilities.selektirajStavkuComboBoxaKojaImaId(selektovaniKorisnik.getTip().getId(), privilegijeJComboBox);
@@ -619,10 +619,20 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
                 Integer.parseInt(datumRodjenjaDanJComboBox.getSelectedItem().toString()));
         korisnik.setDatumRodjenja(date);
         Baza baza = Baza.getBaza();
-        Status status = baza.getStatusKorisnika(((JComboBoxItem) statusJComboBox.getSelectedItem()).getId());
+        Status status = baza.dajPoId(Status.class, ((JComboBoxItem) statusJComboBox.getSelectedItem()).getId());
         korisnik.setStatus(status);
-        Tip tip = baza.getTipKorisnika(((JComboBoxItem) privilegijeJComboBox.getSelectedItem()).getId());
+        Tip tip = baza.dajPoId(Tip.class, ((JComboBoxItem) privilegijeJComboBox.getSelectedItem()).getId());
         korisnik.setTip(tip);
         return korisnik;
+    }
+
+    public void popuniSaSvimPodacimaIzBaze() {
+        Baza baza = Baza.getBaza();
+        java.util.List<Korisnik> sviKorisnici = baza.dajSve(Korisnik.class);
+        long idSelektiranogKorisnika = 0;
+        if (sviKorisnici.size() > 0) {
+            idSelektiranogKorisnika = sviKorisnici.get(0).getId();
+        }
+        popuniSaPodacima(sviKorisnici, idSelektiranogKorisnika);
     }
 }

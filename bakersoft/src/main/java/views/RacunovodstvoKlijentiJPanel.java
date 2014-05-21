@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
+import entities.Korisnik;
 import utilities.Baza;
 import utilities.GuiUtilities;
 import utilities.JComboBoxItem;
@@ -236,6 +237,7 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
         gbc_dodajJButton.gridy = 0;
         dugmadJPanel.add(dodajJButton, gbc_dodajJButton);
 
+        dodajListeners();
     }
 
     public JComboBox getTraziJComboBox() {
@@ -347,5 +349,15 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
         kontaktPodaciEmailJTextField.setText("");
         kontaktPodaciTelefonJTextField.setText("");
        
+    }
+
+    public void popuniSaSvimPodacimaIzBaze() {
+        Baza baza = Baza.getBaza();
+        java.util.List<Klijent> sviKlijenti = baza.dajSve(Klijent.class);
+        long idSelektiranogKlijenta = 0;
+        if (sviKlijenti.size() > 0) {
+            idSelektiranogKlijenta = sviKlijenti.get(0).getId();
+        }
+        popuniSaPodacima(sviKlijenti, idSelektiranogKlijenta);
     }
 }

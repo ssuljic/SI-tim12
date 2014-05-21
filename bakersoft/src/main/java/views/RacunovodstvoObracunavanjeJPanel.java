@@ -379,4 +379,8 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
     public JButton getDodajJButton() {
         return dodajJButton;
     }
+
+    public void popuniSaSvimPodacimaIzBaze() {
+
+    }
 }

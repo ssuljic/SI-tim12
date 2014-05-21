@@ -42,6 +42,30 @@ public class Baza {
         factory.close();
     }
 
+    public <E> List<E> dajSve(Class<E> klasaObjekta) {
+        Query zahtjev = entityManager.createQuery("SELECT k FROM " + klasaObjekta.getSimpleName() + " k");
+        List<E> sviObjekti = zahtjev.getResultList();
+        return sviObjekti;
+    }
+
+    public <E> void obrisiIzBaze(Class<E> klasaObjekta, long idObjekta) {
+        E objekatKojiSeBrise = entityManager.find(klasaObjekta, idObjekta);
+        entityManager.getTransaction().begin();
+        entityManager.remove(objekatKojiSeBrise);
+        entityManager.getTransaction().commit();
+    }
+
+    public <E> void spasiUBazu(E objekat) {
+        entityManager.getTransaction().begin();
+        entityManager.persist(objekat);
+        entityManager.getTransaction().commit();
+    }
+
+    public <E> E dajPoId(Class<E> klasaObjekta, long idObjekta) {
+        E objekat = entityManager.find(klasaObjekta, idObjekta);
+        return objekat;
+    }
+/*
     public List<Korisnik> dajSveKorisnike() {
         Query query = entityManager.createQuery("SELECT k FROM Korisnik k");
         List<Korisnik> sviKorisnici = query.getResultList();
@@ -107,5 +131,5 @@ public class Baza {
         entityManager.getTransaction().commit();
     }
     
-    
+    */
 }

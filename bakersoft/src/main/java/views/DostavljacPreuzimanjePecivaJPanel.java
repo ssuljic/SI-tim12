@@ -117,4 +117,8 @@ public class DostavljacPreuzimanjePecivaJPanel extends JPanel {
     public JButton getPreuzmiDostavuJButton() {
         return preuzmiDostavuJButton;
     }
+
+    public void popuniSaSvimPodacimaIzBaze() {
+
+    }
 }

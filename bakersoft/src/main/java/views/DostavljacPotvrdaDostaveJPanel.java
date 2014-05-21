@@ -87,4 +87,8 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
     public JButton getDostavaIzvrsenaJButton() {
         return dostavaIzvrsenaJButton;
     }
+
+    public void popuniSaSvimPodacimaIzBaze() {
+
+    }
 }

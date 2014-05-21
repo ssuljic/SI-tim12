@@ -60,16 +60,16 @@ public class InicijalizatorBazeZaTestiranje {
 
         
         // Spasavanje u bazu
-        baza.spasiTipKorisnika(tipKorisnika1);
-        baza.spasiTipKorisnika(tipKorisnika2);
+        baza.spasiUBazu(tipKorisnika1);
+        baza.spasiUBazu(tipKorisnika2);
 
-        baza.spasiStatusKorisnika(statusKorisnika1);
-        baza.spasiStatusKorisnika(statusKorisnika2);
+        baza.spasiUBazu(statusKorisnika1);
+        baza.spasiUBazu(statusKorisnika2);
 
-        baza.spasiKorisnika(korisnik1);
-        baza.spasiKorisnika(korisnik2);
+        baza.spasiUBazu(korisnik1);
+        baza.spasiUBazu(korisnik2);
         
-        baza.spasiKlijenta(klijent1);
-        baza.spasiKlijenta(klijent2);
+        baza.spasiUBazu(klijent1);
+        baza.spasiUBazu(klijent2);
     }
 }

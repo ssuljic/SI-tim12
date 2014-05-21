@@ -84,4 +84,8 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
     public JButton getDodajPecivoJButton() {
         return dodajPecivoJButton;
     }
+
+    public void popuniSaSvimPodacimaIzBaze() {
+
+    }
 }

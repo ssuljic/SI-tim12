@@ -5,10 +5,10 @@ import views.DostavljacJFrame;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class DostavljacController {
+public class DostavljacIzbornikController {
     private DostavljacJFrame dostavljacJFrame;
 
-    public DostavljacController(DostavljacJFrame dostavljacJFrame) {
+    public DostavljacIzbornikController(DostavljacJFrame dostavljacJFrame) {
         super();
         this.dostavljacJFrame = dostavljacJFrame;
     }
@@ -56,37 +56,4 @@ public class DostavljacController {
             }
         };
     }
-
-    public ActionListener getPotvrdaDostaveDostavaIzvrsenaJButtonActionListener() {
-        return new ActionListener() {
-            public void actionPerformed(ActionEvent actionEvent) {
-                JOptionPane.showMessageDialog(dostavljacJFrame, "Nije implementirano");
-            }
-        };
-    }
-
-    public ActionListener getPreuzimanjePecivaUkloniPecivoJButtonActionListener() {
-        return new ActionListener() {
-            public void actionPerformed(ActionEvent actionEvent) {
-                JOptionPane.showMessageDialog(dostavljacJFrame, "Nije implementirano");
-            }
-        };
-    }
-
-    public ActionListener getPreuzimanjePecivaDodajPecivoJButtonActionListener() {
-        return new ActionListener() {
-            public void actionPerformed(ActionEvent actionEvent) {
-                JOptionPane.showMessageDialog(dostavljacJFrame, "Nije implementirano");
-            }
-        };
-    }
-
-    public ActionListener getPreuzimanjePecivaPreuzmiDostavuJButtonActionListener() {
-        return new ActionListener() {
-            public void actionPerformed(ActionEvent actionEvent) {
-                JOptionPane.showMessageDialog(dostavljacJFrame, "Nije implementirano");
-            }
-        };
-    }
-
 }

@@ -252,4 +252,8 @@ public class RacunovodstvoSpaseniObracuniJPanel extends JPanel {
     public JButton getPosaljiObracunJButton() {
         return posaljiObracunJButton;
     }
+
+    public void popuniSaSvimPodacimaIzBaze() {
+
+    }
 }

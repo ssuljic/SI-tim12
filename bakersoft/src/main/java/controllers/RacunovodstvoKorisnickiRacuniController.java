@@ -25,20 +25,12 @@ public class RacunovodstvoKorisnickiRacuniController {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     long idSelektiranogKorisnika = ((JComboBoxItem) racunovodstvoKorisnickiRacuniJPanel.getTraziJComboBox().getSelectedItem()).getId();
                     Baza baza = Baza.getBaza();
-                    List<Korisnik> sviKorisnici = baza.dajSveKorisnike();
+                    List<Korisnik> sviKorisnici = baza.dajSve(Korisnik.class);
                     racunovodstvoKorisnickiRacuniJPanel.popuniSaPodacima(sviKorisnici, idSelektiranogKorisnika);
                 }
             }
         };
     }
-
-    /*public ActionListener getKorisnickiRacuniPrivilegijeJComboBoxActionListener() {
-        return new ActionListener() {
-            public void actionPerformed(ActionEvent actionEvent) {
-                JOptionPane.showMessageDialog(racunovodstvoKorisnickiRacuniJPanel.getParent(), "Nije implementirano");
-            }
-        };
-    }*/
 
     public ActionListener getKorisnickiRacuniObrisiJButtonActionListener() {
         return new ActionListener() {
@@ -50,10 +42,10 @@ public class RacunovodstvoKorisnickiRacuniController {
 
                 Baza baza = Baza.getBaza();
                 if (idSelektiranogKorisnika > 0) {
-                    baza.obrisiKorisnikaIzBaze(idSelektiranogKorisnika);
+                    baza.obrisiIzBaze(Korisnik.class, idSelektiranogKorisnika);
                 }
 
-                List<Korisnik> sviKorisnici = baza.dajSveKorisnike();
+                List<Korisnik> sviKorisnici = baza.dajSve(Korisnik.class);
                 long idPrvogKorisnika = 0;
                 if (sviKorisnici.size() > 0) {
                     idPrvogKorisnika = sviKorisnici.get(0).getId();

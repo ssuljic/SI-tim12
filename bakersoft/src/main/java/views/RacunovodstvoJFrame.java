@@ -1,8 +1,7 @@
 package views;
 
-import controllers.RacunovodstvoController;
+import controllers.RacunovodstvoIzbornikController;
 import entities.Korisnik;
-import utilities.Baza;
 
 import javax.swing.*;
 import java.awt.*;
@@ -53,13 +52,7 @@ public class RacunovodstvoJFrame extends JFrame {
 
     public void postaviKorisnickiRacuniJPanel() {
         ukloniPostojecePanele();
-        Baza baza = Baza.getBaza();
-        java.util.List<Korisnik> sviKorisnici = baza.dajSveKorisnike();
-        long idSelektiranogKorisnika = 0;
-        if (sviKorisnici.size() > 0) {
-            idSelektiranogKorisnika = sviKorisnici.get(0).getId();
-        }
-        racunovodstvoKorisnickiRacuniJPanel.popuniSaPodacima(sviKorisnici, idSelektiranogKorisnika);
+        racunovodstvoKorisnickiRacuniJPanel.popuniSaSvimPodacimaIzBaze();
         contentPane.add(racunovodstvoKorisnickiRacuniJPanel, BorderLayout.CENTER);
         osvjeziFormu();
     }
@@ -79,50 +72,54 @@ public class RacunovodstvoJFrame extends JFrame {
 
     public void postaviKlijentiJPanel() {
         ukloniPostojecePanele();
+        racunovodstvoKlijentiJPanel.popuniSaSvimPodacimaIzBaze();
         contentPane.add(racunovodstvoKlijentiJPanel, BorderLayout.CENTER);
         osvjeziFormu();
     }
 
     public void postaviObracunavanjeJPanel() {
         ukloniPostojecePanele();
+        racunovodstvoObracunavanjeJPanel.popuniSaSvimPodacimaIzBaze();
         contentPane.add(racunovodstvoObracunavanjeJPanel, BorderLayout.CENTER);
         osvjeziFormu();
     }
 
     public void postaviSpaseniObracuniJPanel() {
         ukloniPostojecePanele();
+        racunovodstvoSpaseniObracuniJPanel.popuniSaSvimPodacimaIzBaze();
         contentPane.add(racunovodstvoSpaseniObracuniJPanel, BorderLayout.CENTER);
         osvjeziFormu();
     }
 
     public void postaviEvidencijaPecivaJPanel() {
         ukloniPostojecePanele();
+        racunovodstvoEvidencijaPecivaJPanel.popuniSaSvimPodacimaIzBaze();
         contentPane.add(racunovodstvoEvidencijaPecivaJPanel, BorderLayout.CENTER);
         osvjeziFormu();
     }
 
     public void dodajListeners() {
-        RacunovodstvoController racunovodstvoController = new RacunovodstvoController(this);
+        RacunovodstvoIzbornikController racunovodstvoIzbornikController = new RacunovodstvoIzbornikController(this);
 
-        this.addWindowListener(racunovodstvoController.getZatvorenJFrameActionListener());
+        this.addWindowListener(racunovodstvoIzbornikController.getZatvorenJFrameActionListener());
 
-        racunovodstvoIzbornikJPanel.getKorisnickiRacuniJButton().addActionListener(racunovodstvoController.getIzbornikKorisnickiRacuniJButtonActionListener());
-        racunovodstvoIzbornikJPanel.getKlijentiJButton().addActionListener(racunovodstvoController.getIzbornikKlijentiJButtonActionListener());
-        racunovodstvoIzbornikJPanel.getObracunavanjeJButton().addActionListener(racunovodstvoController.getIzbornikObracunavanjeJButtonActionListener());
-        racunovodstvoIzbornikJPanel.getSpaseniObracuniJButton().addActionListener(racunovodstvoController.getIzbornikSpaseniObracuniJButtonActionListener());
-        racunovodstvoIzbornikJPanel.getEvidencijaPecivaJButton().addActionListener(racunovodstvoController.getIzbornikEvidencijaPecivaJButtonActionListener());
-        racunovodstvoIzbornikJPanel.getOdjavaJButton().addActionListener(racunovodstvoController.getIzbornikOdjavaJButtonActionListener());
+        racunovodstvoIzbornikJPanel.getKorisnickiRacuniJButton().addActionListener(racunovodstvoIzbornikController.getIzbornikKorisnickiRacuniJButtonActionListener());
+        racunovodstvoIzbornikJPanel.getKlijentiJButton().addActionListener(racunovodstvoIzbornikController.getIzbornikKlijentiJButtonActionListener());
+        racunovodstvoIzbornikJPanel.getObracunavanjeJButton().addActionListener(racunovodstvoIzbornikController.getIzbornikObracunavanjeJButtonActionListener());
+        racunovodstvoIzbornikJPanel.getSpaseniObracuniJButton().addActionListener(racunovodstvoIzbornikController.getIzbornikSpaseniObracuniJButtonActionListener());
+        racunovodstvoIzbornikJPanel.getEvidencijaPecivaJButton().addActionListener(racunovodstvoIzbornikController.getIzbornikEvidencijaPecivaJButtonActionListener());
+        racunovodstvoIzbornikJPanel.getOdjavaJButton().addActionListener(racunovodstvoIzbornikController.getIzbornikOdjavaJButtonActionListener());
 
-        racunovodstvoEvidencijaPecivaJPanel.getUkloniPecivoJButton().addActionListener(racunovodstvoController.getEvidencijaPecivaUkloniPecivoJButtonActionListener());
+        /*racunovodstvoEvidencijaPecivaJPanel.getUkloniPecivoJButton().addActionListener(racunovodstvoController.getEvidencijaPecivaUkloniPecivoJButtonActionListener());
         racunovodstvoEvidencijaPecivaJPanel.getDodajPecivoJButton().addActionListener(racunovodstvoController.getEvidencijaPecivaDodajPecivoJButtonActionListener());
 
         racunovodstvoKlijentiJPanel.getObrisiJButton().addActionListener(racunovodstvoController.getKlijentiObrisiJButtonActionListener());
         racunovodstvoKlijentiJPanel.getDodajJButton().addActionListener(racunovodstvoController.getKlijentiDodajJButtonActionListener());
 
-        /*racunovodstvoKorisnickiRacuniJPanel.getTraziJComboBox().addActionListener(racunovodstvoController.getKorisnickiRacuniTraziJComboBoxItemListener());
+        racunovodstvoKorisnickiRacuniJPanel.getTraziJComboBox().addActionListener(racunovodstvoController.getKorisnickiRacuniTraziJComboBoxItemListener());
         racunovodstvoKorisnickiRacuniJPanel.getPrivilegijeJComboBox().addActionListener(racunovodstvoController.getKorisnickiRacuniPrivilegijeJComboBoxActionListener());
         racunovodstvoKorisnickiRacuniJPanel.getObrisiJButton().addActionListener(racunovodstvoController.getKorisnickiRacuniObrisiJButtonActionListener());
-        racunovodstvoKorisnickiRacuniJPanel.getDodajJButton().addActionListener(racunovodstvoController.getKorisnickiRacuniObrisiJButtonActionListener());*/
+        racunovodstvoKorisnickiRacuniJPanel.getDodajJButton().addActionListener(racunovodstvoController.getKorisnickiRacuniObrisiJButtonActionListener());
 
         racunovodstvoObracunavanjeJPanel.getObracunZaJComboBox().addActionListener(racunovodstvoController.getObracunavanjeObracunZaJComboBoxActionListener());
         racunovodstvoObracunavanjeJPanel.getObrisiJButton().addActionListener(racunovodstvoController.getObracunavanjeObrisiJButtonActionListener());
@@ -131,7 +128,7 @@ public class RacunovodstvoJFrame extends JFrame {
         racunovodstvoSpaseniObracuniJPanel.getObracunZaJComboBox().addActionListener(racunovodstvoController.getSpaseniObracuniObracunZaJComboBoxActionListener());
         racunovodstvoSpaseniObracuniJPanel.getObrisiObracunJButton().addActionListener(racunovodstvoController.getSpaseniObracuniObracunZaJComboBoxActionListener());
         racunovodstvoSpaseniObracuniJPanel.getNapraviNoviObracunJButton().addActionListener(racunovodstvoController.getSpaseniObracuniNapraviNoviObracunJButtonActionListener());
-        racunovodstvoSpaseniObracuniJPanel.getPosaljiObracunJButton().addActionListener(racunovodstvoController.getSpaseniObracuniPosaljiObracunJButtonActionListener());
+        racunovodstvoSpaseniObracuniJPanel.getPosaljiObracunJButton().addActionListener(racunovodstvoController.getSpaseniObracuniPosaljiObracunJButtonActionListener());*/
     }
 
     public JFrame getPozivaocJFrame() {

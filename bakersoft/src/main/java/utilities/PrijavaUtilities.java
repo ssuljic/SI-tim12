@@ -11,7 +11,7 @@ public class PrijavaUtilities {
 
     public PrijavaUtilities() {
         baza = Baza.getBaza();
-        korisnici = baza.dajSveKorisnike();
+        korisnici = baza.dajSve(Korisnik.class);
     }
 
     /**
