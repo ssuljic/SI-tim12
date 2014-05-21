@@ -1,6 +1,7 @@
 package utilities;
 
 import entities.Korisnik;
+import entities.Klijent;
 import entities.Status;
 import entities.Tip;
 
@@ -48,7 +49,16 @@ public class InicijalizatorBazeZaTestiranje {
         korisnik2.setAdresa("Marin Dvor 23");
         korisnik2.setTip(tipKorisnika1);
         korisnik2.setStatus(statusKorisnika1);
+        
+        // Klijenti
+        Klijent klijent1 = new Klijent();
+        klijent1.setIme("Mesnica Kengur");
+        klijent1.setTelefon("062/274-040");
+        Klijent klijent2 = new Klijent();
+        klijent2.setIme("Mesnica Noj");
+        klijent2.setTelefon("062/225-883");
 
+        
         // Spasavanje u bazu
         baza.spasiTipKorisnika(tipKorisnika1);
         baza.spasiTipKorisnika(tipKorisnika2);
@@ -58,5 +68,8 @@ public class InicijalizatorBazeZaTestiranje {
 
         baza.spasiKorisnika(korisnik1);
         baza.spasiKorisnika(korisnik2);
+        
+        baza.spasiKlijenta(klijent1);
+        baza.spasiKlijenta(klijent2);
     }
 }

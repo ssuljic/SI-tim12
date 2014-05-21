@@ -1,6 +1,7 @@
 package utilities;
 
 import entities.Korisnik;
+import entities.Klijent;
 import entities.Status;
 import entities.Tip;
 
@@ -93,4 +94,18 @@ public class Baza {
         Tip tip = entityManager.find(Tip.class, id);
         return tip;
     }
+    
+    public List<Klijent> dajSveKlijente() {
+        Query query = entityManager.createQuery("SELECT k FROM Klijent k");
+        List<Klijent> sviKlijenti = query.getResultList();
+        return sviKlijenti;
+    }
+    
+    public void spasiKlijenta(Klijent klijent) {
+        entityManager.getTransaction().begin();
+        entityManager.persist(klijent);
+        entityManager.getTransaction().commit();
+    }
+    
+    
 }

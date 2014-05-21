@@ -3,7 +3,18 @@ package views;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+
+import utilities.Baza;
+import utilities.GuiUtilities;
+import utilities.JComboBoxItem;
+import controllers.RacunovodstvoKlijentiController;
+import entities.Klijent;
+import exceptions.NePostojiUBaziStavkaSaDatomIdVrijednosti;
+
 import java.awt.*;
+import java.awt.event.ItemListener;
+import java.util.Date;
+import java.util.List;
 
 public class RacunovodstvoKlijentiJPanel extends JPanel {
     private JTextField nazivFirmeJTextField;
@@ -261,5 +272,80 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
 
     public JButton getDodajJButton() {
         return dodajJButton;
+    }
+    
+    public void dodajListeners() {
+        RacunovodstvoKlijentiController racunovodstvoKlijentiController = new RacunovodstvoKlijentiController(this);
+
+        getTraziJComboBox().addItemListener(racunovodstvoKlijentiController.getKlijentiTraziJComboBoxItemListener());
+        /*getPrivilegijeJComboBox().addActionListener(racunovodstvoKlijentiController.getKorisnickiRacuniPrivilegijeJComboBoxActionListener());*/
+        //getObrisiJButton().addActionListener(racunovodstvoKlijentiController.getKlijentiObrisiJButtonActionListener());
+        //getDodajJButton().addActionListener(racunovodstvoKlijentiController.getKlijentiRacuniDodajJButtonActionListener());
+    }
+    
+    public void popuniSaPodacima(List<Klijent> sviKlijenti, long idSelektovanogKlijenta) {
+        // TODO: Vjerovatno bi se još malo moglo refaktorisati ...
+        if (sviKlijenti == null || sviKlijenti.size() <= 0) {
+            ocistiPanel();
+            return;
+        }
+        
+        Klijent selektovaniKlijent = popuniTraziJComboBoxSa(sviKlijenti, idSelektovanogKlijenta);
+        
+        nazivFirmeJTextField.setText(selektovaniKlijent.getIme());
+       // adresaJTextField.setText(selektovaniKlijent.getPrezime());
+       // kontaktPodaciImeJTextField.setText(selektovaniKlijent.getKorisnickoIme());
+        //kontaktPodaciPrezimeJTextField.setText(selektovaniKlijent.getLozinka());
+        kontaktPodaciTelefonJTextField.setText(selektovaniKlijent.getTelefon());
+        //kontaktPodaciEmailJTextField.setText(selektovaniKlijent.getEmail());
+
+    }
+    
+    private Klijent popuniTraziJComboBoxSa(List<Klijent> sviKlijenti, long idSelektovanogKlijenta) {
+    	
+        Klijent selektovaniKlijent = null;
+        JComboBox comboBoxKlijenti = getTraziJComboBox();
+        // Izbjegavanje okidanja eventa SELECTED prilikom dinamickog dodavanja itemova
+        ItemListener[] itemListeners = comboBoxKlijenti.getItemListeners();
+        for (int i = 0; i < itemListeners.length; i++) {
+            comboBoxKlijenti.removeItemListener(itemListeners[i]);
+        }
+
+        int indexSelektovanogKlijentaUJComboBox = 0;
+        int index = 0;
+        comboBoxKlijenti.removeAllItems();
+        for (Klijent k : sviKlijenti) {
+            comboBoxKlijenti.addItem(new JComboBoxItem(k.getId(), k.getIme() + " hehe"));
+            if (k.getId() == idSelektovanogKlijenta) {
+                selektovaniKlijent = k;
+                indexSelektovanogKlijentaUJComboBox = index;
+            }
+            index++;
+        }
+
+        if (selektovaniKlijent == null) {
+            throw new NePostojiUBaziStavkaSaDatomIdVrijednosti("Pokusavate popuniti formu za " +
+                    "upravljanje korisnickim racunima. Id koji ste proslijedili ne postoji u bazi. " +
+                    "Taj id je: " + idSelektovanogKlijenta);
+        }
+
+        comboBoxKlijenti.setSelectedIndex(indexSelektovanogKlijentaUJComboBox);
+
+        // Vracanje EventListener-a na JComboBox
+        for (int i = 0; i < itemListeners.length; i++) {
+            comboBoxKlijenti.addItemListener(itemListeners[i]);
+        }
+        return selektovaniKlijent;
+    }
+    
+    private void ocistiPanel() {
+        traziJComboBox.removeAllItems();
+        nazivFirmeJTextField.setText("");
+        adresaJTextField.setText("");
+        kontaktPodaciImeJTextField.setText("");
+        kontaktPodaciPrezimeJTextField.setText("");
+        kontaktPodaciEmailJTextField.setText("");
+        kontaktPodaciTelefonJTextField.setText("");
+       
     }
 }
