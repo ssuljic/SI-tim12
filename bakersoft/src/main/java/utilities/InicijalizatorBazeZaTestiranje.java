@@ -4,6 +4,7 @@ import entities.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 // TODO: Obrisati ovu klasu kada se zavrsi sa developmentom i izbaciti njeno pozivanje u main-u
 public class InicijalizatorBazeZaTestiranje {
@@ -154,5 +155,8 @@ public class InicijalizatorBazeZaTestiranje {
         baza.spasiUBazu(prodajnoMjesto1);
 
         baza.spasiUBazu(dostava1);
+
+        Klijent klijent = baza.dajPoId(Klijent.class, 1);
+        List<Dostava> sveDostave = (List<Dostava>)klijent.getDostave();
     }
 }

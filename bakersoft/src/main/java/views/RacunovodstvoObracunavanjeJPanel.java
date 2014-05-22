@@ -1,8 +1,10 @@
 package views;
 
 import controllers.RacunovodstvoObracunavanjeController;
-import entities.Dostava;
-import entities.Klijent;
+import entities.*;
+import utilities.Baza;
+import utilities.GuiUtilities;
+import utilities.JComboBoxItem;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -11,6 +13,10 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
+import java.awt.event.ItemListener;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class RacunovodstvoObracunavanjeJPanel extends JPanel {
@@ -389,37 +395,133 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
     }
 
     public void popuniSaSvimPodacimaIzBaze() {
+        Baza baza = Baza.getBaza();
+        List<Klijent> sviKlijenti = baza.dajSve(Klijent.class);
 
+        Klijent klijent = sviKlijenti.get(0);
+        List<Dostava> sveDostave = (List<Dostava>)klijent.getDostave();
+        // Napravi jComboBoxItem-ove sa svim klijentima
+        List<JComboBoxItem> sviKlijentiJComboBoxItemi = new ArrayList<JComboBoxItem>();
+        for(Klijent k : sviKlijenti) {
+            sviKlijentiJComboBoxItemi.add(new JComboBoxItem(k.getId(), k.getIme()));
+        }
+        // Popuni obracunZaJComboBox sa JComboBoxItem-ovima
+        popuniJComboBoxSa(sviKlijentiJComboBoxItemi, obracunZaJComboBox);
+
+        // Popuni ComboBox-ove za datume sa trenutnim datumom
+        Calendar kalendarTrenutniDatum = Calendar.getInstance();
+        kalendarTrenutniDatum.setTime(new Date());
+        GuiUtilities.postaviDatumUComboBoxove(
+                kalendarTrenutniDatum.get(Calendar.DAY_OF_MONTH), kalendarTrenutniDatum.get(Calendar.MONTH), kalendarTrenutniDatum.get(Calendar.YEAR),
+                odDatumaDanJComboBox, odDatumaMjesecJComboBox, odDatumaGodinaJComboBox);
+        GuiUtilities.postaviDatumUComboBoxove(
+                kalendarTrenutniDatum.get(Calendar.DAY_OF_MONTH), kalendarTrenutniDatum.get(Calendar.MONTH), kalendarTrenutniDatum.get(Calendar.YEAR),
+                doDatumaDanJComboBox, doDatumaMjesecJComboBox, doDatumaGodinaJComboBox);
+
+        // Popuni tabelu dostave sa dostavama za trenutnog klijenta
+        Klijent prviKlijentUJComboBoxu = sviKlijenti.get(0);
+        TableModel dostaveTableModel;
+        if(prviKlijentUJComboBoxu != null) {
+             dostaveTableModel = new DostaveTableModel(prviKlijentUJComboBoxu);
+        } else {
+            Klijent prazanKlijent = new Klijent();
+            prazanKlijent.setDostave(new ArrayList<Dostava>(0));
+            dostaveTableModel = new DostaveTableModel(prazanKlijent);
+        }
+        dostaveJTable.setModel(dostaveTableModel);
+
+        // Popuni tabelu peciva sa podacima o pecivima iz oznacene dostave
+        List<PecivoUDostavi> pecivaZaPrvogKlijentaUJComboBoxu = (List<PecivoUDostavi>)((List<Dostava>)prviKlijentUJComboBoxu.getDostave()).get(0).getPeciva();
+        //TODO: Napraviti TableModel za peciva u dostavi tabelu i zavrsiti ovu metodu
+
+        // Napraviti ukupnu cijenu za svako pecivo posebno
+
+        // Izracunati zaradu i upisati ju u zarada labelu
+
+        // Refreshati panel
+        this.validate();
+        this.repaint();
+    }
+
+    private void popuniJComboBoxSa(List<JComboBoxItem> jComboBoxStavke, JComboBox jComboBox) {
+        // Izbjegavanje okidanja eventa SELECTED prilikom dinamickog dodavanja itemova
+        ItemListener[] itemListeners = jComboBox.getItemListeners();
+        for (int i = 0; i < itemListeners.length; i++) {
+            jComboBox.removeItemListener(itemListeners[i]);
+        }
+
+        for(JComboBoxItem j : jComboBoxStavke) {
+            jComboBox.addItem(j);
+        }
+
+        // Vracanje EventListener-a na JComboBox
+        for (int i = 0; i < itemListeners.length; i++) {
+            jComboBox.addItemListener(itemListeners[i]);
+        }
     }
 
     public void popuniSaPodacima(long idSelektiranogKlijenta) {
-
+        Baza baza = Baza.getBaza();
+        Klijent selektiraniKlijent = baza.dajPoId(Klijent.class, idSelektiranogKlijenta);
     }
 }
 
-class ObracunavanjeTableModel implements TableModel {
+class DostaveTableModel extends DefaultTableModel {
 
-    Klijent klijent;
-    List<Dostava> dostaveZaKlijenta;
+    private Klijent klijent;
+    private List<Dostava> dostaveZaKlijenta;
+
+    DostaveTableModel() { }
+
+    DostaveTableModel(Klijent klijent) {
+        this.klijent = klijent;
+        this.dostaveZaKlijenta = (List<Dostava>)klijent.getDostave();
+    }
 
     @Override
     public int getRowCount() {
+        if(dostaveZaKlijenta != null) {
+            return dostaveZaKlijenta.size();
+        }
+
         return 0;
     }
 
     @Override
     public int getColumnCount() {
-        return 0;
+        return 4;
     }
 
     @Override
     public String getColumnName(int columnIndex) {
-        return null;
+        switch (columnIndex) {
+            case 0:
+                return "Naziv dostave";
+            case 1:
+                return "Isporučioc";
+            case 2:
+                return "Datum dostave";
+            case 3:
+                return "Dostava isporučena";
+            default:
+                return null;
+        }
     }
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        return null;
+        switch (columnIndex) {
+            case 0:
+                return String.class;
+            case 1:
+                return String.class;
+            case 2:
+                return String.class;
+            case 3:
+                return Boolean.class;
+            default:
+                return null;
+        }
     }
 
     @Override
@@ -429,10 +531,22 @@ class ObracunavanjeTableModel implements TableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        return null;
+        switch (columnIndex) {
+            case 0:
+                return dostaveZaKlijenta.get(rowIndex).getNaziv();
+            case 1:
+                Korisnik korisnikKojiJePreuzeoDostavu = dostaveZaKlijenta.get(rowIndex).getPreuzeo();
+                return korisnikKojiJePreuzeoDostavu.getIme() + " " + korisnikKojiJePreuzeoDostavu.getPrezime();
+            case 2:
+                return dostaveZaKlijenta.get(rowIndex).getDatum().toString();
+            case 3:
+                return dostaveZaKlijenta.get(rowIndex).isJeIsporuceno() ? Boolean.TRUE : Boolean.FALSE;
+            default:
+                return null;
+        }
     }
 
-    @Override
+    /*@Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 
     }
@@ -445,5 +559,5 @@ class ObracunavanjeTableModel implements TableModel {
     @Override
     public void removeTableModelListener(TableModelListener l) {
 
-    }
+    }*/
 }
