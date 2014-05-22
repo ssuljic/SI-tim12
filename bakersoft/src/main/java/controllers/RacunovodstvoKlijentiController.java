@@ -52,7 +52,7 @@ public class RacunovodstvoKlijentiController {
                     idPrvogKlijenta = sviKlijenti.get(0).getId();
                 }
                 racunovodstvoKlijentiJPanel.popuniSaPodacima(sviKlijenti, idPrvogKlijenta);
-                JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Uspjeï¿½no ste izbrisali klijenta!");
+                JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Uspješno ste izbrisali klijenta!");
             }
         };
     }
@@ -63,7 +63,7 @@ public class RacunovodstvoKlijentiController {
                 Klijent noviKlijent = racunovodstvoKlijentiJPanel.dajPodatkeONovomKlijentu();
                 Baza baza = Baza.getBaza();
                 baza.spasiUBazu(noviKlijent);
-                JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Uspjeï¿½no ste dodali klijenta: " + noviKlijent.getIme());
+                JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Uspješno ste dodali klijenta: " + noviKlijent.getIme());
             }
         };
     }
