@@ -1,37 +1,24 @@
 package views;
 
+import entities.Klijent;
+
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
-
-import entities.Korisnik;
-import entities.Status;
-import entities.Tip;
-import utilities.Baza;
-import utilities.GuiUtilities;
-import utilities.JComboBoxItem;
-import controllers.RacunovodstvoKlijentiController;
-import entities.Klijent;
-import exceptions.NePostojiUBaziStavkaSaDatomIdVrijednosti;
-
 import java.awt.*;
-import java.awt.event.ItemListener;
-import java.util.Date;
 import java.util.List;
 
 public class RacunovodstvoKlijentiJPanel extends JPanel {
     private JTextField nazivFirmeJTextField;
     private JTextField telefonJTextField;
-    private JTextField kontaktPodaciImeJTextField;
-    private JTextField kontaktPodaciPrezimeJTextField;
-    private JTextField kontaktPodaciTelefonJTextField;
-    private JTextField kontaktPodaciEmailJTextField;
+    private JTextField prodajnoMjestoNazivJTextField;
+    private JTextField prodajnoMjestoAdresaJTextField;
     private JComboBox traziJComboBox;
-    private JButton obrisiJButton;
-    private JButton dodajJButton;
-    private JButton prethodnoProdajnoMjestoJButton;
-    private JButton iduceProdajnoMjestoJButton;
+    private JButton obrisiKlijentaJButton;
+    private JButton dodajKlijentaJButton;
     private JButton dodajProdajnoMjestoJButton;
+    private JComboBox prodajnoMjestoJComboBox;
+    private JButton obrisiProdajnoMjestoJButton;
 
     /**
      * Create the panel.
@@ -42,7 +29,7 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
         gridBagLayout.columnWidths = new int[]{0, 0};
         gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0};
         gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-        gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
+        gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         setLayout(gridBagLayout);
 
         JPanel traziJPanel = new JPanel();
@@ -69,7 +56,6 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
         traziJPanel.add(traziJLabel, gbc_traziJLabel);
 
         traziJComboBox = new JComboBox();
-        traziJComboBox.setEditable(true);
         GridBagConstraints gbc_traziJComboBox = new GridBagConstraints();
         gbc_traziJComboBox.fill = GridBagConstraints.HORIZONTAL;
         gbc_traziJComboBox.gridx = 1;
@@ -135,108 +121,72 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
         gbc_prodajnoMjestoJPanel.gridy = 2;
         add(prodajnoMjestoJPanel, gbc_prodajnoMjestoJPanel);
         GridBagLayout gbl_prodajnoMjestoJPanel = new GridBagLayout();
-        gbl_prodajnoMjestoJPanel.columnWidths = new int[]{0, 0, 0, 0};
-        gbl_prodajnoMjestoJPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
+        gbl_prodajnoMjestoJPanel.columnWidths = new int[]{0, 147, 0, 0};
+        gbl_prodajnoMjestoJPanel.rowHeights = new int[]{0, 0, 0, 0, 0};
         gbl_prodajnoMjestoJPanel.columnWeights = new double[]{0.0, 1.0, 1.0, Double.MIN_VALUE};
-        gbl_prodajnoMjestoJPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+        gbl_prodajnoMjestoJPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         prodajnoMjestoJPanel.setLayout(gbl_prodajnoMjestoJPanel);
 
-        prethodnoProdajnoMjestoJButton = new JButton("Prethodno prodajno mjesto");
-        GridBagConstraints gbc_prethodnoProdajnoMjestoJButton = new GridBagConstraints();
-        gbc_prethodnoProdajnoMjestoJButton.fill = GridBagConstraints.HORIZONTAL;
-        gbc_prethodnoProdajnoMjestoJButton.insets = new Insets(0, 0, 5, 5);
-        gbc_prethodnoProdajnoMjestoJButton.gridx = 1;
-        gbc_prethodnoProdajnoMjestoJButton.gridy = 0;
-        prodajnoMjestoJPanel.add(prethodnoProdajnoMjestoJButton, gbc_prethodnoProdajnoMjestoJButton);
+        prodajnoMjestoJComboBox = new JComboBox();
+        GridBagConstraints gbc_prodajnoMjestoJComboBox = new GridBagConstraints();
+        gbc_prodajnoMjestoJComboBox.gridwidth = 2;
+        gbc_prodajnoMjestoJComboBox.insets = new Insets(0, 0, 5, 0);
+        gbc_prodajnoMjestoJComboBox.fill = GridBagConstraints.HORIZONTAL;
+        gbc_prodajnoMjestoJComboBox.gridx = 1;
+        gbc_prodajnoMjestoJComboBox.gridy = 0;
+        prodajnoMjestoJPanel.add(prodajnoMjestoJComboBox, gbc_prodajnoMjestoJComboBox);
 
-        iduceProdajnoMjestoJButton = new JButton("Idu\u0107e prodajno mjesto");
-        GridBagConstraints gbc_iduceProdajnoMjestoJButton = new GridBagConstraints();
-        gbc_iduceProdajnoMjestoJButton.fill = GridBagConstraints.HORIZONTAL;
-        gbc_iduceProdajnoMjestoJButton.insets = new Insets(0, 0, 5, 0);
-        gbc_iduceProdajnoMjestoJButton.gridx = 2;
-        gbc_iduceProdajnoMjestoJButton.gridy = 0;
-        prodajnoMjestoJPanel.add(iduceProdajnoMjestoJButton, gbc_iduceProdajnoMjestoJButton);
+        JLabel prodajnoMjestoNazivJLabel = new JLabel("Naziv:");
+        prodajnoMjestoNazivJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        GridBagConstraints gbc_prodajnoMjestoNazivJLabel = new GridBagConstraints();
+        gbc_prodajnoMjestoNazivJLabel.insets = new Insets(0, 0, 5, 5);
+        gbc_prodajnoMjestoNazivJLabel.anchor = GridBagConstraints.EAST;
+        gbc_prodajnoMjestoNazivJLabel.gridx = 0;
+        gbc_prodajnoMjestoNazivJLabel.gridy = 1;
+        prodajnoMjestoJPanel.add(prodajnoMjestoNazivJLabel, gbc_prodajnoMjestoNazivJLabel);
 
-        JLabel kontaktPodaciImeJLabel = new JLabel("Ime:");
-        kontaktPodaciImeJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        GridBagConstraints gbc_kontaktPodaciImeJLabel = new GridBagConstraints();
-        gbc_kontaktPodaciImeJLabel.insets = new Insets(0, 0, 5, 5);
-        gbc_kontaktPodaciImeJLabel.anchor = GridBagConstraints.EAST;
-        gbc_kontaktPodaciImeJLabel.gridx = 0;
-        gbc_kontaktPodaciImeJLabel.gridy = 1;
-        prodajnoMjestoJPanel.add(kontaktPodaciImeJLabel, gbc_kontaktPodaciImeJLabel);
+        prodajnoMjestoNazivJTextField = new JTextField();
+        GridBagConstraints gbc_prodajnoMjestoNazivJTextField = new GridBagConstraints();
+        gbc_prodajnoMjestoNazivJTextField.gridwidth = 2;
+        gbc_prodajnoMjestoNazivJTextField.insets = new Insets(0, 0, 5, 0);
+        gbc_prodajnoMjestoNazivJTextField.fill = GridBagConstraints.HORIZONTAL;
+        gbc_prodajnoMjestoNazivJTextField.gridx = 1;
+        gbc_prodajnoMjestoNazivJTextField.gridy = 1;
+        prodajnoMjestoJPanel.add(prodajnoMjestoNazivJTextField, gbc_prodajnoMjestoNazivJTextField);
+        prodajnoMjestoNazivJTextField.setColumns(10);
 
-        kontaktPodaciImeJTextField = new JTextField();
-        GridBagConstraints gbc_kontaktPodaciImeJTextField = new GridBagConstraints();
-        gbc_kontaktPodaciImeJTextField.gridwidth = 2;
-        gbc_kontaktPodaciImeJTextField.insets = new Insets(0, 0, 5, 0);
-        gbc_kontaktPodaciImeJTextField.fill = GridBagConstraints.HORIZONTAL;
-        gbc_kontaktPodaciImeJTextField.gridx = 1;
-        gbc_kontaktPodaciImeJTextField.gridy = 1;
-        prodajnoMjestoJPanel.add(kontaktPodaciImeJTextField, gbc_kontaktPodaciImeJTextField);
-        kontaktPodaciImeJTextField.setColumns(10);
+        JLabel prodajnoMjestoAdresaJLabel = new JLabel("Adresa:");
+        prodajnoMjestoAdresaJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        GridBagConstraints gbc_prodajnoMjestoAdresaJLabel = new GridBagConstraints();
+        gbc_prodajnoMjestoAdresaJLabel.anchor = GridBagConstraints.EAST;
+        gbc_prodajnoMjestoAdresaJLabel.insets = new Insets(0, 0, 5, 5);
+        gbc_prodajnoMjestoAdresaJLabel.gridx = 0;
+        gbc_prodajnoMjestoAdresaJLabel.gridy = 2;
+        prodajnoMjestoJPanel.add(prodajnoMjestoAdresaJLabel, gbc_prodajnoMjestoAdresaJLabel);
 
-        JLabel kotaktPodaciPrezimeJLabel = new JLabel("Prezime:");
-        kotaktPodaciPrezimeJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        GridBagConstraints gbc_kotaktPodaciPrezimeJLabel = new GridBagConstraints();
-        gbc_kotaktPodaciPrezimeJLabel.anchor = GridBagConstraints.EAST;
-        gbc_kotaktPodaciPrezimeJLabel.insets = new Insets(0, 0, 5, 5);
-        gbc_kotaktPodaciPrezimeJLabel.gridx = 0;
-        gbc_kotaktPodaciPrezimeJLabel.gridy = 2;
-        prodajnoMjestoJPanel.add(kotaktPodaciPrezimeJLabel, gbc_kotaktPodaciPrezimeJLabel);
+        prodajnoMjestoAdresaJTextField = new JTextField();
+        prodajnoMjestoAdresaJTextField.setColumns(10);
+        GridBagConstraints gbc_prodajnoMjestoAdresaJTextField = new GridBagConstraints();
+        gbc_prodajnoMjestoAdresaJTextField.gridwidth = 2;
+        gbc_prodajnoMjestoAdresaJTextField.insets = new Insets(0, 0, 5, 0);
+        gbc_prodajnoMjestoAdresaJTextField.fill = GridBagConstraints.HORIZONTAL;
+        gbc_prodajnoMjestoAdresaJTextField.gridx = 1;
+        gbc_prodajnoMjestoAdresaJTextField.gridy = 2;
+        prodajnoMjestoJPanel.add(prodajnoMjestoAdresaJTextField, gbc_prodajnoMjestoAdresaJTextField);
 
-        kontaktPodaciPrezimeJTextField = new JTextField();
-        kontaktPodaciPrezimeJTextField.setColumns(10);
-        GridBagConstraints gbc_kontaktPodaciPrezimeJTextField = new GridBagConstraints();
-        gbc_kontaktPodaciPrezimeJTextField.gridwidth = 2;
-        gbc_kontaktPodaciPrezimeJTextField.insets = new Insets(0, 0, 5, 0);
-        gbc_kontaktPodaciPrezimeJTextField.fill = GridBagConstraints.HORIZONTAL;
-        gbc_kontaktPodaciPrezimeJTextField.gridx = 1;
-        gbc_kontaktPodaciPrezimeJTextField.gridy = 2;
-        prodajnoMjestoJPanel.add(kontaktPodaciPrezimeJTextField, gbc_kontaktPodaciPrezimeJTextField);
-
-        JLabel kontaktPodaciTelefonJLabel = new JLabel("Telefon:");
-        kontaktPodaciTelefonJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        GridBagConstraints gbc_kontaktPodaciTelefonJLabel = new GridBagConstraints();
-        gbc_kontaktPodaciTelefonJLabel.anchor = GridBagConstraints.EAST;
-        gbc_kontaktPodaciTelefonJLabel.insets = new Insets(0, 0, 5, 5);
-        gbc_kontaktPodaciTelefonJLabel.gridx = 0;
-        gbc_kontaktPodaciTelefonJLabel.gridy = 3;
-        prodajnoMjestoJPanel.add(kontaktPodaciTelefonJLabel, gbc_kontaktPodaciTelefonJLabel);
-
-        kontaktPodaciTelefonJTextField = new JTextField();
-        kontaktPodaciTelefonJTextField.setColumns(10);
-        GridBagConstraints gbc_kontaktPodaciTelefonJTextField = new GridBagConstraints();
-        gbc_kontaktPodaciTelefonJTextField.gridwidth = 2;
-        gbc_kontaktPodaciTelefonJTextField.insets = new Insets(0, 0, 5, 0);
-        gbc_kontaktPodaciTelefonJTextField.fill = GridBagConstraints.HORIZONTAL;
-        gbc_kontaktPodaciTelefonJTextField.gridx = 1;
-        gbc_kontaktPodaciTelefonJTextField.gridy = 3;
-        prodajnoMjestoJPanel.add(kontaktPodaciTelefonJTextField, gbc_kontaktPodaciTelefonJTextField);
-
-        JLabel kontaktPodaciEmailJLabel = new JLabel("E-mail:");
-        kontaktPodaciEmailJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        GridBagConstraints gbc_kontaktPodaciEmailJLabel = new GridBagConstraints();
-        gbc_kontaktPodaciEmailJLabel.anchor = GridBagConstraints.EAST;
-        gbc_kontaktPodaciEmailJLabel.insets = new Insets(0, 0, 5, 5);
-        gbc_kontaktPodaciEmailJLabel.gridx = 0;
-        gbc_kontaktPodaciEmailJLabel.gridy = 4;
-        prodajnoMjestoJPanel.add(kontaktPodaciEmailJLabel, gbc_kontaktPodaciEmailJLabel);
-
-        kontaktPodaciEmailJTextField = new JTextField();
-        kontaktPodaciEmailJTextField.setColumns(10);
-        GridBagConstraints gbc_kontaktPodaciEmailJTextField = new GridBagConstraints();
-        gbc_kontaktPodaciEmailJTextField.insets = new Insets(0, 0, 5, 0);
-        gbc_kontaktPodaciEmailJTextField.gridwidth = 2;
-        gbc_kontaktPodaciEmailJTextField.fill = GridBagConstraints.HORIZONTAL;
-        gbc_kontaktPodaciEmailJTextField.gridx = 1;
-        gbc_kontaktPodaciEmailJTextField.gridy = 4;
-        prodajnoMjestoJPanel.add(kontaktPodaciEmailJTextField, gbc_kontaktPodaciEmailJTextField);
+        obrisiProdajnoMjestoJButton = new JButton("Obri\u0161i prodajno mjesto");
+        GridBagConstraints gbc_obrisiProdajnoMjestoJButton = new GridBagConstraints();
+        gbc_obrisiProdajnoMjestoJButton.fill = GridBagConstraints.HORIZONTAL;
+        gbc_obrisiProdajnoMjestoJButton.insets = new Insets(0, 0, 0, 5);
+        gbc_obrisiProdajnoMjestoJButton.gridx = 1;
+        gbc_obrisiProdajnoMjestoJButton.gridy = 3;
+        prodajnoMjestoJPanel.add(obrisiProdajnoMjestoJButton, gbc_obrisiProdajnoMjestoJButton);
 
         dodajProdajnoMjestoJButton = new JButton("Dodaj prodajno mjesto");
         GridBagConstraints gbc_dodajProdajnoMjestoJButton = new GridBagConstraints();
+        gbc_dodajProdajnoMjestoJButton.fill = GridBagConstraints.HORIZONTAL;
         gbc_dodajProdajnoMjestoJButton.gridx = 2;
-        gbc_dodajProdajnoMjestoJButton.gridy = 5;
+        gbc_dodajProdajnoMjestoJButton.gridy = 3;
         prodajnoMjestoJPanel.add(dodajProdajnoMjestoJButton, gbc_dodajProdajnoMjestoJButton);
 
         JPanel dugmadJPanel = new JPanel();
@@ -252,22 +202,22 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
         gbl_dugmadJPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
         dugmadJPanel.setLayout(gbl_dugmadJPanel);
 
-        obrisiJButton = new JButton("Obri\u0161i");
-        GridBagConstraints gbc_obrisiJButton = new GridBagConstraints();
-        gbc_obrisiJButton.anchor = GridBagConstraints.SOUTH;
-        gbc_obrisiJButton.fill = GridBagConstraints.HORIZONTAL;
-        gbc_obrisiJButton.insets = new Insets(0, 0, 0, 5);
-        gbc_obrisiJButton.gridx = 0;
-        gbc_obrisiJButton.gridy = 0;
-        dugmadJPanel.add(obrisiJButton, gbc_obrisiJButton);
+        obrisiKlijentaJButton = new JButton("Obri\u0161i klijenta");
+        GridBagConstraints gbc_obrisiKlijentaJButton = new GridBagConstraints();
+        gbc_obrisiKlijentaJButton.anchor = GridBagConstraints.SOUTH;
+        gbc_obrisiKlijentaJButton.fill = GridBagConstraints.HORIZONTAL;
+        gbc_obrisiKlijentaJButton.insets = new Insets(0, 0, 0, 5);
+        gbc_obrisiKlijentaJButton.gridx = 0;
+        gbc_obrisiKlijentaJButton.gridy = 0;
+        dugmadJPanel.add(obrisiKlijentaJButton, gbc_obrisiKlijentaJButton);
 
-        dodajJButton = new JButton("Dodaj");
-        GridBagConstraints gbc_dodajJButton = new GridBagConstraints();
-        gbc_dodajJButton.anchor = GridBagConstraints.SOUTH;
-        gbc_dodajJButton.fill = GridBagConstraints.HORIZONTAL;
-        gbc_dodajJButton.gridx = 1;
-        gbc_dodajJButton.gridy = 0;
-        dugmadJPanel.add(dodajJButton, gbc_dodajJButton);
+        dodajKlijentaJButton = new JButton("Dodaj klijenta");
+        GridBagConstraints gbc_dodajKlijentaJButton = new GridBagConstraints();
+        gbc_dodajKlijentaJButton.anchor = GridBagConstraints.SOUTH;
+        gbc_dodajKlijentaJButton.fill = GridBagConstraints.HORIZONTAL;
+        gbc_dodajKlijentaJButton.gridx = 1;
+        gbc_dodajKlijentaJButton.gridy = 0;
+        dugmadJPanel.add(dodajKlijentaJButton, gbc_dodajKlijentaJButton);
 
         dodajListeners();
     }
@@ -284,36 +234,28 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
         return telefonJTextField;
     }
 
-    public JTextField getKontaktPodaciImeJTextField() {
-        return kontaktPodaciImeJTextField;
+    public JTextField getProdajnoMjestoNazivJTextField() {
+        return prodajnoMjestoNazivJTextField;
     }
 
-    public JTextField getKontaktPodaciPrezimeJTextField() {
-        return kontaktPodaciPrezimeJTextField;
+    public JTextField getProdajnoMjestoAdresaJTextField() {
+        return prodajnoMjestoAdresaJTextField;
     }
 
-    public JTextField getKontaktPodaciTelefonJTextField() {
-        return kontaktPodaciTelefonJTextField;
+    public JButton getObrisiKlijentaJButton() {
+        return obrisiKlijentaJButton;
     }
 
-    public JTextField getKontaktPodaciEmailJTextField() {
-        return kontaktPodaciEmailJTextField;
+    public JButton getDodajKlijentaJButton() {
+        return dodajKlijentaJButton;
     }
 
-    public JButton getObrisiJButton() {
-        return obrisiJButton;
+    public JComboBox getProdajnoMjestoJComboBox() {
+        return prodajnoMjestoJComboBox;
     }
 
-    public JButton getDodajJButton() {
-        return dodajJButton;
-    }
-
-    public JButton getPrethodnoProdajnoMjestoJButton() {
-        return prethodnoProdajnoMjestoJButton;
-    }
-
-    public JButton getIduceProdajnoMjestoJButton() {
-        return iduceProdajnoMjestoJButton;
+    public JButton getObrisiProdajnoMjestoJButton() {
+        return obrisiProdajnoMjestoJButton;
     }
 
     public JButton getDodajProdajnoMjestoJButton() {
@@ -321,106 +263,28 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
     }
 
     public void dodajListeners() {
-        RacunovodstvoKlijentiController racunovodstvoKlijentiController = new RacunovodstvoKlijentiController(this);
 
-        getTraziJComboBox().addItemListener(racunovodstvoKlijentiController.getKlijentiTraziJComboBoxItemListener());
-        getObrisiJButton().addActionListener(racunovodstvoKlijentiController.getKlijentiObrisiJButtonActionListener());
-        getDodajJButton().addActionListener(racunovodstvoKlijentiController.getKlijentiDodajJButtonActionListener());
     }
-    
+
     public void popuniSaPodacima(List<Klijent> sviKlijenti, long idSelektovanogKlijenta) {
-        // TODO: Vjerovatno bi se još malo moglo refaktorisati ...
-        if (sviKlijenti == null || sviKlijenti.size() <= 0) {
-            ocistiPanel();
-            return;
-        }
-        
-        Klijent selektovaniKlijent = popuniTraziJComboBoxSa(sviKlijenti, idSelektovanogKlijenta);
-        
-        nazivFirmeJTextField.setText(selektovaniKlijent.getIme());
-       // adresaJTextField.setText(selektovaniKlijent.getPrezime());
-       // kontaktPodaciImeJTextField.setText(selektovaniKlijent.getKorisnickoIme());
-        //kontaktPodaciPrezimeJTextField.setText(selektovaniKlijent.getLozinka());
-        kontaktPodaciTelefonJTextField.setText(selektovaniKlijent.getTelefon());
-        //kontaktPodaciEmailJTextField.setText(selektovaniKlijent.getEmail());
+
 
     }
-    
+
     private Klijent popuniTraziJComboBoxSa(List<Klijent> sviKlijenti, long idSelektovanogKlijenta) {
-    	
-        Klijent selektovaniKlijent = null;
-        JComboBox comboBoxKlijenti = getTraziJComboBox();
-        // Izbjegavanje okidanja eventa SELECTED prilikom dinamickog dodavanja itemova
-        ItemListener[] itemListeners = comboBoxKlijenti.getItemListeners();
-        for (int i = 0; i < itemListeners.length; i++) {
-            comboBoxKlijenti.removeItemListener(itemListeners[i]);
-        }
-
-        int indexSelektovanogKlijentaUJComboBox = 0;
-        int index = 0;
-        comboBoxKlijenti.removeAllItems();
-        for (Klijent k : sviKlijenti) {
-            comboBoxKlijenti.addItem(new JComboBoxItem(k.getId(), k.getIme()));
-            if (k.getId() == idSelektovanogKlijenta) {
-                selektovaniKlijent = k;
-                indexSelektovanogKlijentaUJComboBox = index;
-            }
-            index++;
-        }
-
-        if (selektovaniKlijent == null) {
-            throw new NePostojiUBaziStavkaSaDatomIdVrijednosti("Pokusavate popuniti formu za " +
-                    "upravljanje korisnickim racunima. Id koji ste proslijedili ne postoji u bazi. " +
-                    "Taj id je: " + idSelektovanogKlijenta);
-        }
-
-        comboBoxKlijenti.setSelectedIndex(indexSelektovanogKlijentaUJComboBox);
-
-        // Vracanje EventListener-a na JComboBox
-        for (int i = 0; i < itemListeners.length; i++) {
-            comboBoxKlijenti.addItemListener(itemListeners[i]);
-        }
-        return selektovaniKlijent;
+        return null;
     }
-    
+
     private void ocistiPanel() {
-        traziJComboBox.removeAllItems();
-        nazivFirmeJTextField.setText("");
-        telefonJTextField.setText("");
-        kontaktPodaciImeJTextField.setText("");
-        kontaktPodaciPrezimeJTextField.setText("");
-        kontaktPodaciEmailJTextField.setText("");
-        kontaktPodaciTelefonJTextField.setText("");
-       
+
+
     }
-    
+
     public Klijent dajPodatkeONovomKlijentu() {
-        Klijent klijent = new Klijent();
-        klijent.setIme(getNazivFirmeJTextField().getText());
-        klijent.setTelefon(getKontaktPodaciTelefonJTextField().getText());
-        /*klijent.setIme(getImeJTextField().getText());
-        klijent.setPrezime(getPrezimeJTextField().getText());
-        klijent.setKorisnickoIme(getKorisnickoImeJTextField().getText());
-        klijent.setLozinka(getLozinkaJTextField().getText());
-        klijent.setEmail(getEmailJTextField().getText());
-        klijent.setBrojTelefona(telefonJTextField.getText());
-        klijent.setBrojMobitela(mobitelJTextField.getText());
-        klijent.setAdresa(adresaJTextField.getText());
-        Date date = new Date(Integer.parseInt(datumRodjenjaGodinaJComboBox.getSelectedItem().toString()),
-                Integer.parseInt(datumRodjenjaMjesecJComboBox.getSelectedItem().toString()),
-                Integer.parseInt(datumRodjenjaDanJComboBox.getSelectedItem().toString()));
-        klijent.setDatumRodjenja(date);*/
-        
-        return klijent;
+        return null;
     }
 
     public void popuniSaSvimPodacimaIzBaze() {
-        Baza baza = Baza.getBaza();
-        java.util.List<Klijent> sviKlijenti = baza.dajSve(Klijent.class);
-        long idSelektiranogKlijenta = 0;
-        if (sviKlijenti.size() > 0) {
-            idSelektiranogKlijenta = sviKlijenti.get(0).getId();
-        }
-        popuniSaPodacima(sviKlijenti, idSelektiranogKlijenta);
+
     }
 }

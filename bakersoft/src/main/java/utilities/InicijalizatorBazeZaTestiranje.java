@@ -29,7 +29,7 @@ public class InicijalizatorBazeZaTestiranje {
         korisnik1.setBrojTelefona("033-234-345");
         korisnik1.setDatumRodjenja(new Date(1987, 9, 12));
         korisnik1.setKorisnickoIme("mujo");
-        korisnik1.setLozinka("mujinaLozinka");
+        korisnik1.setLozinka("m");
         korisnik1.setEmail("mujo.mujkic@hotmail.com");
         korisnik1.setAdresa("Titova 11");
         korisnik1.setTip(tipKorisnika2);
@@ -41,7 +41,7 @@ public class InicijalizatorBazeZaTestiranje {
         korisnik2.setBrojTelefona("033-234-345");
         korisnik2.setDatumRodjenja(new Date(1989, 6, 25));
         korisnik2.setKorisnickoIme("fata");
-        korisnik2.setLozinka("fatinaLozinka");
+        korisnik2.setLozinka("f");
         korisnik2.setEmail("fata.fatimovic@gmail.com");
         korisnik2.setAdresa("Marin Dvor 23");
         korisnik2.setTip(tipKorisnika1);

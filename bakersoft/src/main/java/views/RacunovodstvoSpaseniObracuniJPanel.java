@@ -7,15 +7,11 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class RacunovodstvoSpaseniObracuniJPanel extends JPanel {
-    private JTable dostaveJTable;
     private JTable obracuniJTable;
     private JComboBox obracunZaJComboBox;
-    private JLabel brojDostavaIspisJLabel;
-    private JLabel brojPovrataIspisJLabel;
-    private JLabel zaradaIspisJLabel;
     private JButton obrisiObracunJButton;
     private JButton napraviNoviObracunJButton;
-    private JButton posaljiObracunJButton;
+    private JButton kreirajPdfJButton;
 
     /**
      * Create the panel.
@@ -69,23 +65,22 @@ public class RacunovodstvoSpaseniObracuniJPanel extends JPanel {
         add(podaciOObracunimaJPanel, gbc_podaciOObracunimaJPanel);
         GridBagLayout gbl_podaciOObracunimaJPanel = new GridBagLayout();
         gbl_podaciOObracunimaJPanel.columnWidths = new int[]{0, 0, 0};
-        gbl_podaciOObracunimaJPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
+        gbl_podaciOObracunimaJPanel.rowHeights = new int[]{245, 0};
         gbl_podaciOObracunimaJPanel.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-        gbl_podaciOObracunimaJPanel.rowWeights = new double[]{1.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+        gbl_podaciOObracunimaJPanel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
         podaciOObracunimaJPanel.setLayout(gbl_podaciOObracunimaJPanel);
 
         JLabel obracuniJLabel = new JLabel("Obra\u010Duni:");
         obracuniJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         GridBagConstraints gbc_obracuniJLabel = new GridBagConstraints();
         gbc_obracuniJLabel.anchor = GridBagConstraints.EAST;
-        gbc_obracuniJLabel.insets = new Insets(0, 0, 5, 5);
+        gbc_obracuniJLabel.insets = new Insets(0, 0, 0, 5);
         gbc_obracuniJLabel.gridx = 0;
         gbc_obracuniJLabel.gridy = 0;
         podaciOObracunimaJPanel.add(obracuniJLabel, gbc_obracuniJLabel);
 
         JScrollPane obracuniJScrollPane = new JScrollPane();
         GridBagConstraints gbc_obracuniJScrollPane = new GridBagConstraints();
-        gbc_obracuniJScrollPane.insets = new Insets(0, 0, 5, 0);
         gbc_obracuniJScrollPane.fill = GridBagConstraints.BOTH;
         gbc_obracuniJScrollPane.gridx = 1;
         gbc_obracuniJScrollPane.gridy = 0;
@@ -93,87 +88,20 @@ public class RacunovodstvoSpaseniObracuniJPanel extends JPanel {
 
         obracuniJTable = new JTable();
         obracuniJTable.setModel(new DefaultTableModel(
-                new Object[][]{
+                new Object[][] {
                 },
-                new String[]{
-                        "Id izvje\u0161taja", "Naziv izvje\u0161taja", "Datum kreiranja izvje\u0161taja"
+                new String[] {
+                        "Datum", "Broj", "Iznos", "Pla\u0107en", "Obra\u010Dunao", "Po\u010Detak obra\u010Duna", "Kraj obra\u010Duna"
                 }
-        ));
+        ) {
+            Class[] columnTypes = new Class[] {
+                    Object.class, Object.class, Object.class, Boolean.class, Object.class, Object.class, Object.class
+            };
+            public Class getColumnClass(int columnIndex) {
+                return columnTypes[columnIndex];
+            }
+        });
         obracuniJScrollPane.setViewportView(obracuniJTable);
-
-        JLabel dostaveJLabel = new JLabel("Dostave:");
-        dostaveJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        GridBagConstraints gbc_dostaveJLabel = new GridBagConstraints();
-        gbc_dostaveJLabel.insets = new Insets(0, 0, 5, 5);
-        gbc_dostaveJLabel.anchor = GridBagConstraints.EAST;
-        gbc_dostaveJLabel.gridx = 0;
-        gbc_dostaveJLabel.gridy = 1;
-        podaciOObracunimaJPanel.add(dostaveJLabel, gbc_dostaveJLabel);
-
-        JScrollPane dostaveJScrollPane = new JScrollPane();
-        GridBagConstraints gbc_dostaveJScrollPane = new GridBagConstraints();
-        gbc_dostaveJScrollPane.insets = new Insets(0, 0, 5, 0);
-        gbc_dostaveJScrollPane.fill = GridBagConstraints.BOTH;
-        gbc_dostaveJScrollPane.gridx = 1;
-        gbc_dostaveJScrollPane.gridy = 1;
-        podaciOObracunimaJPanel.add(dostaveJScrollPane, gbc_dostaveJScrollPane);
-
-        dostaveJTable = new JTable();
-        dostaveJTable.setModel(new DefaultTableModel(
-                new Object[][]{
-                },
-                new String[]{
-                        "Klijent", "Vrijeme dostave", "Vrsta peciva", "Koli\u010Dina dostavljenog peciva"
-                }
-        ));
-        dostaveJScrollPane.setViewportView(dostaveJTable);
-
-        JLabel brojDostavaJLabel = new JLabel("Broj dostava:");
-        brojDostavaJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        GridBagConstraints gbc_brojDostavaJLabel = new GridBagConstraints();
-        gbc_brojDostavaJLabel.insets = new Insets(0, 0, 5, 5);
-        gbc_brojDostavaJLabel.anchor = GridBagConstraints.EAST;
-        gbc_brojDostavaJLabel.gridx = 0;
-        gbc_brojDostavaJLabel.gridy = 2;
-        podaciOObracunimaJPanel.add(brojDostavaJLabel, gbc_brojDostavaJLabel);
-
-        brojDostavaIspisJLabel = new JLabel("");
-        GridBagConstraints gbc_brojDostavaIspisJLabel = new GridBagConstraints();
-        gbc_brojDostavaIspisJLabel.insets = new Insets(0, 0, 5, 0);
-        gbc_brojDostavaIspisJLabel.gridx = 1;
-        gbc_brojDostavaIspisJLabel.gridy = 2;
-        podaciOObracunimaJPanel.add(brojDostavaIspisJLabel, gbc_brojDostavaIspisJLabel);
-
-        JLabel brojPovrataJLabel = new JLabel("Broj povrata:");
-        brojPovrataJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        GridBagConstraints gbc_brojPovrataJLabel = new GridBagConstraints();
-        gbc_brojPovrataJLabel.insets = new Insets(0, 0, 5, 5);
-        gbc_brojPovrataJLabel.anchor = GridBagConstraints.EAST;
-        gbc_brojPovrataJLabel.gridx = 0;
-        gbc_brojPovrataJLabel.gridy = 3;
-        podaciOObracunimaJPanel.add(brojPovrataJLabel, gbc_brojPovrataJLabel);
-
-        brojPovrataIspisJLabel = new JLabel("");
-        GridBagConstraints gbc_brojPovrataIspisJLabel = new GridBagConstraints();
-        gbc_brojPovrataIspisJLabel.insets = new Insets(0, 0, 5, 0);
-        gbc_brojPovrataIspisJLabel.gridx = 1;
-        gbc_brojPovrataIspisJLabel.gridy = 3;
-        podaciOObracunimaJPanel.add(brojPovrataIspisJLabel, gbc_brojPovrataIspisJLabel);
-
-        JLabel zaradaJLabel = new JLabel("Zarada:");
-        zaradaJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        GridBagConstraints gbc_zaradaJLabel = new GridBagConstraints();
-        gbc_zaradaJLabel.insets = new Insets(0, 0, 0, 5);
-        gbc_zaradaJLabel.anchor = GridBagConstraints.EAST;
-        gbc_zaradaJLabel.gridx = 0;
-        gbc_zaradaJLabel.gridy = 4;
-        podaciOObracunimaJPanel.add(zaradaJLabel, gbc_zaradaJLabel);
-
-        zaradaIspisJLabel = new JLabel("");
-        GridBagConstraints gbc_zaradaIspisJLabel = new GridBagConstraints();
-        gbc_zaradaIspisJLabel.gridx = 1;
-        gbc_zaradaIspisJLabel.gridy = 4;
-        podaciOObracunimaJPanel.add(zaradaIspisJLabel, gbc_zaradaIspisJLabel);
 
         JPanel dugmadJPanel = new JPanel();
         GridBagConstraints gbc_dugmadJPanel = new GridBagConstraints();
@@ -206,39 +134,23 @@ public class RacunovodstvoSpaseniObracuniJPanel extends JPanel {
         gbc_napraviNoviObracunJButton.gridy = 0;
         dugmadJPanel.add(napraviNoviObracunJButton, gbc_napraviNoviObracunJButton);
 
-        posaljiObracunJButton = new JButton("Po\u0161alji obra\u010Dun");
-        GridBagConstraints gbc_posaljiObracunJButton = new GridBagConstraints();
-        gbc_posaljiObracunJButton.fill = GridBagConstraints.HORIZONTAL;
-        gbc_posaljiObracunJButton.gridwidth = 2;
-        gbc_posaljiObracunJButton.insets = new Insets(0, 0, 0, 5);
-        gbc_posaljiObracunJButton.gridx = 0;
-        gbc_posaljiObracunJButton.gridy = 1;
-        dugmadJPanel.add(posaljiObracunJButton, gbc_posaljiObracunJButton);
+        kreirajPdfJButton = new JButton("Kreiraj PDF");
+        GridBagConstraints gbc_kreirajPdfJButton = new GridBagConstraints();
+        gbc_kreirajPdfJButton.fill = GridBagConstraints.HORIZONTAL;
+        gbc_kreirajPdfJButton.gridwidth = 2;
+        gbc_kreirajPdfJButton.insets = new Insets(0, 0, 0, 5);
+        gbc_kreirajPdfJButton.gridx = 0;
+        gbc_kreirajPdfJButton.gridy = 1;
+        dugmadJPanel.add(kreirajPdfJButton, gbc_kreirajPdfJButton);
 
-    }
-
-    public JComboBox getObracunZaJComboBox() {
-        return obracunZaJComboBox;
     }
 
     public JTable getObracuniJTable() {
         return obracuniJTable;
     }
 
-    public JTable getDostaveJTable() {
-        return dostaveJTable;
-    }
-
-    public JLabel getBrojDostavaIspisJLabel() {
-        return brojDostavaIspisJLabel;
-    }
-
-    public JLabel getBrojPovrataIspisJLabel() {
-        return brojPovrataIspisJLabel;
-    }
-
-    public JLabel getZaradaIspisJLabel() {
-        return zaradaIspisJLabel;
+    public JComboBox getObracunZaJComboBox() {
+        return obracunZaJComboBox;
     }
 
     public JButton getObrisiObracunJButton() {
@@ -249,8 +161,8 @@ public class RacunovodstvoSpaseniObracuniJPanel extends JPanel {
         return napraviNoviObracunJButton;
     }
 
-    public JButton getPosaljiObracunJButton() {
-        return posaljiObracunJButton;
+    public JButton getKreirajPdfJButton() {
+        return kreirajPdfJButton;
     }
 
     public void popuniSaSvimPodacimaIzBaze() {

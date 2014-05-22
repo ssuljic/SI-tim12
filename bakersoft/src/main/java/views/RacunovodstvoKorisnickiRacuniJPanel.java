@@ -47,7 +47,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
     private JLabel statusJLabel;
     private JComboBox statusJComboBox;
     private JLabel privilegijeJLabel;
-    private JButton prepraviJButton;
+    private JButton azurirajJButton;
 
     /**
      * Create the panel.
@@ -85,7 +85,6 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         traziJPanel.add(traziJLabel, gbc_traziJLabel);
 
         traziJComboBox = new JComboBox();
-        traziJComboBox.setEditable(true);
         GridBagConstraints gbc_traziJComboBox = new GridBagConstraints();
         gbc_traziJComboBox.fill = GridBagConstraints.HORIZONTAL;
         gbc_traziJComboBox.gridx = 1;
@@ -369,13 +368,13 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         gbc_obrisiJButton.gridy = 0;
         dugmadJPanel.add(obrisiJButton, gbc_obrisiJButton);
 
-        prepraviJButton = new JButton("Prepravi");
-        GridBagConstraints gbc_prepraviJButton = new GridBagConstraints();
-        gbc_prepraviJButton.fill = GridBagConstraints.HORIZONTAL;
-        gbc_prepraviJButton.insets = new Insets(0, 0, 5, 0);
-        gbc_prepraviJButton.gridx = 1;
-        gbc_prepraviJButton.gridy = 0;
-        dugmadJPanel.add(prepraviJButton, gbc_prepraviJButton);
+        azurirajJButton = new JButton("A\u017Euriraj");
+        GridBagConstraints gbc_azurirajJButton = new GridBagConstraints();
+        gbc_azurirajJButton.fill = GridBagConstraints.HORIZONTAL;
+        gbc_azurirajJButton.insets = new Insets(0, 0, 5, 0);
+        gbc_azurirajJButton.gridx = 1;
+        gbc_azurirajJButton.gridy = 0;
+        dugmadJPanel.add(azurirajJButton, gbc_azurirajJButton);
 
         dodajJButton = new JButton("Dodaj");
         GridBagConstraints gbc_dodajJButton = new GridBagConstraints();
@@ -502,12 +501,12 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         return privilegijeJLabel;
     }
 
-    public JButton getPrepraviJButton() {
-        return prepraviJButton;
+    public JButton getAzurirajJButton() {
+        return azurirajJButton;
     }
 
-    public void setPrepraviJButton(JButton prepraviJButton) {
-        this.prepraviJButton = prepraviJButton;
+    public void setAzurirajJButton(JButton azurirajJButton) {
+        this.azurirajJButton = azurirajJButton;
     }
 
     public void dodajListeners() {
@@ -517,7 +516,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         /*getPrivilegijeJComboBox().addActionListener(racunovodstvoKorisnickiRacuniController.getKorisnickiRacuniPrivilegijeJComboBoxActionListener());*/
         getObrisiJButton().addActionListener(racunovodstvoKorisnickiRacuniController.getKorisnickiRacuniObrisiJButtonActionListener());
         getDodajJButton().addActionListener(racunovodstvoKorisnickiRacuniController.getKorisnickiRacuniDodajJButtonActionListener());
-        getPrepraviJButton().addActionListener(racunovodstvoKorisnickiRacuniController.getKorisnickiRacuniPrepraviJButtonActionListener());
+        getAzurirajJButton().addActionListener(racunovodstvoKorisnickiRacuniController.getKorisnickiRacuniPrepraviJButtonActionListener());
     }
 
     public void popuniSaPodacima(List<Korisnik> sviKorisnici, long idSelektovanogKorisnika) {
