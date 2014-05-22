@@ -12,6 +12,7 @@ import utilities.JTableItem;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
@@ -540,3 +541,4 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
         return selektovaniKlijent;
     }
 }
+
