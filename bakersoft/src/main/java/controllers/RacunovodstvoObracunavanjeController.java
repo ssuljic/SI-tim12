@@ -1,19 +1,10 @@
 package controllers;
 
-import entities.Klijent;
-import entities.Korisnik;
-import entities.Racun;
-import utilities.Baza;
 import utilities.JComboBoxItem;
-import views.RacunovodstvoKorisnickiRacuniJPanel;
 import views.RacunovodstvoObracunavanjeJPanel;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.List;
 
 public class RacunovodstvoObracunavanjeController {
     private RacunovodstvoObracunavanjeJPanel racunovodstvoObracunavanjeJPanel;

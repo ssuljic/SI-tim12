@@ -51,15 +51,16 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
 
         podaciODostaviJTable = new JTable();
         podaciODostaviJTable.setModel(new DefaultTableModel(
-                new Object[][] {
+                new Object[][]{
                 },
-                new String[] {
+                new String[]{
                         "Pecivo", "\u0160ifra", "Koli\u010Dina dostavljenog peciva"
                 }
         ) {
-            boolean[] columnEditables = new boolean[] {
+            boolean[] columnEditables = new boolean[]{
                     false, false, true
             };
+
             public boolean isCellEditable(int row, int column) {
                 return columnEditables[column];
             }

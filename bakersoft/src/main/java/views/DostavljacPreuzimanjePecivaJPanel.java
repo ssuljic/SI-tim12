@@ -53,9 +53,9 @@ public class DostavljacPreuzimanjePecivaJPanel extends JPanel {
 
         dostavaJTable = new JTable();
         dostavaJTable.setModel(new DefaultTableModel(
-                new Object[][] {
+                new Object[][]{
                 },
-                new String[] {
+                new String[]{
                         "Pecivo", "\u0160ifra", "Koli\u010Dina peciva"
                 }
         ));

@@ -9,8 +9,8 @@
         <class>entities.Status</class>
         <class>entities.Tip</class>
         <class>entities.Dostava</class>
-        <class>entities.PecivoUDostavi</class>
         <class>entities.Pecivo</class>
+        <class>entities.PecivoUDostavi</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />

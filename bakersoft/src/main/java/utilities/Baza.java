@@ -1,10 +1,5 @@
 package utilities;
 
-import entities.Korisnik;
-import entities.Klijent;
-import entities.Status;
-import entities.Tip;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;

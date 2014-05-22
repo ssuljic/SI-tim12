@@ -1,11 +1,8 @@
 package views;
 
 import controllers.RacunovodstvoObracunavanjeController;
-import entities.*;
-import exceptions.NePostojiUBaziStavkaSaDatomIdVrijednosti;
-import utilities.Baza;
-import utilities.JComboBoxItem;
-import utilities.JTableItem;
+import entities.Dostava;
+import entities.Klijent;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -14,8 +11,6 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
-import java.awt.event.ItemListener;
-import java.util.ArrayList;
 import java.util.List;
 
 public class RacunovodstvoObracunavanjeJPanel extends JPanel {
@@ -259,15 +254,16 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
 
         dostaveJTable = new JTable();
         dostaveJTable.setModel(new DefaultTableModel(
-                new Object[][] {
+                new Object[][]{
                 },
-                new String[] {
+                new String[]{
                         "Naziv dostave", "Isporu\u010Dioc", "Datum dostave", "Dostava isporucena"
                 }
         ) {
-            Class[] columnTypes = new Class[] {
+            Class[] columnTypes = new Class[]{
                     Object.class, Object.class, Object.class, Boolean.class
             };
+
             public Class getColumnClass(int columnIndex) {
                 return columnTypes[columnIndex];
             }
@@ -291,9 +287,9 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
 
         pecivaDostaveJTable = new JTable();
         pecivaDostaveJTable.setModel(new DefaultTableModel(
-                new Object[][] {
+                new Object[][]{
                 },
-                new String[] {
+                new String[]{
                         "\u0160ifra", "Naziv", "Te\u017Eina", "Cijena", "Koli\u010Dina", "Ukupna cijena"
                 }
         ));
@@ -397,6 +393,57 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
     }
 
     public void popuniSaPodacima(long idSelektiranogKlijenta) {
+
+    }
+}
+
+class ObracunavanjeTableModel implements TableModel {
+
+    Klijent klijent;
+    List<Dostava> dostaveZaKlijenta;
+
+    @Override
+    public int getRowCount() {
+        return 0;
+    }
+
+    @Override
+    public int getColumnCount() {
+        return 0;
+    }
+
+    @Override
+    public String getColumnName(int columnIndex) {
+        return null;
+    }
+
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        return null;
+    }
+
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return false;
+    }
+
+    @Override
+    public Object getValueAt(int rowIndex, int columnIndex) {
+        return null;
+    }
+
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+
+    }
+
+    @Override
+    public void addTableModelListener(TableModelListener l) {
+
+    }
+
+    @Override
+    public void removeTableModelListener(TableModelListener l) {
 
     }
 }

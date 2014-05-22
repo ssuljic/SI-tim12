@@ -34,15 +34,16 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
 
         pregledPecivaJTable = new JTable();
         pregledPecivaJTable.setModel(new DefaultTableModel(
-                new Object[][] {
+                new Object[][]{
                 },
-                new String[] {
+                new String[]{
                         "Naziv", "\u0160ifra", "Cijena", "Te\u017Eina", "U prodaji"
                 }
         ) {
-            Class[] columnTypes = new Class[] {
+            Class[] columnTypes = new Class[]{
                     Object.class, Object.class, Object.class, Object.class, Boolean.class
             };
+
             public Class getColumnClass(int columnIndex) {
                 return columnTypes[columnIndex];
             }

@@ -88,15 +88,16 @@ public class RacunovodstvoSpaseniObracuniJPanel extends JPanel {
 
         obracuniJTable = new JTable();
         obracuniJTable.setModel(new DefaultTableModel(
-                new Object[][] {
+                new Object[][]{
                 },
-                new String[] {
+                new String[]{
                         "Datum", "Broj", "Iznos", "Pla\u0107en", "Obra\u010Dunao", "Po\u010Detak obra\u010Duna", "Kraj obra\u010Duna"
                 }
         ) {
-            Class[] columnTypes = new Class[] {
+            Class[] columnTypes = new Class[]{
                     Object.class, Object.class, Object.class, Boolean.class, Object.class, Object.class, Object.class
             };
+
             public Class getColumnClass(int columnIndex) {
                 return columnTypes[columnIndex];
             }

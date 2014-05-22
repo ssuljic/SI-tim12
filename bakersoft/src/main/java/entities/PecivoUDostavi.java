@@ -1,20 +1,17 @@
 package entities;
 
 import javax.persistence.*;
-import java.util.Collection;
 
+/**
+ * Created by Eli on 5/22/2014.
+ */
 @Entity
 public class PecivoUDostavi {
     @GeneratedValue
     @Id
     private long id;
-
-    private double kolicinaPreuzetog;
-    private double kolicinaDostavljenog;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "peciva")
-    private Collection<Dostava> dostave;
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
-    private Pecivo pecivo;
+    private double kolicinaPreuzetogPeciva;
+    private double kolicinaVracenogPeciva;
 
     public long getId() {
         return id;
@@ -24,29 +21,8 @@ public class PecivoUDostavi {
         this.id = id;
     }
 
-    public double getKolicinaPreuzetog() {
-        return kolicinaPreuzetog;
-    }
-
-    public void setKolicinaPreuzetog(double kolicinaPreuzetog) {
-        this.kolicinaPreuzetog = kolicinaPreuzetog;
-    }
-
-    public double getKolicinaDostavljenog() {
-        return kolicinaDostavljenog;
-    }
-
-    public void setKolicinaDostavljenog(double kolicinaDostavljenog) {
-        this.kolicinaDostavljenog = kolicinaDostavljenog;
-    }
-
-    public Collection<Dostava> getDostave() {
-        return dostave;
-    }
-
-    public void setDostave(Collection<Dostava> dostave) {
-        this.dostave = dostave;
-    }
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    private Pecivo pecivo;
 
     public Pecivo getPecivo() {
         return pecivo;
@@ -54,5 +30,32 @@ public class PecivoUDostavi {
 
     public void setPecivo(Pecivo pecivo) {
         this.pecivo = pecivo;
+    }
+
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    private Dostava dostava;
+
+    public Dostava getDostava() {
+        return dostava;
+    }
+
+    public void setDostava(Dostava dostava) {
+        this.dostava = dostava;
+    }
+
+    public double getKolicinaPreuzetogPeciva() {
+        return kolicinaPreuzetogPeciva;
+    }
+
+    public void setKolicinaPreuzetogPeciva(double kolicinaPreuzetogPeciva) {
+        this.kolicinaPreuzetogPeciva = kolicinaPreuzetogPeciva;
+    }
+
+    public double getKolicinaVracenogPeciva() {
+        return kolicinaVracenogPeciva;
+    }
+
+    public void setKolicinaVracenogPeciva(double kolicinaVracenogPeciva) {
+        this.kolicinaVracenogPeciva = kolicinaVracenogPeciva;
     }
 }

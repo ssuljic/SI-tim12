@@ -18,8 +18,6 @@ public class Dostava {
     private Klijent klijent;
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
     private Korisnik preuzeo;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Collection<PecivoUDostavi> peciva;
 
     public long getId() {
         return id;
@@ -68,6 +66,9 @@ public class Dostava {
     public void setPreuzeo(Korisnik preuzeo) {
         this.preuzeo = preuzeo;
     }
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "dostava")
+    private Collection<PecivoUDostavi> peciva;
 
     public Collection<PecivoUDostavi> getPeciva() {
         return peciva;

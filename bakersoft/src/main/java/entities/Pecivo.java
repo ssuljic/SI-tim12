@@ -11,11 +11,9 @@ public class Pecivo {
 
     private String sifra;
     private String naziv;
-    private String tezina;
+    private double tezina;
     private double cijena;
     private boolean jeUProdaji;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "pecivo")
-    private Collection<PecivoUDostavi> preuzetaPeciva;
 
     public long getId() {
         return id;
@@ -41,11 +39,11 @@ public class Pecivo {
         this.naziv = naziv;
     }
 
-    public String getTezina() {
+    public double getTezina() {
         return tezina;
     }
 
-    public void setTezina(String tezina) {
+    public void setTezina(double tezina) {
         this.tezina = tezina;
     }
 
@@ -65,11 +63,14 @@ public class Pecivo {
         this.jeUProdaji = jeUProdaji;
     }
 
-    public Collection<PecivoUDostavi> getPreuzetaPeciva() {
-        return preuzetaPeciva;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "pecivo")
+    private Collection<PecivoUDostavi> pecivaUDostavi;
+
+    public Collection<PecivoUDostavi> getPecivaUDostavi() {
+        return pecivaUDostavi;
     }
 
-    public void setPreuzetaPeciva(Collection<PecivoUDostavi> preuzetaPeciva) {
-        this.preuzetaPeciva = preuzetaPeciva;
+    public void setPecivaUDostavi(Collection<PecivoUDostavi> pecivaUDostavi) {
+        this.pecivaUDostavi = pecivaUDostavi;
     }
 }
