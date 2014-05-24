@@ -4,7 +4,20 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+
+import controllers.DostavljacIzbornikController;
+import controllers.RacunovodstvoObracunavanjeController;
+import utilities.Baza;
+import utilities.JComboBoxItem;
+import entities.Dostava;
+import entities.Klijent;
+import exceptions.NePostojiUBaziStavkaSaDatomIdVrijednosti;
+
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ItemListener;
+import java.util.List;
 
 public class DostavljacPotvrdaDostaveJPanel extends JPanel {
     private JTable dostaveJTable;
@@ -68,6 +81,10 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
         pecivaUDostaviJScrollPane.setViewportView(podaciODostaviJTable);
 
         dostavaIzvrsenaJButton = new JButton("Dostava izvr\u0161ena");
+        dostavaIzvrsenaJButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
         GridBagConstraints gbc_dostavaIzvrsenaJButton = new GridBagConstraints();
         gbc_dostavaIzvrsenaJButton.fill = GridBagConstraints.BOTH;
         gbc_dostavaIzvrsenaJButton.gridx = 0;
@@ -75,7 +92,28 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
         add(dostavaIzvrsenaJButton, gbc_dostavaIzvrsenaJButton);
 
     }
+    
+    
+    
+    public void popuniSaPodacima(List<Dostava> sveDostave, long idSelektovaneDostave) {
+    	// TODO: Vjerovatno bi se još malo moglo refaktorisati ...
+        if (sveDostave == null || sveDostave.size() <= 0) {
+            ocistiPanel();
+            return;
+        }
+        
+      //  Dostava selektovanaDostava= popuniTraziJComboBoxSa(sveDostave, idSelektovaneDostave);
+        
+       // nazivFirmeJTextField.setText(selektovaniKlijent.getIme());
+       // telefonJTextField.setText(selektovaniKlijent.getTelefon());
 
+    }
+    
+    private void ocistiPanel() {
+    	dostaveJTable.removeAll();
+        podaciODostaviJTable.removeAll();
+
+    }
     public JTable getDostaveJTable() {
         return dostaveJTable;
     }
@@ -87,8 +125,21 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
     public JButton getDostavaIzvrsenaJButton() {
         return dostavaIzvrsenaJButton;
     }
+    
+    private void dodajListeners() {
+       // RacunovodstvoObracunavanjeController racunovodstvoObracunavanjeController = new RacunovodstvoObracunavanjeController(this);
+        //DostavljacIzbornikController dostavljacIzbornikController = new DostavljacIzbornikController(this);
+        //obracunZaJComboBox.addItemListener(racunovodstvoObracunavanjeController.getRacunovodstvoObracunZaJComboBoxItemListener());
+    }
 
     public void popuniSaSvimPodacimaIzBaze() {
-
+    	Baza baza = Baza.getBaza();
+    	 java.util.List<Dostava> sveDostave = baza.dajSve(Dostava.class);
+        long idSelektiraneDostave = 0;
+        if (sveDostave.size() > 0) {
+            idSelektiraneDostave= sveDostave.get(0).getId();
+        }
+        popuniSaPodacima(sveDostave, idSelektiraneDostave);
+        
     }
 }
