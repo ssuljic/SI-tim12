@@ -3,9 +3,11 @@ package views;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import controllers.DostavljacIzbornikController;
+import controllers.DostavljacPotvrdaDostaveController;
 import controllers.RacunovodstvoObracunavanjeController;
 import utilities.Baza;
 import utilities.JComboBoxItem;
@@ -90,7 +92,8 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
         gbc_dostavaIzvrsenaJButton.gridx = 0;
         gbc_dostavaIzvrsenaJButton.gridy = 2;
         add(dostavaIzvrsenaJButton, gbc_dostavaIzvrsenaJButton);
-
+        
+        dodajListeners();
     }
     
     
@@ -128,8 +131,9 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
     
     private void dodajListeners() {
        // RacunovodstvoObracunavanjeController racunovodstvoObracunavanjeController = new RacunovodstvoObracunavanjeController(this);
-        //DostavljacIzbornikController dostavljacIzbornikController = new DostavljacIzbornikController(this);
-        //obracunZaJComboBox.addItemListener(racunovodstvoObracunavanjeController.getRacunovodstvoObracunZaJComboBoxItemListener());
+    	DostavljacPotvrdaDostaveController dostavljacPotvrdaDostaveController = new DostavljacPotvrdaDostaveController(this);
+    	//obracunZaJComboBox.addItemListener(racunovodstvoObracunavanjeController.getRacunovodstvoObracunZaJComboBoxItemListener());
+    	////// getDostaveJTable()).addListSelectionListener(dostavljacPotvrdaDostaveController.getDostavljacPotvrdaDostaveZaJTableItemListener());
     }
 
     public void popuniSaSvimPodacimaIzBaze() {
