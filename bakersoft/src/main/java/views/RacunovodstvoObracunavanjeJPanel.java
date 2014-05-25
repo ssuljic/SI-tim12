@@ -9,14 +9,12 @@ import utilities.JComboBoxItem;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ItemListener;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import java.awt.geom.Arc2D;
+import java.util.*;
 import java.util.List;
 
 public class RacunovodstvoObracunavanjeJPanel extends JPanel {
@@ -395,14 +393,26 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
     }
 
     public void popuniSaSvimPodacimaIzBaze() {
+        // Uzmi sve klijente iz baze
         Baza baza = Baza.getBaza();
         List<Klijent> sviKlijenti = baza.dajSve(Klijent.class);
 
+        // izfiltriraj one klijente koji su obrisani
+        List<Klijent> obrisaniKlijenti = new ArrayList<Klijent>();
+        for(Klijent k : sviKlijenti) {
+            if(k.isObrisano()) {
+                obrisaniKlijenti.add(k);
+            }
+        }
+        sviKlijenti.removeAll(obrisaniKlijenti);
+
+        // uzmi prvog od neobrisanih klijenata
         Klijent klijent = sviKlijenti.get(0);
-        List<Dostava> sveDostave = (List<Dostava>)klijent.getDostave();
+        List<Dostava> sveDostave = (List<Dostava>) klijent.getDostave();
+
         // Napravi jComboBoxItem-ove sa svim klijentima
         List<JComboBoxItem> sviKlijentiJComboBoxItemi = new ArrayList<JComboBoxItem>();
-        for(Klijent k : sviKlijenti) {
+        for (Klijent k : sviKlijenti) {
             sviKlijentiJComboBoxItemi.add(new JComboBoxItem(k.getId(), k.getIme()));
         }
         // Popuni obracunZaJComboBox sa JComboBoxItem-ovima
@@ -421,8 +431,8 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
         // Popuni tabelu dostave sa dostavama za trenutnog klijenta
         Klijent prviKlijentUJComboBoxu = sviKlijenti.get(0);
         TableModel dostaveTableModel;
-        if(prviKlijentUJComboBoxu != null) {
-             dostaveTableModel = new DostaveTableModel(prviKlijentUJComboBoxu);
+        if (prviKlijentUJComboBoxu != null) {
+            dostaveTableModel = new DostaveTableModel(prviKlijentUJComboBoxu);
         } else {
             Klijent prazanKlijent = new Klijent();
             prazanKlijent.setDostave(new ArrayList<Dostava>(0));
@@ -430,13 +440,24 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
         }
         dostaveJTable.setModel(dostaveTableModel);
 
-        // Popuni tabelu peciva sa podacima o pecivima iz oznacene dostave
-        List<PecivoUDostavi> pecivaZaPrvogKlijentaUJComboBoxu = (List<PecivoUDostavi>)((List<Dostava>)prviKlijentUJComboBoxu.getDostave()).get(0).getPeciva();
-        //TODO: Napraviti TableModel za peciva u dostavi tabelu i zavrsiti ovu metodu
+        // Oznaci prvi red u tabeli za dostave
+        ListSelectionModel selectionModel = dostaveJTable.getSelectionModel();
+        selectionModel.setSelectionInterval(0, 0);
 
-        // Napraviti ukupnu cijenu za svako pecivo posebno
+        // Uzmi oznacenu dostavu iz tabele Dostave
+        Dostava oznacenaDostava = ((DostaveTableModel)dostaveJTable.getModel()).getDostaveZaKlijenta()
+                .get(dostaveJTable.getSelectedRow());
+
+        // Popuni tabelu peciva sa podacima o pecivima iz oznacene dostave
+        PecivaDostaveTableModel pecivaDostaveTableModel = new PecivaDostaveTableModel(oznacenaDostava);
+        pecivaDostaveJTable.setModel(pecivaDostaveTableModel);
 
         // Izracunati zaradu i upisati ju u zarada labelu
+        double zarada = 0.0;
+        for(int i=0; i<pecivaDostaveJTable.getRowCount(); i++) {
+            zarada += (Double)pecivaDostaveJTable.getValueAt(i, 5);
+        }
+        zaradaIspisJLabel.setText(String.format("%.2f", zarada));
 
         // Refreshati panel
         this.validate();
@@ -450,7 +471,7 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
             jComboBox.removeItemListener(itemListeners[i]);
         }
 
-        for(JComboBoxItem j : jComboBoxStavke) {
+        for (JComboBoxItem j : jComboBoxStavke) {
             jComboBox.addItem(j);
         }
 
@@ -471,16 +492,32 @@ class DostaveTableModel extends DefaultTableModel {
     private Klijent klijent;
     private List<Dostava> dostaveZaKlijenta;
 
-    DostaveTableModel() { }
+    DostaveTableModel() {
+    }
 
     DostaveTableModel(Klijent klijent) {
         this.klijent = klijent;
-        this.dostaveZaKlijenta = (List<Dostava>)klijent.getDostave();
+        this.dostaveZaKlijenta = (List<Dostava>) klijent.getDostave();
+        List<Dostava> obrisaneDostave = new ArrayList<Dostava>();
+        for(Dostava d : obrisaneDostave) {
+            if(d.isObrisano()) {
+                obrisaneDostave.add(d);
+            }
+        }
+        dostaveZaKlijenta.removeAll(obrisaneDostave);
+    }
+
+    public Klijent getKlijent() {
+        return klijent;
+    }
+
+    public List<Dostava> getDostaveZaKlijenta() {
+        return dostaveZaKlijenta;
     }
 
     @Override
     public int getRowCount() {
-        if(dostaveZaKlijenta != null) {
+        if (dostaveZaKlijenta != null) {
             return dostaveZaKlijenta.size();
         }
 
@@ -541,6 +578,130 @@ class DostaveTableModel extends DefaultTableModel {
                 return dostaveZaKlijenta.get(rowIndex).getDatum().toString();
             case 3:
                 return dostaveZaKlijenta.get(rowIndex).isJeIsporuceno() ? Boolean.TRUE : Boolean.FALSE;
+            default:
+                return null;
+        }
+    }
+
+    /*@Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+
+    }
+
+    @Override
+    public void addTableModelListener(TableModelListener l) {
+
+    }
+
+    @Override
+    public void removeTableModelListener(TableModelListener l) {
+
+    }*/
+}
+
+class PecivaDostaveTableModel extends DefaultTableModel {
+
+    private Dostava dostava;
+    private List<PecivoUDostavi> pecivaUDostavi;
+
+    PecivaDostaveTableModel() {
+    }
+
+    PecivaDostaveTableModel(Dostava dostava) {
+        this.dostava = dostava;
+        this.pecivaUDostavi = (List<PecivoUDostavi>) dostava.getPeciva();
+        List<PecivoUDostavi> obrisanaPecivaUDostavi = new ArrayList<PecivoUDostavi>();
+        for(PecivoUDostavi p : obrisanaPecivaUDostavi) {
+            if(p.isObrisano()) {
+                obrisanaPecivaUDostavi.add(p);
+            }
+        }
+        pecivaUDostavi.removeAll(obrisanaPecivaUDostavi);
+    }
+
+    public Dostava getDostava() {
+        return dostava;
+    }
+
+    public List<PecivoUDostavi> getPecivaUDostavi() {
+        return pecivaUDostavi;
+    }
+
+    @Override
+    public int getRowCount() {
+        if (pecivaUDostavi != null) {
+            return pecivaUDostavi.size();
+        }
+
+        return 0;
+    }
+
+    @Override
+    public int getColumnCount() {
+        return 6;
+    }
+
+    @Override
+    public String getColumnName(int columnIndex) {
+        switch (columnIndex) {
+            case 0:
+                return "Šifra";
+            case 1:
+                return "Naziv";
+            case 2:
+                return "Težina";
+            case 3:
+                return "Cijena";
+            case 4:
+                return "Količina";
+            case 5:
+                return "Ukupna cijena";
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        switch (columnIndex) {
+            case 0:
+                return String.class;
+            case 1:
+                return String.class;
+            case 2:
+                return String.class;
+            case 3:
+                return Double.class;
+            case 4:
+                return Integer.class;
+            case 5:
+                return Double.class;
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return false;
+    }
+
+    @Override
+    public Object getValueAt(int rowIndex, int columnIndex) {
+        switch (columnIndex) {
+            case 0:
+                return pecivaUDostavi.get(rowIndex).getPecivo().getSifra();
+            case 1:
+                return pecivaUDostavi.get(rowIndex).getPecivo().getNaziv();
+            case 2:
+                return pecivaUDostavi.get(rowIndex).getPecivo().getTezina();
+            case 3:
+                return pecivaUDostavi.get(rowIndex).getPecivo().getCijena();
+            case 4:
+                return pecivaUDostavi.get(rowIndex).getKolicinaPreuzetogPeciva() - pecivaUDostavi.get(rowIndex).getKolicinaVracenogPeciva();
+            case 5:
+                double kolicinaDostavljenogPeciva = pecivaUDostavi.get(rowIndex).getKolicinaPreuzetogPeciva() - pecivaUDostavi.get(rowIndex).getKolicinaVracenogPeciva();
+                return kolicinaDostavljenogPeciva*pecivaUDostavi.get(rowIndex).getPecivo().getCijena();
             default:
                 return null;
         }

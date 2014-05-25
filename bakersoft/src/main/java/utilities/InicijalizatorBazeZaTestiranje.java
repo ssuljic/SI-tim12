@@ -21,6 +21,7 @@ public class InicijalizatorBazeZaTestiranje {
         Dostava dostava1 = new Dostava();
         Racun racun1 = new Racun();
         Pecivo pecivo1 = new Pecivo();
+        Pecivo pecivo2 = new Pecivo();
         ProdajnoMjesto prodajnoMjesto1 = new ProdajnoMjesto();
         PecivoUDostavi pecivoUDostavi1 = new PecivoUDostavi();
         PecivoUDostavi pecivoUDostavi2 = new PecivoUDostavi();
@@ -94,7 +95,6 @@ public class InicijalizatorBazeZaTestiranje {
         pecivo1.setTezina(0.05);
         pecivo1.setPecivaUDostavi(new ArrayList<PecivoUDostavi>());
         pecivo1.getPecivaUDostavi().add(pecivoUDostavi1);
-        Pecivo pecivo2 = new Pecivo();
         pecivo2.setNaziv("Krofna");
         pecivo2.setCijena(1.20);
         pecivo2.setJeUProdaji(true);
@@ -116,7 +116,7 @@ public class InicijalizatorBazeZaTestiranje {
         // Dostave
         dostava1.setDatum(new Date());
         dostava1.setKlijent(klijent1);
-        dostava1.setNaziv("Krofna");
+        dostava1.setNaziv("Dostava krofne i kifle");
         dostava1.setPreuzeo(korisnik1);
         dostava1.setJeIsporuceno(true);
         dostava1.setPeciva(new ArrayList<PecivoUDostavi>());

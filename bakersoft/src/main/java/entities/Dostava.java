@@ -9,7 +9,7 @@ public class Dostava {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private long id;
-    private boolean obrisana = false;
+    private boolean obrisano = false;
     private String naziv;
     private boolean jeIsporuceno;
     @Temporal(TemporalType.DATE)
@@ -21,12 +21,12 @@ public class Dostava {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "dostava")
     private Collection<PecivoUDostavi> peciva;
 
-    public boolean isObrisana() {
-        return obrisana;
+    public boolean isObrisano() {
+        return obrisano;
     }
 
-    public void setObrisana(boolean obrisan) {
-        this.obrisana = obrisan;
+    public void setObrisano(boolean obrisan) {
+        this.obrisano = obrisan;
     }
 
     public long getId() {

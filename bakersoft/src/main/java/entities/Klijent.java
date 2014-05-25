@@ -9,7 +9,7 @@ public class Klijent {
     @GeneratedValue
     @Id
     private long id;
-    private boolean obrisan = false;
+    private boolean obrisano = false;
     private String ime;
     @Temporal(TemporalType.DATE)
     private Date datum;
@@ -21,12 +21,12 @@ public class Klijent {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "klijent")
     private Collection<Dostava> dostave;
 
-    public boolean isObrisan() {
-        return obrisan;
+    public boolean isObrisano() {
+        return obrisano;
     }
 
-    public void setObrisan(boolean obrisan) {
-        this.obrisan = obrisan;
+    public void setObrisano(boolean obrisan) {
+        this.obrisano = obrisan;
     }
 
     public long getId() {
