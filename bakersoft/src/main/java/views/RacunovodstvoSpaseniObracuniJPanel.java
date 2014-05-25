@@ -1,10 +1,25 @@
 package views;
 
+import controllers.RacunovodstvoSpaseniObracuniController;
+
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
+import utilities.Baza;
+import utilities.GuiUtilities;
+import utilities.JComboBoxItem;
+import entities.Dostava;
+import entities.Klijent;
+import entities.Korisnik;
+import entities.Racun;
+
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class RacunovodstvoSpaseniObracuniJPanel extends JPanel {
     private JTable obracuniJTable;
@@ -143,9 +158,202 @@ public class RacunovodstvoSpaseniObracuniJPanel extends JPanel {
         gbc_kreirajPdfJButton.gridx = 0;
         gbc_kreirajPdfJButton.gridy = 1;
         dugmadJPanel.add(kreirajPdfJButton, gbc_kreirajPdfJButton);
+        
+        dodajListeners();
 
     }
+    
+    private void dodajListeners() {
+        RacunovodstvoSpaseniObracuniController racunovodstvoSpaseniObracuniController = new RacunovodstvoSpaseniObracuniController(this);
 
+        obracunZaJComboBox.addItemListener(racunovodstvoSpaseniObracuniController.getSpaseniObracuniObracunZaJComboBoxItemListener());
+    }
+    
+    class ObracuniTableModel extends DefaultTableModel {
+
+        private Klijent klijent;
+        private List<Racun> racuniZaKlijenta;
+
+        ObracuniTableModel() {
+        }
+
+        ObracuniTableModel(Klijent klijent) {
+            if(klijent != null) {
+                this.klijent = klijent;
+                this.racuniZaKlijenta = (List<Racun>) klijent.getRacuni();
+                System.out.print(this.racuniZaKlijenta.size());
+                List<Racun> obrisaniRacuni = new ArrayList<Racun>();
+                for (Racun d : obrisaniRacuni) {
+                    if (d.isObrisano()) {
+                        obrisaniRacuni.add(d);
+                    }
+                }
+                racuniZaKlijenta.removeAll(obrisaniRacuni);
+            }
+        }
+
+        public Klijent getKlijent() {
+            return klijent;
+        }
+
+        public List<Racun> getRacuniZaKlijenta() {
+            return racuniZaKlijenta;
+        }
+
+        @Override
+        public int getRowCount() {
+            if (racuniZaKlijenta != null) {
+                return racuniZaKlijenta.size();
+            }
+
+            return 0;
+        }
+
+        @Override
+        public int getColumnCount() {
+            return 7;
+        }
+
+        @Override
+        public String getColumnName(int columnIndex) {
+            switch (columnIndex) {
+                case 0:
+                    return "Datum";
+                case 1:
+                    return "Broj";
+                case 2:
+                    return "Iznos";
+                case 3:
+                    return "Plaćen";
+                case 4:
+                    return "Obračunao";
+                case 5:
+                    return "Početak obračuna";
+               case 6:
+            	   	return "Kraj obračuna";
+                default:
+                    return null;
+            }
+        }
+
+        @Override
+        public Class<?> getColumnClass(int columnIndex) {
+            switch (columnIndex) {
+	            case 0:
+	                return Date.class;
+	            case 1:
+	                return Integer.class;
+	            case 2:
+	                return Double.class;
+	            case 3:
+	                return Boolean.class;
+	            case 4:
+	                return Korisnik.class;
+	            case 5:
+	                return Date.class;
+	           case 6:
+	        	   	return Date.class;
+                default:
+                    return null;
+            }
+        }
+
+        @Override
+        public boolean isCellEditable(int rowIndex, int columnIndex) {
+            return false;
+        }
+
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            if(racuniZaKlijenta != null) {
+                switch (columnIndex) {
+                    case 0:
+                        return racuniZaKlijenta.get(rowIndex).getDatum();
+                    case 1:
+                    	return racuniZaKlijenta.get(rowIndex).getBroj();
+                    case 2:
+                        return racuniZaKlijenta.get(rowIndex).getIznos();
+                    case 3:
+                        return racuniZaKlijenta.get(rowIndex).isJePlacen() ? Boolean.TRUE : Boolean.FALSE;
+                    case 4:
+                        Korisnik korisnikKojiJeObracunao = racuniZaKlijenta.get(rowIndex).getObracunao();
+                        return korisnikKojiJeObracunao.getIme() + " " + korisnikKojiJeObracunao.getPrezime();
+                    case 5:
+                    	return racuniZaKlijenta.get(rowIndex).getPocetak();
+                    case 6:
+                    	return racuniZaKlijenta.get(rowIndex).getKraj();
+                    default:
+                        return null;
+                }
+            }
+
+            return null;
+        }
+    }
+    
+    private void osvjeziJPanel() {
+        this.validate();
+        this.repaint();
+    }
+    
+    private void ukloniObrisaneKlijenteIz(List<Klijent> sviKlijenti) {
+        List<Klijent> obrisaniKlijenti = new ArrayList<Klijent>();
+        for (Klijent k : sviKlijenti) {
+            if (k.isObrisano()) {
+                obrisaniKlijenti.add(k);
+            }
+        }
+        sviKlijenti.removeAll(obrisaniKlijenti);
+    }
+    
+    private void popuniObracuniJTableSaPodacimaOKlijentu(Klijent selektiraniKlijent) {
+        TableModel obracuniTableModel;
+        if (selektiraniKlijent != null) {
+            obracuniTableModel = new ObracuniTableModel(selektiraniKlijent);
+        } else {
+            Klijent prazanKlijent = new Klijent();
+            prazanKlijent.setRacuni(new ArrayList<Racun>(0));
+            obracuniTableModel = new DostaveTableModel(prazanKlijent);
+        }
+        obracuniJTable.setModel(obracuniTableModel);
+        System.out.print(obracuniJTable.getRowCount());
+    }
+    
+    public void popuniSaPodacima(long idSelektiranogKlijenta) {
+        // Isprazni tabelu dostava
+        //obracuniJTable.setModel(new ObracuniTableModel());
+
+        // Uzmi sve klijente iz baze
+        Baza baza = Baza.getBaza();
+        List<Klijent> sviKlijenti = baza.dajSve(Klijent.class);
+        // izfiltriraj one klijente koji su obrisani
+        ukloniObrisaneKlijenteIz(sviKlijenti);
+
+        // Napravi jComboBoxItem-ove sa svim klijentima
+        List<JComboBoxItem> sviKlijentiJComboBoxItemi = new ArrayList<JComboBoxItem>();
+        for (Klijent k : sviKlijenti) {
+            sviKlijentiJComboBoxItemi.add(new JComboBoxItem(k.getId(), k.getIme()));
+        }
+        // Popuni obracunZaJComboBox sa JComboBoxItem-ovima
+        GuiUtilities.popuniJComboBoxSa(sviKlijentiJComboBoxItemi, obracunZaJComboBox, idSelektiranogKlijenta);
+
+        // Popuni tabelu obracuni sa obracunima za klijenta koji ima idSelektiranogKlijenta
+        Klijent selektiraniKlijent = baza.dajPoId(Klijent.class, idSelektiranogKlijenta);
+        popuniObracuniJTableSaPodacimaOKlijentu(selektiraniKlijent);
+        // Oznaci prvi red u tabeli za dostave
+        if (obracuniJTable.getRowCount() > 0) {
+            ListSelectionModel selectionModel = obracuniJTable.getSelectionModel();
+            selectionModel.setSelectionInterval(0, 0);
+
+            // Uzmi oznaceni obracun iz tabele Racun
+            Racun oznaceniRacun = ((ObracuniTableModel) obracuniJTable.getModel()).getRacuniZaKlijenta()
+                    .get(obracuniJTable.getSelectedRow());
+        }
+
+        // Refreshati panel
+        osvjeziJPanel();
+    }
+    
     public JTable getObracuniJTable() {
         return obracuniJTable;
     }
@@ -167,6 +375,24 @@ public class RacunovodstvoSpaseniObracuniJPanel extends JPanel {
     }
 
     public void popuniSaSvimPodacimaIzBaze() {
+        // Uzmi sve klijente iz baze
+        Baza baza = Baza.getBaza();
+        List<Klijent> sviKlijenti = baza.dajSve(Klijent.class);
 
+        // izfiltriraj one klijente koji su obrisani
+        ukloniObrisaneKlijenteIz(sviKlijenti);
+
+        // Napravi jComboBoxItem-ove sa svim klijentima
+        List<JComboBoxItem> sviKlijentiJComboBoxItemi = new ArrayList<JComboBoxItem>();
+        for (Klijent k : sviKlijenti) {
+            sviKlijentiJComboBoxItemi.add(new JComboBoxItem(k.getId(), k.getIme()));
+        }
+        // Popuni obracunZaJComboBox sa JComboBoxItem-ovima
+        GuiUtilities.popuniJComboBoxSa(sviKlijentiJComboBoxItemi, obracunZaJComboBox, sviKlijentiJComboBoxItemi.get(0).getId());
+
+        Klijent prviKlijentUJComboBoxu = sviKlijenti.get(0);
+        popuniObracuniJTableSaPodacimaOKlijentu(prviKlijentUJComboBoxu);
+
+        osvjeziJPanel();
     }
 }
