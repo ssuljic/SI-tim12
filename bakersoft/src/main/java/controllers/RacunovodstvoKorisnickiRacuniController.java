@@ -43,15 +43,24 @@ public class RacunovodstvoKorisnickiRacuniController {
 
                 Baza baza = Baza.getBaza();
                 if (idSelektiranogKorisnika > 0) {
-                    baza.obrisiIzBaze(Korisnik.class, idSelektiranogKorisnika);
+                    Korisnik korisnik = baza.dajPoId(Korisnik.class, idSelektiranogKorisnika);
+                    korisnik.setObrisan(true);
                 }
 
+                // Uzmi id prvog korisnika kojem je zastavica "obrisan" false
                 List<Korisnik> sviKorisnici = baza.dajSve(Korisnik.class);
-                long idPrvogKorisnika = 0;
+                long idPrvogNeobrisanogKorisnika = 0;
                 if (sviKorisnici.size() > 0) {
-                    idPrvogKorisnika = sviKorisnici.get(0).getId();
+                    for(Korisnik k : sviKorisnici) {
+                        if(!k.isObrisan()) {
+                            idPrvogNeobrisanogKorisnika = k.getId();
+                        }
+                    }
                 }
-                racunovodstvoKorisnickiRacuniJPanel.popuniSaPodacima(sviKorisnici, idPrvogKorisnika);
+
+                if(idPrvogNeobrisanogKorisnika > 0) {
+                    racunovodstvoKorisnickiRacuniJPanel.popuniSaPodacima(sviKorisnici, idPrvogNeobrisanogKorisnika);
+                }
             }
         };
     }

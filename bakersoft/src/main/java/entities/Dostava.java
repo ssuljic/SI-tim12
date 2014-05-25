@@ -9,7 +9,7 @@ public class Dostava {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private long id;
-
+    private boolean obrisana = false;
     private String naziv;
     private boolean jeIsporuceno;
     @Temporal(TemporalType.DATE)
@@ -18,6 +18,16 @@ public class Dostava {
     private Klijent klijent;
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
     private Korisnik preuzeo;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "dostava")
+    private Collection<PecivoUDostavi> peciva;
+
+    public boolean isObrisana() {
+        return obrisana;
+    }
+
+    public void setObrisana(boolean obrisan) {
+        this.obrisana = obrisan;
+    }
 
     public long getId() {
         return id;
@@ -66,9 +76,6 @@ public class Dostava {
     public void setPreuzeo(Korisnik preuzeo) {
         this.preuzeo = preuzeo;
     }
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "dostava")
-    private Collection<PecivoUDostavi> peciva;
 
     public Collection<PecivoUDostavi> getPeciva() {
         return peciva;

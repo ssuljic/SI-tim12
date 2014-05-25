@@ -566,12 +566,14 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         int index = 0;
         comboBoxKorisnici.removeAllItems();
         for (Korisnik k : sviKorisnici) {
-            comboBoxKorisnici.addItem(new JComboBoxItem(k.getId(), k.getIme() + " " + k.getPrezime()));
-            if (k.getId() == idSelektovanogKorisnika) {
-                selektovaniKorisnik = k;
-                indexSelektovanogKorisnikaUJComboBox = index;
+            if(!k.isObrisan()) {
+                comboBoxKorisnici.addItem(new JComboBoxItem(k.getId(), k.getIme() + " " + k.getPrezime()));
+                if (k.getId() == idSelektovanogKorisnika) {
+                    selektovaniKorisnik = k;
+                    indexSelektovanogKorisnikaUJComboBox = index;
+                }
+                index++;
             }
-            index++;
         }
 
         if (selektovaniKorisnik == null) {
