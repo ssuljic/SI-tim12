@@ -44,7 +44,7 @@ public class RacunovodstvoKorisnickiRacuniController {
                 Baza baza = Baza.getBaza();
                 if (idSelektiranogKorisnika > 0) {
                     Korisnik korisnik = baza.dajPoId(Korisnik.class, idSelektiranogKorisnika);
-                    korisnik.setObrisan(true);
+                    korisnik.setObrisano(true);
                 }
 
                 // Uzmi id prvog korisnika kojem je zastavica "obrisan" false
@@ -52,7 +52,7 @@ public class RacunovodstvoKorisnickiRacuniController {
                 long idPrvogNeobrisanogKorisnika = 0;
                 if (sviKorisnici.size() > 0) {
                     for(Korisnik k : sviKorisnici) {
-                        if(!k.isObrisan()) {
+                        if(!k.isObrisano()) {
                             idPrvogNeobrisanogKorisnika = k.getId();
                         }
                     }

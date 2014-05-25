@@ -43,6 +43,12 @@ public class Baza {
         return sviObjekti;
     }
 
+    public <E> List<E> dajSveNeobrisano(Class<E> klasaObjekta) {
+        Query zahtjev = entityManager.createQuery("SELECT k FROM " + klasaObjekta.getSimpleName() + " k WHERE k.obrisano = FALSE");
+        List<E> sviNeobrisaniObjekti = zahtjev.getResultList();
+        return sviNeobrisaniObjekti;
+    }
+
     public <E> void obrisiIzBaze(Class<E> klasaObjekta, long idObjekta) {
         E objekatKojiSeBrise = entityManager.find(klasaObjekta, idObjekta);
         entityManager.getTransaction().begin();
