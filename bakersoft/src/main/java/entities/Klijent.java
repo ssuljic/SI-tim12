@@ -9,12 +9,10 @@ public class Klijent {
     @GeneratedValue
     @Id
     private long id;
-
+    private boolean obrisano = false;
     private String ime;
-
     @Temporal(TemporalType.DATE)
     private Date datum;
-
     private String telefon;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "klijent")
     private Collection<ProdajnoMjesto> prodajnaMjesta;
@@ -22,6 +20,14 @@ public class Klijent {
     private Collection<Racun> racuni;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "klijent")
     private Collection<Dostava> dostave;
+
+    public boolean isObrisano() {
+        return obrisano;
+    }
+
+    public void setObrisano(boolean obrisan) {
+        this.obrisano = obrisan;
+    }
 
     public long getId() {
         return id;

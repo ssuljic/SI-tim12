@@ -1,7 +1,10 @@
 package views;
 
 import controllers.RacunovodstvoObracunavanjeController;
-import entities.*;
+import entities.Dostava;
+import entities.Klijent;
+import entities.Korisnik;
+import entities.PecivoUDostavi;
 import utilities.Baza;
 import utilities.GuiUtilities;
 import utilities.JComboBoxItem;
@@ -9,29 +12,27 @@ import utilities.JComboBoxItem;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.TableModelListener;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
-import java.awt.event.ItemListener;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 import java.util.List;
 
 public class RacunovodstvoObracunavanjeJPanel extends JPanel {
     private JTable dostaveJTable;
     private JComboBox obracunZaJComboBox;
-    private JComboBox odDatumaDanJComboBox;
-    private JComboBox odDatumaMjesecJComboBox;
-    private JComboBox odDatumaGodinaJComboBox;
-    private JComboBox doDatumaDanJComboBox;
-    private JComboBox doDatumaMjesecJComboBox;
-    private JComboBox doDatumaGodinaJComboBox;
     private JLabel zaradaIspisJLabel;
     private JButton napraviObracunJButton;
     private JButton filtrirajDostaveJButton;
     private JTable pecivaDostaveJTable;
+    private JSpinner doDatumaJSpinner;
+    private JSpinner odDatumaJSpinner;
+    private JLabel krajnjiRokIsplateJLabel;
+    private JLabel poetniRokIsplateJLabel;
+    private JSpinner krajnjiRokIsplateJSpinner;
+    private JSpinner pocetniRokIsplateJSpinner;
 
     /**
      * Create the panel.
@@ -85,9 +86,9 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
         add(podaciZaObracunJPanel, gbc_podaciZaObracunJPanel);
         GridBagLayout gbl_podaciZaObracunJPanel = new GridBagLayout();
         gbl_podaciZaObracunJPanel.columnWidths = new int[]{0, 0, 0};
-        gbl_podaciZaObracunJPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
+        gbl_podaciZaObracunJPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
         gbl_podaciZaObracunJPanel.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-        gbl_podaciZaObracunJPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
+        gbl_podaciZaObracunJPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         podaciZaObracunJPanel.setLayout(gbl_podaciZaObracunJPanel);
 
         JLabel odDatumaJLabel = new JLabel("Od datuma:");
@@ -99,68 +100,14 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
         gbc_odDatumaJLabel.gridy = 0;
         podaciZaObracunJPanel.add(odDatumaJLabel, gbc_odDatumaJLabel);
 
-        JPanel odDatumaDanMjesecGodinaSadrzajniJPanel = new JPanel();
-        GridBagConstraints gbc_odDatumaDanMjesecGodinaSadrzajniJPanel = new GridBagConstraints();
-        gbc_odDatumaDanMjesecGodinaSadrzajniJPanel.insets = new Insets(0, 0, 5, 0);
-        gbc_odDatumaDanMjesecGodinaSadrzajniJPanel.fill = GridBagConstraints.BOTH;
-        gbc_odDatumaDanMjesecGodinaSadrzajniJPanel.gridx = 1;
-        gbc_odDatumaDanMjesecGodinaSadrzajniJPanel.gridy = 0;
-        podaciZaObracunJPanel.add(odDatumaDanMjesecGodinaSadrzajniJPanel, gbc_odDatumaDanMjesecGodinaSadrzajniJPanel);
-        GridBagLayout gbl_odDatumaDanMjesecGodinaSadrzajniJPanel = new GridBagLayout();
-        gbl_odDatumaDanMjesecGodinaSadrzajniJPanel.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0};
-        gbl_odDatumaDanMjesecGodinaSadrzajniJPanel.rowHeights = new int[]{0, 0};
-        gbl_odDatumaDanMjesecGodinaSadrzajniJPanel.columnWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
-        gbl_odDatumaDanMjesecGodinaSadrzajniJPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
-        odDatumaDanMjesecGodinaSadrzajniJPanel.setLayout(gbl_odDatumaDanMjesecGodinaSadrzajniJPanel);
-
-        JLabel odDatumaDanJLabel = new JLabel("Dan");
-        GridBagConstraints gbc_odDatumaDanJLabel = new GridBagConstraints();
-        gbc_odDatumaDanJLabel.anchor = GridBagConstraints.EAST;
-        gbc_odDatumaDanJLabel.insets = new Insets(0, 0, 0, 5);
-        gbc_odDatumaDanJLabel.gridx = 0;
-        gbc_odDatumaDanJLabel.gridy = 0;
-        odDatumaDanMjesecGodinaSadrzajniJPanel.add(odDatumaDanJLabel, gbc_odDatumaDanJLabel);
-
-        odDatumaDanJComboBox = new JComboBox();
-        odDatumaDanJComboBox.setModel(new DefaultComboBoxModel(new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}));
-        GridBagConstraints gbc_odDatumaDanJComboBox = new GridBagConstraints();
-        gbc_odDatumaDanJComboBox.fill = GridBagConstraints.HORIZONTAL;
-        gbc_odDatumaDanJComboBox.insets = new Insets(0, 0, 0, 5);
-        gbc_odDatumaDanJComboBox.gridx = 1;
-        gbc_odDatumaDanJComboBox.gridy = 0;
-        odDatumaDanMjesecGodinaSadrzajniJPanel.add(odDatumaDanJComboBox, gbc_odDatumaDanJComboBox);
-
-        JLabel odDatumaMjesecJLabel = new JLabel("Mjesec");
-        GridBagConstraints gbc_odDatumaMjesecJLabel = new GridBagConstraints();
-        gbc_odDatumaMjesecJLabel.anchor = GridBagConstraints.EAST;
-        gbc_odDatumaMjesecJLabel.insets = new Insets(0, 0, 0, 5);
-        gbc_odDatumaMjesecJLabel.gridx = 2;
-        gbc_odDatumaMjesecJLabel.gridy = 0;
-        odDatumaDanMjesecGodinaSadrzajniJPanel.add(odDatumaMjesecJLabel, gbc_odDatumaMjesecJLabel);
-
-        odDatumaMjesecJComboBox = new JComboBox();
-        odDatumaMjesecJComboBox.setModel(new DefaultComboBoxModel(new String[]{"Januar", "Februar", "Mart", "April", "Maj", "Juni", "Juli", "August", "Septembar", "Oktobar", "Novembar", "Decembar"}));
-        GridBagConstraints gbc_odDatumaMjesecJComboBox = new GridBagConstraints();
-        gbc_odDatumaMjesecJComboBox.fill = GridBagConstraints.HORIZONTAL;
-        gbc_odDatumaMjesecJComboBox.insets = new Insets(0, 0, 0, 5);
-        gbc_odDatumaMjesecJComboBox.gridx = 3;
-        gbc_odDatumaMjesecJComboBox.gridy = 0;
-        odDatumaDanMjesecGodinaSadrzajniJPanel.add(odDatumaMjesecJComboBox, gbc_odDatumaMjesecJComboBox);
-
-        JLabel odDatumaGodinaJLabel = new JLabel("Godina");
-        GridBagConstraints gbc_odDatumaGodinaJLabel = new GridBagConstraints();
-        gbc_odDatumaGodinaJLabel.anchor = GridBagConstraints.EAST;
-        gbc_odDatumaGodinaJLabel.insets = new Insets(0, 0, 0, 5);
-        gbc_odDatumaGodinaJLabel.gridx = 4;
-        gbc_odDatumaGodinaJLabel.gridy = 0;
-        odDatumaDanMjesecGodinaSadrzajniJPanel.add(odDatumaGodinaJLabel, gbc_odDatumaGodinaJLabel);
-
-        odDatumaGodinaJComboBox = new JComboBox();
-        GridBagConstraints gbc_odDatumaGodinaJComboBox = new GridBagConstraints();
-        gbc_odDatumaGodinaJComboBox.fill = GridBagConstraints.HORIZONTAL;
-        gbc_odDatumaGodinaJComboBox.gridx = 5;
-        gbc_odDatumaGodinaJComboBox.gridy = 0;
-        odDatumaDanMjesecGodinaSadrzajniJPanel.add(odDatumaGodinaJComboBox, gbc_odDatumaGodinaJComboBox);
+        odDatumaJSpinner = new JSpinner();
+        odDatumaJSpinner.setModel(new SpinnerDateModel(new Date(1400968800000L), null, null, Calendar.DAY_OF_YEAR));
+        GridBagConstraints gbc_odDatumaJSpinner = new GridBagConstraints();
+        gbc_odDatumaJSpinner.fill = GridBagConstraints.HORIZONTAL;
+        gbc_odDatumaJSpinner.insets = new Insets(0, 0, 5, 0);
+        gbc_odDatumaJSpinner.gridx = 1;
+        gbc_odDatumaJSpinner.gridy = 0;
+        podaciZaObracunJPanel.add(odDatumaJSpinner, gbc_odDatumaJSpinner);
 
         JLabel doDatumaJLabel = new JLabel("Do datuma:");
         doDatumaJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -171,68 +118,14 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
         gbc_doDatumaJLabel.gridy = 1;
         podaciZaObracunJPanel.add(doDatumaJLabel, gbc_doDatumaJLabel);
 
-        JPanel doDatumaDanMjesecGodinaSadrzajniJPanel = new JPanel();
-        GridBagConstraints gbc_doDatumaDanMjesecGodinaSadrzajniJPanel = new GridBagConstraints();
-        gbc_doDatumaDanMjesecGodinaSadrzajniJPanel.insets = new Insets(0, 0, 5, 0);
-        gbc_doDatumaDanMjesecGodinaSadrzajniJPanel.fill = GridBagConstraints.BOTH;
-        gbc_doDatumaDanMjesecGodinaSadrzajniJPanel.gridx = 1;
-        gbc_doDatumaDanMjesecGodinaSadrzajniJPanel.gridy = 1;
-        podaciZaObracunJPanel.add(doDatumaDanMjesecGodinaSadrzajniJPanel, gbc_doDatumaDanMjesecGodinaSadrzajniJPanel);
-        GridBagLayout gbl_doDatumaDanMjesecGodinaSadrzajniJPanel = new GridBagLayout();
-        gbl_doDatumaDanMjesecGodinaSadrzajniJPanel.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0};
-        gbl_doDatumaDanMjesecGodinaSadrzajniJPanel.rowHeights = new int[]{0, 0};
-        gbl_doDatumaDanMjesecGodinaSadrzajniJPanel.columnWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
-        gbl_doDatumaDanMjesecGodinaSadrzajniJPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
-        doDatumaDanMjesecGodinaSadrzajniJPanel.setLayout(gbl_doDatumaDanMjesecGodinaSadrzajniJPanel);
-
-        JLabel doDatumaDanJLabel = new JLabel("Dan");
-        GridBagConstraints gbc_doDatumaDanJLabel = new GridBagConstraints();
-        gbc_doDatumaDanJLabel.anchor = GridBagConstraints.EAST;
-        gbc_doDatumaDanJLabel.insets = new Insets(0, 0, 0, 5);
-        gbc_doDatumaDanJLabel.gridx = 0;
-        gbc_doDatumaDanJLabel.gridy = 0;
-        doDatumaDanMjesecGodinaSadrzajniJPanel.add(doDatumaDanJLabel, gbc_doDatumaDanJLabel);
-
-        doDatumaDanJComboBox = new JComboBox();
-        doDatumaDanJComboBox.setModel(new DefaultComboBoxModel(new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}));
-        GridBagConstraints gbc_doDatumaDanJComboBox = new GridBagConstraints();
-        gbc_doDatumaDanJComboBox.fill = GridBagConstraints.HORIZONTAL;
-        gbc_doDatumaDanJComboBox.insets = new Insets(0, 0, 0, 5);
-        gbc_doDatumaDanJComboBox.gridx = 1;
-        gbc_doDatumaDanJComboBox.gridy = 0;
-        doDatumaDanMjesecGodinaSadrzajniJPanel.add(doDatumaDanJComboBox, gbc_doDatumaDanJComboBox);
-
-        JLabel doDatumaMjesecJLabel = new JLabel("Mjesec");
-        GridBagConstraints gbc_doDatumaMjesecJLabel = new GridBagConstraints();
-        gbc_doDatumaMjesecJLabel.anchor = GridBagConstraints.EAST;
-        gbc_doDatumaMjesecJLabel.insets = new Insets(0, 0, 0, 5);
-        gbc_doDatumaMjesecJLabel.gridx = 2;
-        gbc_doDatumaMjesecJLabel.gridy = 0;
-        doDatumaDanMjesecGodinaSadrzajniJPanel.add(doDatumaMjesecJLabel, gbc_doDatumaMjesecJLabel);
-
-        doDatumaMjesecJComboBox = new JComboBox();
-        doDatumaMjesecJComboBox.setModel(new DefaultComboBoxModel(new String[]{"Januar", "Februar", "Mart", "April", "Maj", "Juni", "Juli", "August", "Septembar", "Oktobar", "Novembar", "Decembar"}));
-        GridBagConstraints gbc_doDatumaMjesecJComboBox = new GridBagConstraints();
-        gbc_doDatumaMjesecJComboBox.fill = GridBagConstraints.HORIZONTAL;
-        gbc_doDatumaMjesecJComboBox.insets = new Insets(0, 0, 0, 5);
-        gbc_doDatumaMjesecJComboBox.gridx = 3;
-        gbc_doDatumaMjesecJComboBox.gridy = 0;
-        doDatumaDanMjesecGodinaSadrzajniJPanel.add(doDatumaMjesecJComboBox, gbc_doDatumaMjesecJComboBox);
-
-        JLabel doDatumaGodinaJLabel = new JLabel("Godina");
-        GridBagConstraints gbc_doDatumaGodinaJLabel = new GridBagConstraints();
-        gbc_doDatumaGodinaJLabel.anchor = GridBagConstraints.EAST;
-        gbc_doDatumaGodinaJLabel.insets = new Insets(0, 0, 0, 5);
-        gbc_doDatumaGodinaJLabel.gridx = 4;
-        gbc_doDatumaGodinaJLabel.gridy = 0;
-        doDatumaDanMjesecGodinaSadrzajniJPanel.add(doDatumaGodinaJLabel, gbc_doDatumaGodinaJLabel);
-
-        doDatumaGodinaJComboBox = new JComboBox();
-        GridBagConstraints gbc_doDatumaGodinaJComboBox = new GridBagConstraints();
-        gbc_doDatumaGodinaJComboBox.fill = GridBagConstraints.HORIZONTAL;
-        gbc_doDatumaGodinaJComboBox.gridx = 5;
-        gbc_doDatumaGodinaJComboBox.gridy = 0;
-        doDatumaDanMjesecGodinaSadrzajniJPanel.add(doDatumaGodinaJComboBox, gbc_doDatumaGodinaJComboBox);
+        doDatumaJSpinner = new JSpinner();
+        doDatumaJSpinner.setModel(new SpinnerDateModel(new Date(1400968800000L), null, null, Calendar.DAY_OF_YEAR));
+        GridBagConstraints gbc_doDatumaJSpinner = new GridBagConstraints();
+        gbc_doDatumaJSpinner.fill = GridBagConstraints.HORIZONTAL;
+        gbc_doDatumaJSpinner.insets = new Insets(0, 0, 5, 0);
+        gbc_doDatumaJSpinner.gridx = 1;
+        gbc_doDatumaJSpinner.gridy = 1;
+        podaciZaObracunJPanel.add(doDatumaJSpinner, gbc_doDatumaJSpinner);
 
         filtrirajDostaveJButton = new JButton("Filtriraj dostave");
         GridBagConstraints gbc_filtrirajDostaveJButton = new GridBagConstraints();
@@ -301,19 +194,51 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
         ));
         pecivaDostaveJScrollPane.setViewportView(pecivaDostaveJTable);
 
+        poetniRokIsplateJLabel = new JLabel("Po\u010Detni rok isplate:");
+        GridBagConstraints gbc_poetniRokIsplateJLabel = new GridBagConstraints();
+        gbc_poetniRokIsplateJLabel.insets = new Insets(0, 0, 5, 5);
+        gbc_poetniRokIsplateJLabel.gridx = 0;
+        gbc_poetniRokIsplateJLabel.gridy = 5;
+        podaciZaObracunJPanel.add(poetniRokIsplateJLabel, gbc_poetniRokIsplateJLabel);
+
+        pocetniRokIsplateJSpinner = new JSpinner();
+        pocetniRokIsplateJSpinner.setModel(new SpinnerDateModel(new Date(1400968800000L), null, null, Calendar.DAY_OF_YEAR));
+        GridBagConstraints gbc_pocetniRokIsplateJSpinner = new GridBagConstraints();
+        gbc_pocetniRokIsplateJSpinner.fill = GridBagConstraints.HORIZONTAL;
+        gbc_pocetniRokIsplateJSpinner.insets = new Insets(0, 0, 5, 0);
+        gbc_pocetniRokIsplateJSpinner.gridx = 1;
+        gbc_pocetniRokIsplateJSpinner.gridy = 5;
+        podaciZaObracunJPanel.add(pocetniRokIsplateJSpinner, gbc_pocetniRokIsplateJSpinner);
+
+        krajnjiRokIsplateJLabel = new JLabel("Krajnji rok isplate:");
+        GridBagConstraints gbc_krajnjiRokIsplateJLabel = new GridBagConstraints();
+        gbc_krajnjiRokIsplateJLabel.insets = new Insets(0, 0, 5, 5);
+        gbc_krajnjiRokIsplateJLabel.gridx = 0;
+        gbc_krajnjiRokIsplateJLabel.gridy = 6;
+        podaciZaObracunJPanel.add(krajnjiRokIsplateJLabel, gbc_krajnjiRokIsplateJLabel);
+
+        krajnjiRokIsplateJSpinner = new JSpinner();
+        krajnjiRokIsplateJSpinner.setModel(new SpinnerDateModel(new Date(1400968800000L), null, null, Calendar.DAY_OF_YEAR));
+        GridBagConstraints gbc_krajnjiRokIsplateJSpinner = new GridBagConstraints();
+        gbc_krajnjiRokIsplateJSpinner.fill = GridBagConstraints.HORIZONTAL;
+        gbc_krajnjiRokIsplateJSpinner.insets = new Insets(0, 0, 5, 0);
+        gbc_krajnjiRokIsplateJSpinner.gridx = 1;
+        gbc_krajnjiRokIsplateJSpinner.gridy = 6;
+        podaciZaObracunJPanel.add(krajnjiRokIsplateJSpinner, gbc_krajnjiRokIsplateJSpinner);
+
         JLabel zaradaJLabel = new JLabel("Zarada:");
         zaradaJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         GridBagConstraints gbc_zaradaJLabel = new GridBagConstraints();
         gbc_zaradaJLabel.insets = new Insets(0, 0, 0, 5);
         gbc_zaradaJLabel.anchor = GridBagConstraints.EAST;
         gbc_zaradaJLabel.gridx = 0;
-        gbc_zaradaJLabel.gridy = 5;
+        gbc_zaradaJLabel.gridy = 7;
         podaciZaObracunJPanel.add(zaradaJLabel, gbc_zaradaJLabel);
 
         zaradaIspisJLabel = new JLabel("");
         GridBagConstraints gbc_zaradaIspisJLabel = new GridBagConstraints();
         gbc_zaradaIspisJLabel.gridx = 1;
-        gbc_zaradaIspisJLabel.gridy = 5;
+        gbc_zaradaIspisJLabel.gridy = 7;
         podaciZaObracunJPanel.add(zaradaIspisJLabel, gbc_zaradaIspisJLabel);
 
         JPanel dugmadJPanel = new JPanel();
@@ -348,30 +273,6 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
         return obracunZaJComboBox;
     }
 
-    public JComboBox getOdDatumaDanJComboBox() {
-        return odDatumaDanJComboBox;
-    }
-
-    public JComboBox getOdDatumaMjesecJComboBox() {
-        return odDatumaMjesecJComboBox;
-    }
-
-    public JComboBox getOdDatumaGodinaJComboBox() {
-        return odDatumaGodinaJComboBox;
-    }
-
-    public JComboBox getDoDatumaDanJComboBox() {
-        return doDatumaDanJComboBox;
-    }
-
-    public JComboBox getDoDatumaMjesecJComboBox() {
-        return doDatumaMjesecJComboBox;
-    }
-
-    public JComboBox getDoDatumaGodinaJComboBox() {
-        return doDatumaGodinaJComboBox;
-    }
-
     public JButton getNapraviObracunJButton() {
         return napraviObracunJButton;
     }
@@ -388,81 +289,249 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
         return zaradaIspisJLabel;
     }
 
+    public JSpinner getDoDatumaJSpinner() {
+        return doDatumaJSpinner;
+    }
+
+    public JSpinner getOdDatumaJSpinner() {
+        return odDatumaJSpinner;
+    }
+
+    public JSpinner getKrajnjiRokIsplateJSpinner() {
+        return krajnjiRokIsplateJSpinner;
+    }
+
+    public JSpinner getPocetniRokIsplateJSpinner() {
+        return pocetniRokIsplateJSpinner;
+    }
+
     private void dodajListeners() {
         RacunovodstvoObracunavanjeController racunovodstvoObracunavanjeController = new RacunovodstvoObracunavanjeController(this);
 
-        obracunZaJComboBox.addItemListener(racunovodstvoObracunavanjeController.getRacunovodstvoObracunZaJComboBoxItemListener());
+        obracunZaJComboBox.addItemListener(racunovodstvoObracunavanjeController.getObracunavanjeObracunZaJComboBoxItemListener());
+        filtrirajDostaveJButton.addActionListener(racunovodstvoObracunavanjeController.getObracunavanjeFiltrirajDostaveJButtonActionListener());
+        napraviObracunJButton.addActionListener(racunovodstvoObracunavanjeController.getObracunavanjeNapraviObracunJButtonActionListener());
+        dostaveJTable.getSelectionModel().addListSelectionListener(racunovodstvoObracunavanjeController.getObracunavanjeDostaveJTableListSelectionListener());
     }
 
     public void popuniSaSvimPodacimaIzBaze() {
+        // Uzmi sve klijente iz baze
         Baza baza = Baza.getBaza();
         List<Klijent> sviKlijenti = baza.dajSve(Klijent.class);
 
-        Klijent klijent = sviKlijenti.get(0);
-        List<Dostava> sveDostave = (List<Dostava>)klijent.getDostave();
+        // izfiltriraj one klijente koji su obrisani
+        ukloniObrisaneKlijenteIz(sviKlijenti);
+
         // Napravi jComboBoxItem-ove sa svim klijentima
         List<JComboBoxItem> sviKlijentiJComboBoxItemi = new ArrayList<JComboBoxItem>();
-        for(Klijent k : sviKlijenti) {
+        for (Klijent k : sviKlijenti) {
             sviKlijentiJComboBoxItemi.add(new JComboBoxItem(k.getId(), k.getIme()));
         }
         // Popuni obracunZaJComboBox sa JComboBoxItem-ovima
-        popuniJComboBoxSa(sviKlijentiJComboBoxItemi, obracunZaJComboBox);
-
-        // Popuni ComboBox-ove za datume sa trenutnim datumom
-        Calendar kalendarTrenutniDatum = Calendar.getInstance();
-        kalendarTrenutniDatum.setTime(new Date());
-        GuiUtilities.postaviDatumUComboBoxove(
-                kalendarTrenutniDatum.get(Calendar.DAY_OF_MONTH), kalendarTrenutniDatum.get(Calendar.MONTH), kalendarTrenutniDatum.get(Calendar.YEAR),
-                odDatumaDanJComboBox, odDatumaMjesecJComboBox, odDatumaGodinaJComboBox);
-        GuiUtilities.postaviDatumUComboBoxove(
-                kalendarTrenutniDatum.get(Calendar.DAY_OF_MONTH), kalendarTrenutniDatum.get(Calendar.MONTH), kalendarTrenutniDatum.get(Calendar.YEAR),
-                doDatumaDanJComboBox, doDatumaMjesecJComboBox, doDatumaGodinaJComboBox);
+        if(sviKlijentiJComboBoxItemi.size() > 0){
+            GuiUtilities.popuniJComboBoxSa(sviKlijentiJComboBoxItemi, obracunZaJComboBox, sviKlijentiJComboBoxItemi.get(0).getId());
+        }
 
         // Popuni tabelu dostave sa dostavama za trenutnog klijenta
-        Klijent prviKlijentUJComboBoxu = sviKlijenti.get(0);
+        if(sviKlijenti.size() > 0) {
+            Klijent prviKlijentUJComboBoxu = sviKlijenti.get(0);
+            popuniDostaveJTableSaPodacimaOKlijentu(prviKlijentUJComboBoxu);
+        }
+
+        // Oznaci prvi red u tabeli za dostave
+        if(dostaveJTable.getRowCount() > 0) {
+            oznaciNtiRedUJTable(dostaveJTable, 0);
+        }
+
+        // Uzmi oznacenu dostavu iz tabele Dostave
+        if(((DostaveTableModel) dostaveJTable.getModel()).getDostaveZaKlijenta() != null) {
+            Dostava oznacenaDostava = ((DostaveTableModel) dostaveJTable.getModel()).getDostaveZaKlijenta()
+                    .get(dostaveJTable.getSelectedRow());
+
+            // Popuni tabelu peciva sa podacima o pecivima iz oznacene dostave
+            PecivaDostaveTableModel pecivaDostaveTableModel = new PecivaDostaveTableModel(oznacenaDostava);
+            pecivaDostaveJTable.setModel(pecivaDostaveTableModel);
+        } else {
+            pecivaDostaveJTable.setModel(new PecivaDostaveTableModel());
+        }
+
+        // Izracunati zaradu i upisati ju u zarada labelu
+        izracunajZaraduNaStavkeUPecivaDostaveJTable();
+
+        // Refreshati panel
+        osvjeziJPanel();
+    }
+
+    private void popuniDostaveJTableSaPodacimaOKlijentu(Klijent selektiraniKlijent) {
         TableModel dostaveTableModel;
-        if(prviKlijentUJComboBoxu != null) {
-             dostaveTableModel = new DostaveTableModel(prviKlijentUJComboBoxu);
+        if (selektiraniKlijent != null) {
+            dostaveTableModel = new DostaveTableModel(selektiraniKlijent);
         } else {
             Klijent prazanKlijent = new Klijent();
             prazanKlijent.setDostave(new ArrayList<Dostava>(0));
             dostaveTableModel = new DostaveTableModel(prazanKlijent);
         }
         dostaveJTable.setModel(dostaveTableModel);
-
-        // Popuni tabelu peciva sa podacima o pecivima iz oznacene dostave
-        List<PecivoUDostavi> pecivaZaPrvogKlijentaUJComboBoxu = (List<PecivoUDostavi>)((List<Dostava>)prviKlijentUJComboBoxu.getDostave()).get(0).getPeciva();
-        //TODO: Napraviti TableModel za peciva u dostavi tabelu i zavrsiti ovu metodu
-
-        // Napraviti ukupnu cijenu za svako pecivo posebno
-
-        // Izracunati zaradu i upisati ju u zarada labelu
-
-        // Refreshati panel
-        this.validate();
-        this.repaint();
     }
 
-    private void popuniJComboBoxSa(List<JComboBoxItem> jComboBoxStavke, JComboBox jComboBox) {
-        // Izbjegavanje okidanja eventa SELECTED prilikom dinamickog dodavanja itemova
-        ItemListener[] itemListeners = jComboBox.getItemListeners();
-        for (int i = 0; i < itemListeners.length; i++) {
-            jComboBox.removeItemListener(itemListeners[i]);
+    private void izracunajZaraduNaStavkeUPecivaDostaveJTable() {
+        double zarada = 0.0;
+        for (int i = 0; i < pecivaDostaveJTable.getRowCount(); i++) {
+            zarada += (Double) pecivaDostaveJTable.getValueAt(i, 5);
         }
+        zaradaIspisJLabel.setText(String.format("%.2f", zarada));
+    }
 
-        for(JComboBoxItem j : jComboBoxStavke) {
-            jComboBox.addItem(j);
+    private void ukloniObrisaneKlijenteIz(List<Klijent> sviKlijenti) {
+        List<Klijent> obrisaniKlijenti = new ArrayList<Klijent>();
+        for (Klijent k : sviKlijenti) {
+            if (k.isObrisano()) {
+                obrisaniKlijenti.add(k);
+            }
         }
+        sviKlijenti.removeAll(obrisaniKlijenti);
+    }
 
-        // Vracanje EventListener-a na JComboBox
-        for (int i = 0; i < itemListeners.length; i++) {
-            jComboBox.addItemListener(itemListeners[i]);
+    private void oznaciNtiRedUJTable(JTable jTable, int rowIndex) {
+        ListSelectionModel selectionModel = jTable.getSelectionModel();
+        ListSelectionListener[] listeners = ((DefaultListSelectionModel) selectionModel).getListSelectionListeners();
+        for (ListSelectionListener l : listeners) {
+            selectionModel.removeListSelectionListener(l);
+        }
+        selectionModel.setSelectionInterval(rowIndex, rowIndex);
+        for (ListSelectionListener l : listeners) {
+            selectionModel.addListSelectionListener(l);
         }
     }
 
     public void popuniSaPodacima(long idSelektiranogKlijenta) {
+        // Isprazni tabelu dostava
+        dostaveJTable.setModel(new DostaveTableModel());
+        // Isprazni tabelu peciva u dostavi
+        pecivaDostaveJTable.setModel(new PecivaDostaveTableModel());
+
+        // Uzmi sve klijente iz baze
         Baza baza = Baza.getBaza();
+        List<Klijent> sviKlijenti = baza.dajSve(Klijent.class);
+        // izfiltriraj one klijente koji su obrisani
+        ukloniObrisaneKlijenteIz(sviKlijenti);
+
+        // Napravi jComboBoxItem-ove sa svim klijentima
+        List<JComboBoxItem> sviKlijentiJComboBoxItemi = new ArrayList<JComboBoxItem>();
+        for (Klijent k : sviKlijenti) {
+            sviKlijentiJComboBoxItemi.add(new JComboBoxItem(k.getId(), k.getIme()));
+        }
+        // Popuni obracunZaJComboBox sa JComboBoxItem-ovima
+        GuiUtilities.popuniJComboBoxSa(sviKlijentiJComboBoxItemi, obracunZaJComboBox, idSelektiranogKlijenta);
+
+        // Popuni tabelu dostave sa dostavama za klijenta koji ima idSelektiranogKlijenta
         Klijent selektiraniKlijent = baza.dajPoId(Klijent.class, idSelektiranogKlijenta);
+        popuniDostaveJTableSaPodacimaOKlijentu(selektiraniKlijent);
+        // Oznaci prvi red u tabeli za dostave
+        if (dostaveJTable.getRowCount() > 0) {
+            ListSelectionModel selectionModel = dostaveJTable.getSelectionModel();
+            selectionModel.setSelectionInterval(0, 0);
+
+            // Uzmi oznacenu dostavu iz tabele Dostave
+            Dostava oznacenaDostava = ((DostaveTableModel) dostaveJTable.getModel()).getDostaveZaKlijenta()
+                    .get(dostaveJTable.getSelectedRow());
+
+            // Popuni tabelu peciva sa podacima o pecivima iz oznacene dostave
+            PecivaDostaveTableModel pecivaDostaveTableModel = new PecivaDostaveTableModel(oznacenaDostava);
+            pecivaDostaveJTable.setModel(pecivaDostaveTableModel);
+
+            // Izracunati zaradu i upisati ju u zarada labelu
+            izracunajZaraduNaStavkeUPecivaDostaveJTable();
+        }
+
+        // Refreshati panel
+        osvjeziJPanel();
+    }
+
+    public void popuniSaPodacima(long idSelektiranogKlijenta, Date pocetniDatum, Date krajnjiDatum) {
+        // Isprazni tabelu dostava
+        dostaveJTable.setModel(new DostaveTableModel());
+        // Isprazni tabelu peciva u dostavi
+        pecivaDostaveJTable.setModel(new PecivaDostaveTableModel());
+
+        // Uzmi sve klijente iz baze
+        Baza baza = Baza.getBaza();
+        List<Klijent> sviKlijenti = baza.dajSve(Klijent.class);
+
+        // izfiltriraj one klijente koji su obrisani
+        ukloniObrisaneKlijenteIz(sviKlijenti);
+
+        // Napravi jComboBoxItem-ove sa svim klijentima
+        List<JComboBoxItem> sviKlijentiJComboBoxItemi = new ArrayList<JComboBoxItem>();
+        for (Klijent k : sviKlijenti) {
+            sviKlijentiJComboBoxItemi.add(new JComboBoxItem(k.getId(), k.getIme()));
+        }
+
+        // Popuni obracunZaJComboBox sa JComboBoxItem-ovima
+        GuiUtilities.popuniJComboBoxSa(sviKlijentiJComboBoxItemi, obracunZaJComboBox, idSelektiranogKlijenta);
+
+        // Popuni tabelu dostave sa dostavama za klijenta koji ima idSelektiranogKlijenta
+        Klijent selektiraniKlijent = baza.dajPoId(Klijent.class, idSelektiranogKlijenta);
+        popuniDostaveJTableSaPodacimaOKlijentu(selektiraniKlijent);
+
+        // Filtriraj tabelu po datumima
+        TableRowSorter<TableModel> dostaveTableModelTableRowSorter = new TableRowSorter<TableModel>(dostaveJTable.getModel());
+        dostaveJTable.setRowSorter(dostaveTableModelTableRowSorter);
+        int redniBrojKoloneDatum = 2;
+        RowFilter<TableModel, Integer> pocetniDatumFilter = RowFilter.dateFilter(RowFilter.ComparisonType.AFTER, pocetniDatum, redniBrojKoloneDatum);
+        RowFilter<TableModel, Integer> krajnjiDatumFilter = RowFilter.dateFilter(RowFilter.ComparisonType.BEFORE, krajnjiDatum, redniBrojKoloneDatum);
+        List<RowFilter<TableModel, Integer>> sviFilteri = Arrays.asList(pocetniDatumFilter, krajnjiDatumFilter);
+        RowFilter<TableModel, Integer> filter = RowFilter.andFilter(sviFilteri);
+        dostaveTableModelTableRowSorter.setRowFilter(filter);
+
+        if (dostaveJTable.getRowCount() > 0) {
+            // Oznaci prvi red u tabeli za dostave
+            oznaciNtiRedUJTable(dostaveJTable, 0);
+
+            // Uzmi oznacenu dostavu iz tabele Dostave
+            Dostava oznacenaDostava = ((DostaveTableModel) dostaveJTable.getModel()).getDostaveZaKlijenta()
+                    .get(dostaveJTable.getSelectedRow());
+
+            // Popuni tabelu peciva sa podacima o pecivima iz oznacene dostave
+            PecivaDostaveTableModel pecivaDostaveTableModel = new PecivaDostaveTableModel(oznacenaDostava);
+            pecivaDostaveJTable.setModel(pecivaDostaveTableModel);
+
+            // Izracunati zaradu i upisati ju u zarada labelu
+            izracunajZaraduNaStavkeUPecivaDostaveJTable();
+        }
+
+        // Refreshati panel
+        osvjeziJPanel();
+    }
+
+    public void popuniSaPodacima(Dostava selektiranaDostava) {
+        // Isprazni tabelu peciva u dostavi
+        pecivaDostaveJTable.setModel(new PecivaDostaveTableModel());
+
+        // Popuni tabelu peciva sa podacima o pecivima iz oznacene dostave
+        PecivaDostaveTableModel pecivaDostaveTableModel = new PecivaDostaveTableModel(selektiranaDostava);
+        pecivaDostaveJTable.setModel(pecivaDostaveTableModel);
+
+        // Izracunati zaradu i upisati ju u zarada labelu
+        izracunajZaraduNaStavkeUPecivaDostaveJTable();
+
+        // Refreshati panel
+        osvjeziJPanel();
+    }
+
+    private void osvjeziJPanel() {
+        this.validate();
+        this.repaint();
+    }
+
+    public Dostava dajSelektiranuDostavu() {
+        if(((DostaveTableModel)dostaveJTable.getModel()).getDostaveZaKlijenta() != null) {
+            if(dostaveJTable.getSelectedRow() >= 0 && dostaveJTable.getSelectedRow() < ((DostaveTableModel)dostaveJTable.getModel()).getDostaveZaKlijenta().size()) {
+                return ((DostaveTableModel)dostaveJTable.getModel()).getDostaveZaKlijenta().get(dostaveJTable.getSelectedRow());
+            }
+        }
+
+        return null;
     }
 }
 
@@ -471,16 +540,34 @@ class DostaveTableModel extends DefaultTableModel {
     private Klijent klijent;
     private List<Dostava> dostaveZaKlijenta;
 
-    DostaveTableModel() { }
+    DostaveTableModel() {
+    }
 
     DostaveTableModel(Klijent klijent) {
-        this.klijent = klijent;
-        this.dostaveZaKlijenta = (List<Dostava>)klijent.getDostave();
+        if(klijent != null) {
+            this.klijent = klijent;
+            this.dostaveZaKlijenta = (List<Dostava>) klijent.getDostave();
+            List<Dostava> obrisaneDostave = new ArrayList<Dostava>();
+            for (Dostava d : obrisaneDostave) {
+                if (d.isObrisano()) {
+                    obrisaneDostave.add(d);
+                }
+            }
+            dostaveZaKlijenta.removeAll(obrisaneDostave);
+        }
+    }
+
+    public Klijent getKlijent() {
+        return klijent;
+    }
+
+    public List<Dostava> getDostaveZaKlijenta() {
+        return dostaveZaKlijenta;
     }
 
     @Override
     public int getRowCount() {
-        if(dostaveZaKlijenta != null) {
+        if (dostaveZaKlijenta != null) {
             return dostaveZaKlijenta.size();
         }
 
@@ -516,7 +603,7 @@ class DostaveTableModel extends DefaultTableModel {
             case 1:
                 return String.class;
             case 2:
-                return String.class;
+                return Date.class;
             case 3:
                 return Boolean.class;
             default:
@@ -531,19 +618,153 @@ class DostaveTableModel extends DefaultTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
+        if(dostaveZaKlijenta != null) {
+            switch (columnIndex) {
+                case 0:
+                    return dostaveZaKlijenta.get(rowIndex).getNaziv();
+                case 1:
+                    Korisnik korisnikKojiJePreuzeoDostavu = dostaveZaKlijenta.get(rowIndex).getPreuzeo();
+                    return korisnikKojiJePreuzeoDostavu.getIme() + " " + korisnikKojiJePreuzeoDostavu.getPrezime();
+                case 2:
+                    return dostaveZaKlijenta.get(rowIndex).getDatum();
+                case 3:
+                    return dostaveZaKlijenta.get(rowIndex).isJeIsporuceno() ? Boolean.TRUE : Boolean.FALSE;
+                default:
+                    return null;
+            }
+        }
+
+        return null;
+    }
+
+    /*@Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+
+    }
+
+    @Override
+    public void addTableModelListener(TableModelListener l) {
+
+    }
+
+    @Override
+    public void removeTableModelListener(TableModelListener l) {
+
+    }*/
+}
+
+class PecivaDostaveTableModel extends DefaultTableModel {
+
+    private Dostava dostava;
+    private List<PecivoUDostavi> pecivaUDostavi;
+
+    PecivaDostaveTableModel() {
+    }
+
+    PecivaDostaveTableModel(Dostava dostava) {
+        if(dostava != null) {
+            this.dostava = dostava;
+            this.pecivaUDostavi = (List<PecivoUDostavi>) dostava.getPeciva();
+            List<PecivoUDostavi> obrisanaPecivaUDostavi = new ArrayList<PecivoUDostavi>();
+            for (PecivoUDostavi p : obrisanaPecivaUDostavi) {
+                if (p.isObrisano()) {
+                    obrisanaPecivaUDostavi.add(p);
+                }
+            }
+            pecivaUDostavi.removeAll(obrisanaPecivaUDostavi);
+        }
+    }
+
+    public Dostava getDostava() {
+        return dostava;
+    }
+
+    public List<PecivoUDostavi> getPecivaUDostavi() {
+        return pecivaUDostavi;
+    }
+
+    @Override
+    public int getRowCount() {
+        if (pecivaUDostavi != null) {
+            return pecivaUDostavi.size();
+        }
+
+        return 0;
+    }
+
+    @Override
+    public int getColumnCount() {
+        return 6;
+    }
+
+    @Override
+    public String getColumnName(int columnIndex) {
         switch (columnIndex) {
             case 0:
-                return dostaveZaKlijenta.get(rowIndex).getNaziv();
+                return "Šifra";
             case 1:
-                Korisnik korisnikKojiJePreuzeoDostavu = dostaveZaKlijenta.get(rowIndex).getPreuzeo();
-                return korisnikKojiJePreuzeoDostavu.getIme() + " " + korisnikKojiJePreuzeoDostavu.getPrezime();
+                return "Naziv";
             case 2:
-                return dostaveZaKlijenta.get(rowIndex).getDatum().toString();
+                return "Težina";
             case 3:
-                return dostaveZaKlijenta.get(rowIndex).isJeIsporuceno() ? Boolean.TRUE : Boolean.FALSE;
+                return "Cijena";
+            case 4:
+                return "Količina";
+            case 5:
+                return "Ukupna cijena";
             default:
                 return null;
         }
+    }
+
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        switch (columnIndex) {
+            case 0:
+                return String.class;
+            case 1:
+                return String.class;
+            case 2:
+                return String.class;
+            case 3:
+                return Double.class;
+            case 4:
+                return Integer.class;
+            case 5:
+                return Double.class;
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return false;
+    }
+
+    @Override
+    public Object getValueAt(int rowIndex, int columnIndex) {
+        if(pecivaUDostavi != null) {
+            switch (columnIndex) {
+                case 0:
+                    return pecivaUDostavi.get(rowIndex).getPecivo().getSifra();
+                case 1:
+                    return pecivaUDostavi.get(rowIndex).getPecivo().getNaziv();
+                case 2:
+                    return pecivaUDostavi.get(rowIndex).getPecivo().getTezina();
+                case 3:
+                    return pecivaUDostavi.get(rowIndex).getPecivo().getCijena();
+                case 4:
+                    return pecivaUDostavi.get(rowIndex).getKolicinaPreuzetogPeciva() - pecivaUDostavi.get(rowIndex).getKolicinaVracenogPeciva();
+                case 5:
+                    double kolicinaDostavljenogPeciva = pecivaUDostavi.get(rowIndex).getKolicinaPreuzetogPeciva() - pecivaUDostavi.get(rowIndex).getKolicinaVracenogPeciva();
+                    return kolicinaDostavljenogPeciva * pecivaUDostavi.get(rowIndex).getPecivo().getCijena();
+                default:
+                    return null;
+            }
+        }
+
+        return null;
     }
 
     /*@Override

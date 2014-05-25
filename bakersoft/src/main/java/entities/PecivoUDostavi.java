@@ -10,8 +10,21 @@ public class PecivoUDostavi {
     @GeneratedValue
     @Id
     private long id;
+    private boolean obrisano = false;
     private double kolicinaPreuzetogPeciva;
     private double kolicinaVracenogPeciva;
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    private Pecivo pecivo;
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    private Dostava dostava;
+
+    public boolean isObrisano() {
+        return obrisano;
+    }
+
+    public void setObrisano(boolean obrisan) {
+        this.obrisano = obrisan;
+    }
 
     public long getId() {
         return id;
@@ -21,9 +34,6 @@ public class PecivoUDostavi {
         this.id = id;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
-    private Pecivo pecivo;
-
     public Pecivo getPecivo() {
         return pecivo;
     }
@@ -31,9 +41,6 @@ public class PecivoUDostavi {
     public void setPecivo(Pecivo pecivo) {
         this.pecivo = pecivo;
     }
-
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
-    private Dostava dostava;
 
     public Dostava getDostava() {
         return dostava;

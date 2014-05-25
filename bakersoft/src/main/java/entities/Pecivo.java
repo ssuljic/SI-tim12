@@ -8,12 +8,22 @@ public class Pecivo {
     @GeneratedValue
     @Id
     private long id;
-
+    private boolean obrisano = false;
     private String sifra;
     private String naziv;
     private double tezina;
     private double cijena;
     private boolean jeUProdaji;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "pecivo")
+    private Collection<PecivoUDostavi> pecivaUDostavi;
+
+    public boolean isObrisano() {
+        return obrisano;
+    }
+
+    public void setObrisano(boolean obrisan) {
+        this.obrisano = obrisan;
+    }
 
     public long getId() {
         return id;
@@ -62,9 +72,6 @@ public class Pecivo {
     public void setJeUProdaji(boolean jeUProdaji) {
         this.jeUProdaji = jeUProdaji;
     }
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "pecivo")
-    private Collection<PecivoUDostavi> pecivaUDostavi;
 
     public Collection<PecivoUDostavi> getPecivaUDostavi() {
         return pecivaUDostavi;

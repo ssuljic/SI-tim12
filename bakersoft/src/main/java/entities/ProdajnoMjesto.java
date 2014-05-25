@@ -7,11 +7,19 @@ public class ProdajnoMjesto {
     @GeneratedValue
     @Id
     private long id;
-
+    private boolean obrisano = false;
     private String mjesto;
     private String adresa;
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
     private Klijent klijent;
+
+    public boolean isObrisano() {
+        return obrisano;
+    }
+
+    public void setObrisano(boolean obrisano) {
+        this.obrisano = obrisano;
+    }
 
     public long getId() {
         return id;

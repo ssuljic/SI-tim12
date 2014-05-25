@@ -15,6 +15,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -38,16 +39,11 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
     private JLabel datumRodjenjaJLabel;
     private JLabel mobitelJLabel;
     private JLabel adresaJLabel;
-    private JComboBox datumRodjenjaGodinaJComboBox;
-    private JComboBox datumRodjenjaMjesecJComboBox;
-    private JComboBox datumRodjenjaDanJComboBox;
-    private JLabel datumRodjenjaMjesecJLabel;
-    private JLabel datumRodjenjaGodinaJLabel;
-    private JLabel datumRodjenjaDanJLabel;
     private JLabel statusJLabel;
     private JComboBox statusJComboBox;
     private JLabel privilegijeJLabel;
     private JButton azurirajJButton;
+    private JSpinner datumRodjenjaJSpinner;
 
     /**
      * Create the panel.
@@ -246,73 +242,21 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         podaciOKorisnikuJPanel.add(adresaJTextField, gbc_adresaJTextField);
         adresaJTextField.setColumns(10);
 
-        datumRodjenjaJLabel = new JLabel("Datum roÄ‘enja:");
+        datumRodjenjaJLabel = new JLabel("Datum rođenja:");
         GridBagConstraints gbc_datumRodjenjaJLabel = new GridBagConstraints();
         gbc_datumRodjenjaJLabel.insets = new Insets(0, 0, 5, 5);
         gbc_datumRodjenjaJLabel.gridx = 0;
         gbc_datumRodjenjaJLabel.gridy = 8;
         podaciOKorisnikuJPanel.add(datumRodjenjaJLabel, gbc_datumRodjenjaJLabel);
 
-        JPanel datumRodjenjaJPanel = new JPanel();
-        GridBagConstraints gbc_datumRodjenjaJPanel = new GridBagConstraints();
-        gbc_datumRodjenjaJPanel.insets = new Insets(0, 0, 5, 0);
-        gbc_datumRodjenjaJPanel.fill = GridBagConstraints.BOTH;
-        gbc_datumRodjenjaJPanel.gridx = 1;
-        gbc_datumRodjenjaJPanel.gridy = 8;
-        podaciOKorisnikuJPanel.add(datumRodjenjaJPanel, gbc_datumRodjenjaJPanel);
-        GridBagLayout gbl_datumRodjenjaJPanel = new GridBagLayout();
-        gbl_datumRodjenjaJPanel.columnWidths = new int[]{41, 19, 68, 45, 33, 68, 45, 33, 68, 0};
-        gbl_datumRodjenjaJPanel.rowHeights = new int[]{20, 0};
-        gbl_datumRodjenjaJPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-        gbl_datumRodjenjaJPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
-        datumRodjenjaJPanel.setLayout(gbl_datumRodjenjaJPanel);
-
-        datumRodjenjaDanJLabel = new JLabel("Dan");
-        GridBagConstraints gbc_datumRodjenjaDanJLabel = new GridBagConstraints();
-        gbc_datumRodjenjaDanJLabel.anchor = GridBagConstraints.EAST;
-        gbc_datumRodjenjaDanJLabel.insets = new Insets(0, 0, 0, 5);
-        gbc_datumRodjenjaDanJLabel.gridx = 1;
-        gbc_datumRodjenjaDanJLabel.gridy = 0;
-        datumRodjenjaJPanel.add(datumRodjenjaDanJLabel, gbc_datumRodjenjaDanJLabel);
-
-        datumRodjenjaDanJComboBox = new JComboBox();
-        GridBagConstraints gbc_datumRodjenjaDanJComboBox = new GridBagConstraints();
-        gbc_datumRodjenjaDanJComboBox.fill = GridBagConstraints.HORIZONTAL;
-        gbc_datumRodjenjaDanJComboBox.insets = new Insets(0, 0, 0, 5);
-        gbc_datumRodjenjaDanJComboBox.gridx = 2;
-        gbc_datumRodjenjaDanJComboBox.gridy = 0;
-        datumRodjenjaJPanel.add(datumRodjenjaDanJComboBox, gbc_datumRodjenjaDanJComboBox);
-
-        datumRodjenjaMjesecJLabel = new JLabel("Mjesec");
-        GridBagConstraints gbc_datumRodjenjaMjesecJLabel = new GridBagConstraints();
-        gbc_datumRodjenjaMjesecJLabel.anchor = GridBagConstraints.EAST;
-        gbc_datumRodjenjaMjesecJLabel.insets = new Insets(0, 0, 0, 5);
-        gbc_datumRodjenjaMjesecJLabel.gridx = 4;
-        gbc_datumRodjenjaMjesecJLabel.gridy = 0;
-        datumRodjenjaJPanel.add(datumRodjenjaMjesecJLabel, gbc_datumRodjenjaMjesecJLabel);
-
-        datumRodjenjaMjesecJComboBox = new JComboBox();
-        GridBagConstraints gbc_datumRodjenjaMjesecJComboBox = new GridBagConstraints();
-        gbc_datumRodjenjaMjesecJComboBox.fill = GridBagConstraints.HORIZONTAL;
-        gbc_datumRodjenjaMjesecJComboBox.insets = new Insets(0, 0, 0, 5);
-        gbc_datumRodjenjaMjesecJComboBox.gridx = 5;
-        gbc_datumRodjenjaMjesecJComboBox.gridy = 0;
-        datumRodjenjaJPanel.add(datumRodjenjaMjesecJComboBox, gbc_datumRodjenjaMjesecJComboBox);
-
-        datumRodjenjaGodinaJLabel = new JLabel("Godina");
-        GridBagConstraints gbc_datumRodjenjaGodinaJLabel = new GridBagConstraints();
-        gbc_datumRodjenjaGodinaJLabel.anchor = GridBagConstraints.EAST;
-        gbc_datumRodjenjaGodinaJLabel.insets = new Insets(0, 0, 0, 5);
-        gbc_datumRodjenjaGodinaJLabel.gridx = 7;
-        gbc_datumRodjenjaGodinaJLabel.gridy = 0;
-        datumRodjenjaJPanel.add(datumRodjenjaGodinaJLabel, gbc_datumRodjenjaGodinaJLabel);
-
-        datumRodjenjaGodinaJComboBox = new JComboBox();
-        GridBagConstraints gbc_datumRodjenjaGodinaJComboBox = new GridBagConstraints();
-        gbc_datumRodjenjaGodinaJComboBox.fill = GridBagConstraints.HORIZONTAL;
-        gbc_datumRodjenjaGodinaJComboBox.gridx = 8;
-        gbc_datumRodjenjaGodinaJComboBox.gridy = 0;
-        datumRodjenjaJPanel.add(datumRodjenjaGodinaJComboBox, gbc_datumRodjenjaGodinaJComboBox);
+        datumRodjenjaJSpinner = new JSpinner();
+        datumRodjenjaJSpinner.setModel(new SpinnerDateModel(new Date(1400968800000L), null, null, Calendar.DAY_OF_YEAR));
+        GridBagConstraints gbc_datumRodjenjaJSpinner = new GridBagConstraints();
+        gbc_datumRodjenjaJSpinner.fill = GridBagConstraints.HORIZONTAL;
+        gbc_datumRodjenjaJSpinner.insets = new Insets(0, 0, 5, 0);
+        gbc_datumRodjenjaJSpinner.gridx = 1;
+        gbc_datumRodjenjaJSpinner.gridy = 8;
+        podaciOKorisnikuJPanel.add(datumRodjenjaJSpinner, gbc_datumRodjenjaJSpinner);
 
         statusJLabel = new JLabel("Status:");
         GridBagConstraints gbc_statusJLabel = new GridBagConstraints();
@@ -465,28 +409,8 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         return adresaJLabel;
     }
 
-    public JComboBox getDatumRodjenjaGodinaJComboBox() {
-        return datumRodjenjaGodinaJComboBox;
-    }
-
-    public JComboBox getDatumRodjenjaMjesecJComboBox() {
-        return datumRodjenjaMjesecJComboBox;
-    }
-
-    public JComboBox getDatumRodjenjaDanJComboBox() {
-        return datumRodjenjaDanJComboBox;
-    }
-
-    public JLabel getDatumRodjenjaMjesecJLabel() {
-        return datumRodjenjaMjesecJLabel;
-    }
-
-    public JLabel getDatumRodjenjaGodinaJLabel() {
-        return datumRodjenjaGodinaJLabel;
-    }
-
-    public JLabel getDatumRodjenjaDanJLabel() {
-        return datumRodjenjaDanJLabel;
+    public JSpinner getDatumRodjenjaJSpinner() {
+        return datumRodjenjaJSpinner;
     }
 
     public JLabel getStatusJLabel() {
@@ -537,9 +461,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         telefonJTextField.setText(selektovaniKorisnik.getBrojTelefona());
         mobitelJTextField.setText(selektovaniKorisnik.getBrojMobitela());
 
-        Date datumRodjenjaKorisnika = selektovaniKorisnik.getDatumRodjenja();
-        GuiUtilities.postaviDatumUComboBoxove(datumRodjenjaKorisnika.getDay(), datumRodjenjaKorisnika.getMonth(), datumRodjenjaKorisnika.getYear(),
-                datumRodjenjaDanJComboBox, datumRodjenjaMjesecJComboBox, datumRodjenjaGodinaJComboBox);
+        datumRodjenjaJSpinner.setValue(selektovaniKorisnik.getDatumRodjenja());
 
         Baza baza = Baza.getBaza();
         List<Status> sviStatusiKorisnika = baza.dajSve(Status.class);
@@ -615,9 +537,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         telefonJTextField.setText("");
         mobitelJTextField.setText("");
         adresaJTextField.setText("");
-        datumRodjenjaDanJComboBox.removeAllItems();
-        datumRodjenjaMjesecJComboBox.removeAllItems();
-        datumRodjenjaGodinaJComboBox.removeAllItems();
+        datumRodjenjaJSpinner.setValue(new Date());
         statusJComboBox.removeAllItems();
         privilegijeJComboBox.removeAllItems();
     }
@@ -632,9 +552,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         korisnik.setBrojTelefona(telefonJTextField.getText());
         korisnik.setBrojMobitela(mobitelJTextField.getText());
         korisnik.setAdresa(adresaJTextField.getText());
-        Date date = new Date(Integer.parseInt(datumRodjenjaGodinaJComboBox.getSelectedItem().toString()),
-                Integer.parseInt(datumRodjenjaMjesecJComboBox.getSelectedItem().toString()),
-                Integer.parseInt(datumRodjenjaDanJComboBox.getSelectedItem().toString()));
+        Date date = (Date)datumRodjenjaJSpinner.getValue();
         korisnik.setDatumRodjenja(date);
         Baza baza = Baza.getBaza();
         Status status = baza.dajPoId(Status.class, ((JComboBoxItem) statusJComboBox.getSelectedItem()).getId());
@@ -647,6 +565,13 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
     public void popuniSaSvimPodacimaIzBaze() {
         Baza baza = Baza.getBaza();
         java.util.List<Korisnik> sviKorisnici = baza.dajSve(Korisnik.class);
+        java.util.List<Korisnik> obrisaniKorisnici = new ArrayList<Korisnik>();
+        for(Korisnik k : sviKorisnici) {
+            if(k.isObrisano()) {
+                obrisaniKorisnici.add(k);
+            }
+        }
+        sviKorisnici.removeAll(obrisaniKorisnici);
         long idSelektiranogKorisnika = 0;
         if (sviKorisnici.size() > 0) {
             idSelektiranogKorisnika = sviKorisnici.get(0).getId();

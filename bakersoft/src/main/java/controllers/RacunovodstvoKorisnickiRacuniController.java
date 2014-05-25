@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RacunovodstvoKorisnickiRacuniController {
@@ -27,6 +28,13 @@ public class RacunovodstvoKorisnickiRacuniController {
                     long idSelektiranogKorisnika = ((JComboBoxItem) racunovodstvoKorisnickiRacuniJPanel.getTraziJComboBox().getSelectedItem()).getId();
                     Baza baza = Baza.getBaza();
                     List<Korisnik> sviKorisnici = baza.dajSve(Korisnik.class);
+                    List<Korisnik> obrisaniKorisnici = new ArrayList<Korisnik>();
+                    for(Korisnik k : obrisaniKorisnici) {
+                        if(k.isObrisano()) {
+                            obrisaniKorisnici.add(k);
+                        }
+                    }
+                    sviKorisnici.removeAll(obrisaniKorisnici);
                     racunovodstvoKorisnickiRacuniJPanel.popuniSaPodacima(sviKorisnici, idSelektiranogKorisnika);
                 }
             }
@@ -43,15 +51,29 @@ public class RacunovodstvoKorisnickiRacuniController {
 
                 Baza baza = Baza.getBaza();
                 if (idSelektiranogKorisnika > 0) {
-                    baza.obrisiIzBaze(Korisnik.class, idSelektiranogKorisnika);
+                    Korisnik korisnik = baza.dajPoId(Korisnik.class, idSelektiranogKorisnika);
+                    korisnik.setObrisano(true);
                 }
 
+                // Uzmi id prvog korisnika kojem je zastavica "obrisan" false
                 List<Korisnik> sviKorisnici = baza.dajSve(Korisnik.class);
-                long idPrvogKorisnika = 0;
-                if (sviKorisnici.size() > 0) {
-                    idPrvogKorisnika = sviKorisnici.get(0).getId();
+                List<Korisnik> obrisaniKorisnici = new ArrayList<Korisnik>();
+                for(Korisnik k : sviKorisnici) {
+                    if(k.isObrisano()) {
+                        obrisaniKorisnici.add(k);
+                    }
                 }
-                racunovodstvoKorisnickiRacuniJPanel.popuniSaPodacima(sviKorisnici, idPrvogKorisnika);
+                sviKorisnici.removeAll(obrisaniKorisnici);
+                long idPrvogNeobrisanogKorisnika = 0;
+                if (sviKorisnici.size() > 0) {
+                    for(Korisnik k : sviKorisnici) {
+                            idPrvogNeobrisanogKorisnika = k.getId();
+                    }
+                }
+
+                if(idPrvogNeobrisanogKorisnika > 0) {
+                    racunovodstvoKorisnickiRacuniJPanel.popuniSaPodacima(sviKorisnici, idPrvogNeobrisanogKorisnika);
+                }
             }
         };
     }
