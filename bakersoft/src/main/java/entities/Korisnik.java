@@ -9,6 +9,7 @@ public class Korisnik {
     @GeneratedValue
     @Id
     private long id;
+    private boolean obrisan = false;
 
     private String ime;
     private String prezime;
@@ -35,6 +36,14 @@ public class Korisnik {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public boolean isObrisan() {
+        return obrisan;
+    }
+
+    public void setObrisan(boolean obrisan) {
+        this.obrisan = obrisan;
     }
 
     public String getIme() {

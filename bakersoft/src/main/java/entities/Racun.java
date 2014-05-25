@@ -8,10 +8,9 @@ public class Racun {
     @GeneratedValue
     @Id
     private long id;
-
+    private boolean obrisan = false;
     @Temporal(TemporalType.DATE)
     private Date datum;
-
     private int broj;
     private double iznos;
     private boolean jePlacen;
@@ -23,6 +22,14 @@ public class Racun {
     private Klijent klijent;
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
     private Korisnik obracunao;
+
+    public boolean isObrisan() {
+        return obrisan;
+    }
+
+    public void setObrisan(boolean obrisan) {
+        this.obrisan = obrisan;
+    }
 
     public long getId() {
         return id;
