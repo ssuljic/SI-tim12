@@ -1,15 +1,18 @@
 package controllers;
 
 import entities.Klijent;
+import entities.ProdajnoMjesto;
 import utilities.Baza;
 import utilities.JComboBoxItem;
 import views.RacunovodstvoKlijentiJPanel;
 
 import javax.swing.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RacunovodstvoKlijentiController {
@@ -25,9 +28,32 @@ public class RacunovodstvoKlijentiController {
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     long idSelektiranogKlijenta = ((JComboBoxItem) racunovodstvoKlijentiJPanel.getTraziJComboBox().getSelectedItem()).getId();
+                    long idSelektiranogMjesta = ((JComboBoxItem) racunovodstvoKlijentiJPanel.getProdajnoMjestoJComboBox().getSelectedItem()).getId();
                     Baza baza = Baza.getBaza();
                     List<Klijent> sviKlijenti = baza.dajSve(Klijent.class);
+                    List<ProdajnoMjesto> svaMjesta = baza.dajSve(ProdajnoMjesto.class);
                     racunovodstvoKlijentiJPanel.popuniSaPodacima(sviKlijenti, idSelektiranogKlijenta);
+                }
+            }
+        };
+    }
+    
+    public ItemListener getKlijentiProdajnoMjestoJComboBoxItemListener() {
+        return new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    long idSelektiranogKlijenta = ((JComboBoxItem) racunovodstvoKlijentiJPanel.getTraziJComboBox().getSelectedItem()).getId();
+                    long idSelektiranogMjesta = ((JComboBoxItem) racunovodstvoKlijentiJPanel.getProdajnoMjestoJComboBox().getSelectedItem()).getId();
+                    Baza baza = Baza.getBaza();
+                    List<Klijent> sviKlijenti = baza.dajSve(Klijent.class);
+                    List<ProdajnoMjesto> svaMjesta = baza.dajSve(ProdajnoMjesto.class);
+                    List<ProdajnoMjesto> klijentovaProdajnaMjesta = new ArrayList<ProdajnoMjesto>();
+                    for(ProdajnoMjesto pm : svaMjesta){
+                    	if(pm.getKlijent().getId() == idSelektiranogKlijenta)
+                    		klijentovaProdajnaMjesta.add(pm);
+                    }
+                    //racunovodstvoKlijentiJPanel.popuniSaPodacima(svaMjesta, idSelektiranogMjesta);
                 }
             }
         };
@@ -40,17 +66,20 @@ public class RacunovodstvoKlijentiController {
                 if (racunovodstvoKlijentiJPanel.getTraziJComboBox().getItemCount() > 0) {
                     idSelektiranogKlijenta = ((JComboBoxItem) racunovodstvoKlijentiJPanel.getTraziJComboBox().getSelectedItem()).getId();
                 }
+                long idSelektiranogMjesta = ((JComboBoxItem) racunovodstvoKlijentiJPanel.getProdajnoMjestoJComboBox().getSelectedItem()).getId();
 
                 Baza baza = Baza.getBaza();
                 if (idSelektiranogKlijenta > 0) {
                     baza.obrisiIzBaze(Klijent.class, idSelektiranogKlijenta);
                 }
+                List<ProdajnoMjesto> svaMjesta = baza.dajSve(ProdajnoMjesto.class);
 
                 List<Klijent> sviKlijenti = baza.dajSve(Klijent.class);
                 long idPrvogKlijenta = 0;
                 if (sviKlijenti.size() > 0) {
                     idPrvogKlijenta = sviKlijenti.get(0).getId();
                 }
+                
                 racunovodstvoKlijentiJPanel.popuniSaPodacima(sviKlijenti, idPrvogKlijenta);
                 JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Uspješno ste izbrisali klijenta!");
             }
@@ -60,7 +89,7 @@ public class RacunovodstvoKlijentiController {
     public ActionListener getKlijentiDodajJButtonActionListener() {
         return new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
-                Klijent noviKlijent = racunovodstvoKlijentiJPanel.dajPodatkeONovomKlijentu();
+            	Klijent noviKlijent = racunovodstvoKlijentiJPanel.dajPodatkeONovomKlijentu();
                 Baza baza = Baza.getBaza();
                 baza.spasiUBazu(noviKlijent);
                 JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Uspješno ste dodali klijenta: " + noviKlijent.getIme());

@@ -18,12 +18,17 @@ public class InicijalizatorBazeZaTestiranje {
         Korisnik korisnik1 = new Korisnik();
         Korisnik korisnik2 = new Korisnik();
         Klijent klijent1 = new Klijent();
+        Klijent klijent2 = new Klijent();
         Dostava dostava1 = new Dostava();
+        Dostava dostava2 = new Dostava();
         Racun racun1 = new Racun();
         Pecivo pecivo1 = new Pecivo();
+        Pecivo pecivo2 = new Pecivo();
         ProdajnoMjesto prodajnoMjesto1 = new ProdajnoMjesto();
         PecivoUDostavi pecivoUDostavi1 = new PecivoUDostavi();
         PecivoUDostavi pecivoUDostavi2 = new PecivoUDostavi();
+        PecivoUDostavi pecivoUDostavi11 = new PecivoUDostavi();
+        PecivoUDostavi pecivoUDostavi22 = new PecivoUDostavi();
 
         // Tipovi korisnika
         tipKorisnika1.setTip(Tip.RACUNOVODJA);
@@ -47,8 +52,10 @@ public class InicijalizatorBazeZaTestiranje {
         korisnik1.setStatus(statusKorisnika1);
         korisnik1.setDostave(new ArrayList<Dostava>());
         korisnik1.getDostave().add(dostava1);
+        korisnik1.getDostave().add(dostava2);
         korisnik1.setObracunatiRacuni(new ArrayList<Racun>());
         korisnik1.getObracunatiRacuni().add(racun1);
+
         korisnik2.setIme("Fata");
         korisnik2.setPrezime("Fatimovic");
         korisnik2.setBrojMobitela("061-456-958");
@@ -68,9 +75,10 @@ public class InicijalizatorBazeZaTestiranje {
         klijent1.setTelefon("062/274-040");
         klijent1.setDostave(new ArrayList<Dostava>());
         klijent1.getDostave().add(dostava1);
+        klijent1.getDostave().add(dostava2);
         klijent1.setProdajnaMjesta(new ArrayList<ProdajnoMjesto>());
         klijent1.getProdajnaMjesta().add(prodajnoMjesto1);
-        Klijent klijent2 = new Klijent();
+
         klijent2.setIme("Mesnica Noj");
         klijent2.setTelefon("062/225-883");
         klijent2.setProdajnaMjesta(new ArrayList<ProdajnoMjesto>());
@@ -94,14 +102,15 @@ public class InicijalizatorBazeZaTestiranje {
         pecivo1.setTezina(0.05);
         pecivo1.setPecivaUDostavi(new ArrayList<PecivoUDostavi>());
         pecivo1.getPecivaUDostavi().add(pecivoUDostavi1);
-        Pecivo pecivo2 = new Pecivo();
+        pecivo1.getPecivaUDostavi().add(pecivoUDostavi11);
+
         pecivo2.setNaziv("Krofna");
         pecivo2.setCijena(1.20);
         pecivo2.setJeUProdaji(true);
         pecivo2.setSifra("krofna-192");
         pecivo2.setTezina(0.2);
         pecivo2.setPecivaUDostavi(new ArrayList<PecivoUDostavi>());
-        pecivo2.getPecivaUDostavi().add(pecivoUDostavi2);
+        pecivo2.getPecivaUDostavi().add(pecivoUDostavi22);
 
         // Peciva u dostavi
         pecivoUDostavi1.setDostava(dostava1);
@@ -113,18 +122,33 @@ public class InicijalizatorBazeZaTestiranje {
         pecivoUDostavi2.setKolicinaPreuzetogPeciva(92.6);
         pecivoUDostavi2.setKolicinaVracenogPeciva(0.0);
 
+        pecivoUDostavi11.setDostava(dostava2);
+        pecivoUDostavi11.setPecivo(pecivo1);
+        pecivoUDostavi11.setKolicinaPreuzetogPeciva(20.3);
+        pecivoUDostavi11.setKolicinaVracenogPeciva(0.0);
+        pecivoUDostavi22.setDostava(dostava2);
+        pecivoUDostavi22.setPecivo(pecivo2);
+        pecivoUDostavi22.setKolicinaPreuzetogPeciva(45.3);
+        pecivoUDostavi22.setKolicinaVracenogPeciva(5.0);
+
         // Dostave
         dostava1.setDatum(new Date());
         dostava1.setKlijent(klijent1);
-        dostava1.setNaziv("Krofna");
+        dostava1.setNaziv("Dostava krofne i kifle");
         dostava1.setPreuzeo(korisnik1);
         dostava1.setJeIsporuceno(true);
         dostava1.setPeciva(new ArrayList<PecivoUDostavi>());
         dostava1.getPeciva().add(pecivoUDostavi1);
         dostava1.getPeciva().add(pecivoUDostavi2);
-        dostava1.setPeciva(new ArrayList<PecivoUDostavi>());
-        dostava1.getPeciva().add(pecivoUDostavi1);
-        dostava1.getPeciva().add(pecivoUDostavi2);
+
+        dostava2.setDatum(new Date());
+        dostava2.setKlijent(klijent1);
+        dostava2.setNaziv("Dostava krofne i kifle 2");
+        dostava2.setPreuzeo(korisnik1);
+        dostava2.setJeIsporuceno(true);
+        dostava2.setPeciva(new ArrayList<PecivoUDostavi>());
+        dostava2.getPeciva().add(pecivoUDostavi11);
+        dostava2.getPeciva().add(pecivoUDostavi22);
 
         // Prodajna mjesta
         prodajnoMjesto1.setAdresa("Tunguzija 23");
@@ -151,12 +175,11 @@ public class InicijalizatorBazeZaTestiranje {
 
         baza.spasiUBazu(pecivoUDostavi1);
         baza.spasiUBazu(pecivoUDostavi2);
+        baza.spasiUBazu(pecivoUDostavi11);
+        baza.spasiUBazu(pecivoUDostavi22);
 
         baza.spasiUBazu(prodajnoMjesto1);
 
         baza.spasiUBazu(dostava1);
-
-        Klijent klijent = baza.dajPoId(Klijent.class, 1);
-        List<Dostava> sveDostave = (List<Dostava>)klijent.getDostave();
     }
 }
