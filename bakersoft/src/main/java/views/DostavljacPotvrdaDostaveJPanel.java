@@ -96,7 +96,7 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
     
     
     public void popuniSaPodacima(List<Dostava> sveDostave, long idSelektovaneDostave) {
-    	// TODO: Vjerovatno bi se još malo moglo refaktorisati ...
+    	// TODO: Vjerovatno bi se joï¿½ malo moglo refaktorisati ...
         if (sveDostave == null || sveDostave.size() <= 0) {
             ocistiPanel();
             return;
@@ -129,7 +129,7 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
     private void dodajListeners() {
        // RacunovodstvoObracunavanjeController racunovodstvoObracunavanjeController = new RacunovodstvoObracunavanjeController(this);
         //DostavljacIzbornikController dostavljacIzbornikController = new DostavljacIzbornikController(this);
-        //obracunZaJComboBox.addItemListener(racunovodstvoObracunavanjeController.getRacunovodstvoObracunZaJComboBoxItemListener());
+        //obracunZaJComboBox.addItemListener(racunovodstvoObracunavanjeController.getObracunavanjeObracunZaJComboBoxItemListener());
     }
 
     public void popuniSaSvimPodacimaIzBaze() {

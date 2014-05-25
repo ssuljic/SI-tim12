@@ -538,7 +538,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         mobitelJTextField.setText(selektovaniKorisnik.getBrojMobitela());
 
         Date datumRodjenjaKorisnika = selektovaniKorisnik.getDatumRodjenja();
-        GuiUtilities.postaviDatumUComboBoxove(datumRodjenjaKorisnika.getDay(), datumRodjenjaKorisnika.getMonth(), datumRodjenjaKorisnika.getYear(),
+        GuiUtilities.postaviDatumUComboBoxove(datumRodjenjaKorisnika.getDay(), datumRodjenjaKorisnika.getMonth()+1, datumRodjenjaKorisnika.getYear(),
                 datumRodjenjaDanJComboBox, datumRodjenjaMjesecJComboBox, datumRodjenjaGodinaJComboBox);
 
         Baza baza = Baza.getBaza();
@@ -566,14 +566,12 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         int index = 0;
         comboBoxKorisnici.removeAllItems();
         for (Korisnik k : sviKorisnici) {
-            if(!k.isObrisano()) {
-                comboBoxKorisnici.addItem(new JComboBoxItem(k.getId(), k.getIme() + " " + k.getPrezime()));
-                if (k.getId() == idSelektovanogKorisnika) {
-                    selektovaniKorisnik = k;
-                    indexSelektovanogKorisnikaUJComboBox = index;
-                }
-                index++;
+            comboBoxKorisnici.addItem(new JComboBoxItem(k.getId(), k.getIme() + " " + k.getPrezime()));
+            if (k.getId() == idSelektovanogKorisnika) {
+                selektovaniKorisnik = k;
+                indexSelektovanogKorisnikaUJComboBox = index;
             }
+            index++;
         }
 
         if (selektovaniKorisnik == null) {
@@ -649,6 +647,13 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
     public void popuniSaSvimPodacimaIzBaze() {
         Baza baza = Baza.getBaza();
         java.util.List<Korisnik> sviKorisnici = baza.dajSve(Korisnik.class);
+        java.util.List<Korisnik> obrisaniKorisnici = new ArrayList<Korisnik>();
+        for(Korisnik k : sviKorisnici) {
+            if(k.isObrisano()) {
+                obrisaniKorisnici.add(k);
+            }
+        }
+        sviKorisnici.removeAll(obrisaniKorisnici);
         long idSelektiranogKorisnika = 0;
         if (sviKorisnici.size() > 0) {
             idSelektiranogKorisnika = sviKorisnici.get(0).getId();

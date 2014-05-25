@@ -2,6 +2,8 @@ package utilities;
 
 import entities.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -78,6 +80,8 @@ public class InicijalizatorBazeZaTestiranje {
         klijent1.getDostave().add(dostava2);
         klijent1.setProdajnaMjesta(new ArrayList<ProdajnoMjesto>());
         klijent1.getProdajnaMjesta().add(prodajnoMjesto1);
+        klijent1.setRacuni(new ArrayList<Racun>());
+        klijent1.getRacuni().add(racun1);
 
         klijent2.setIme("Mesnica Noj");
         klijent2.setTelefon("062/225-883");
@@ -141,7 +145,12 @@ public class InicijalizatorBazeZaTestiranje {
         dostava1.getPeciva().add(pecivoUDostavi1);
         dostava1.getPeciva().add(pecivoUDostavi2);
 
-        dostava2.setDatum(new Date());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            dostava2.setDatum(simpleDateFormat.parse("19/10/2013"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         dostava2.setKlijent(klijent1);
         dostava2.setNaziv("Dostava krofne i kifle 2");
         dostava2.setPreuzeo(korisnik1);
@@ -181,5 +190,6 @@ public class InicijalizatorBazeZaTestiranje {
         baza.spasiUBazu(prodajnoMjesto1);
 
         baza.spasiUBazu(dostava1);
+        baza.spasiUBazu(dostava2);
     }
 }
