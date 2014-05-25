@@ -328,22 +328,32 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
             sviKlijentiJComboBoxItemi.add(new JComboBoxItem(k.getId(), k.getIme()));
         }
         // Popuni obracunZaJComboBox sa JComboBoxItem-ovima
-        GuiUtilities.popuniJComboBoxSa(sviKlijentiJComboBoxItemi, obracunZaJComboBox, sviKlijentiJComboBoxItemi.get(0).getId());
+        if(sviKlijentiJComboBoxItemi.size() > 0){
+            GuiUtilities.popuniJComboBoxSa(sviKlijentiJComboBoxItemi, obracunZaJComboBox, sviKlijentiJComboBoxItemi.get(0).getId());
+        }
 
         // Popuni tabelu dostave sa dostavama za trenutnog klijenta
-        Klijent prviKlijentUJComboBoxu = sviKlijenti.get(0);
-        popuniDostaveJTableSaPodacimaOKlijentu(prviKlijentUJComboBoxu);
+        if(sviKlijenti.size() > 0) {
+            Klijent prviKlijentUJComboBoxu = sviKlijenti.get(0);
+            popuniDostaveJTableSaPodacimaOKlijentu(prviKlijentUJComboBoxu);
+        }
 
         // Oznaci prvi red u tabeli za dostave
-        oznaciNtiRedUJTable(dostaveJTable, 0);
+        if(dostaveJTable.getRowCount() > 0) {
+            oznaciNtiRedUJTable(dostaveJTable, 0);
+        }
 
         // Uzmi oznacenu dostavu iz tabele Dostave
-        Dostava oznacenaDostava = ((DostaveTableModel) dostaveJTable.getModel()).getDostaveZaKlijenta()
-                .get(dostaveJTable.getSelectedRow());
+        if(((DostaveTableModel) dostaveJTable.getModel()).getDostaveZaKlijenta() != null) {
+            Dostava oznacenaDostava = ((DostaveTableModel) dostaveJTable.getModel()).getDostaveZaKlijenta()
+                    .get(dostaveJTable.getSelectedRow());
 
-        // Popuni tabelu peciva sa podacima o pecivima iz oznacene dostave
-        PecivaDostaveTableModel pecivaDostaveTableModel = new PecivaDostaveTableModel(oznacenaDostava);
-        pecivaDostaveJTable.setModel(pecivaDostaveTableModel);
+            // Popuni tabelu peciva sa podacima o pecivima iz oznacene dostave
+            PecivaDostaveTableModel pecivaDostaveTableModel = new PecivaDostaveTableModel(oznacenaDostava);
+            pecivaDostaveJTable.setModel(pecivaDostaveTableModel);
+        } else {
+            pecivaDostaveJTable.setModel(new PecivaDostaveTableModel());
+        }
 
         // Izracunati zaradu i upisati ju u zarada labelu
         izracunajZaraduNaStavkeUPecivaDostaveJTable();
@@ -516,7 +526,9 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
 
     public Dostava dajSelektiranuDostavu() {
         if(((DostaveTableModel)dostaveJTable.getModel()).getDostaveZaKlijenta() != null) {
-            return ((DostaveTableModel)dostaveJTable.getModel()).getDostaveZaKlijenta().get(dostaveJTable.getSelectedRow());
+            if(dostaveJTable.getSelectedRow() >= 0 && dostaveJTable.getSelectedRow() < ((DostaveTableModel)dostaveJTable.getModel()).getDostaveZaKlijenta().size()) {
+                return ((DostaveTableModel)dostaveJTable.getModel()).getDostaveZaKlijenta().get(dostaveJTable.getSelectedRow());
+            }
         }
 
         return null;
