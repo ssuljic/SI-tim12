@@ -93,13 +93,13 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
         gbc_dostavaIzvrsenaJButton.gridy = 2;
         add(dostavaIzvrsenaJButton, gbc_dostavaIzvrsenaJButton);
         
-        dodajListeners();
+       // dodajListeners();
     }
     
     
     
     public void popuniSaPodacima(List<Dostava> sveDostave, long idSelektovaneDostave) {
-    	// TODO: Vjerovatno bi se još malo moglo refaktorisati ...
+    	// TODO: Vjerovatno bi se joï¿½ malo moglo refaktorisati ...
         if (sveDostave == null || sveDostave.size() <= 0) {
             ocistiPanel();
             return;
@@ -129,12 +129,15 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
         return dostavaIzvrsenaJButton;
     }
     
-    private void dodajListeners() {
+  //  private void dodajListeners() {
        // RacunovodstvoObracunavanjeController racunovodstvoObracunavanjeController = new RacunovodstvoObracunavanjeController(this);
-    	DostavljacPotvrdaDostaveController dostavljacPotvrdaDostaveController = new DostavljacPotvrdaDostaveController(this);
+    	//DostavljacPotvrdaDostaveController dostavljacPotvrdaDostaveController = new DostavljacPotvrdaDostaveController(this);
     	//obracunZaJComboBox.addItemListener(racunovodstvoObracunavanjeController.getRacunovodstvoObracunZaJComboBoxItemListener());
     	////// getDostaveJTable()).addListSelectionListener(dostavljacPotvrdaDostaveController.getDostavljacPotvrdaDostaveZaJTableItemListener());
-    }
+        //DostavljacIzbornikController dostavljacIzbornikController = new DostavljacIzbornikController(this);
+        //obracunZaJComboBox.addItemListener(racunovodstvoObracunavanjeController.getObracunavanjeObracunZaJComboBoxItemListener());
+
+   // }
 
     public void popuniSaSvimPodacimaIzBaze() {
     	Baza baza = Baza.getBaza();
