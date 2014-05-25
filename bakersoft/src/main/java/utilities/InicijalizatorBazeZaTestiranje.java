@@ -25,6 +25,8 @@ public class InicijalizatorBazeZaTestiranje {
         Pecivo pecivo1 = new Pecivo();
         Pecivo pecivo2 = new Pecivo();
         ProdajnoMjesto prodajnoMjesto1 = new ProdajnoMjesto();
+        ProdajnoMjesto prodajnoMjesto2 = new ProdajnoMjesto();
+        ProdajnoMjesto prodajnoMjesto3 = new ProdajnoMjesto();
         PecivoUDostavi pecivoUDostavi1 = new PecivoUDostavi();
         PecivoUDostavi pecivoUDostavi2 = new PecivoUDostavi();
         PecivoUDostavi pecivoUDostavi11 = new PecivoUDostavi();
@@ -154,6 +156,12 @@ public class InicijalizatorBazeZaTestiranje {
         prodajnoMjesto1.setAdresa("Tunguzija 23");
         prodajnoMjesto1.setKlijent(klijent1);
         prodajnoMjesto1.setMjesto("Sisha han");
+        prodajnoMjesto2.setAdresa("Kipar 554");
+        prodajnoMjesto2.setKlijent(klijent2);
+        prodajnoMjesto2.setMjesto("Tiru liru faktory");
+        prodajnoMjesto3.setAdresa("Bam bam 25");
+        prodajnoMjesto3.setKlijent(klijent1);
+        prodajnoMjesto3.setMjesto("Vispak kinder jaje");
 
         // Spasavanje u bazu
         baza.spasiUBazu(tipKorisnika1);
@@ -179,6 +187,8 @@ public class InicijalizatorBazeZaTestiranje {
         baza.spasiUBazu(pecivoUDostavi22);
 
         baza.spasiUBazu(prodajnoMjesto1);
+        baza.spasiUBazu(prodajnoMjesto2);
+        baza.spasiUBazu(prodajnoMjesto3);
 
         baza.spasiUBazu(dostava1);
     }
