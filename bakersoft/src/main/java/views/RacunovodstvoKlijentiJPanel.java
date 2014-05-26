@@ -19,6 +19,7 @@ import controllers.RacunovodstvoKlijentiController;
 import java.awt.*;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class RacunovodstvoKlijentiJPanel extends JPanel {
@@ -30,10 +31,15 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
     private JButton obrisiKlijentaJButton;
     private JButton dodajKlijentaJButton;
     private JButton dodajProdajnoMjestoJButton;
-    private JComboBox prodajnoMjestoJComboBox;
     private JButton obrisiProdajnoMjestoJButton;
+    private JButton btnSljedece;
+	private JLabel lblRb;
+    private JLabel lblBroj;
+    
 
-    /**
+
+
+	/**
      * Create the panel.
      */
     public RacunovodstvoKlijentiJPanel() {
@@ -126,7 +132,7 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
         podaciOFirmiJPanel.add(telefonJTextField, gbc_telefonJTextField);
 
         JPanel prodajnoMjestoJPanel = new JPanel();
-        prodajnoMjestoJPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Prodajno mjesto:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        prodajnoMjestoJPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Prodajna mjesta odabranog klijenta:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         GridBagConstraints gbc_prodajnoMjestoJPanel = new GridBagConstraints();
         gbc_prodajnoMjestoJPanel.insets = new Insets(0, 0, 5, 0);
         gbc_prodajnoMjestoJPanel.fill = GridBagConstraints.BOTH;
@@ -139,15 +145,31 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
         gbl_prodajnoMjestoJPanel.columnWeights = new double[]{0.0, 1.0, 1.0, Double.MIN_VALUE};
         gbl_prodajnoMjestoJPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         prodajnoMjestoJPanel.setLayout(gbl_prodajnoMjestoJPanel);
-
-        prodajnoMjestoJComboBox = new JComboBox();
-        GridBagConstraints gbc_prodajnoMjestoJComboBox = new GridBagConstraints();
-        gbc_prodajnoMjestoJComboBox.gridwidth = 2;
-        gbc_prodajnoMjestoJComboBox.insets = new Insets(0, 0, 5, 0);
-        gbc_prodajnoMjestoJComboBox.fill = GridBagConstraints.HORIZONTAL;
-        gbc_prodajnoMjestoJComboBox.gridx = 1;
-        gbc_prodajnoMjestoJComboBox.gridy = 0;
-        prodajnoMjestoJPanel.add(prodajnoMjestoJComboBox, gbc_prodajnoMjestoJComboBox);
+        
+        lblRb = new JLabel("Rb:");
+        lblRb.setHorizontalAlignment(SwingConstants.RIGHT);
+        GridBagConstraints gbc_lblRb = new GridBagConstraints();
+        gbc_lblRb.anchor = GridBagConstraints.EAST;
+        gbc_lblRb.insets = new Insets(0, 0, 5, 5);
+        gbc_lblRb.gridx = 0;
+        gbc_lblRb.gridy = 0;
+        prodajnoMjestoJPanel.add(lblRb, gbc_lblRb);
+        
+        lblBroj = new JLabel("broj");
+        GridBagConstraints gbc_lblBroj = new GridBagConstraints();
+        gbc_lblBroj.insets = new Insets(0, 0, 5, 5);
+        gbc_lblBroj.gridx = 1;
+        gbc_lblBroj.gridy = 0;
+        prodajnoMjestoJPanel.add(lblBroj, gbc_lblBroj);
+        
+        btnSljedece = new JButton("Sljede\u0107e ");
+        GridBagConstraints gbc_btnSljedece = new GridBagConstraints();
+        gbc_btnSljedece.fill = GridBagConstraints.HORIZONTAL;
+        gbc_btnSljedece.anchor = GridBagConstraints.EAST;
+        gbc_btnSljedece.insets = new Insets(0, 0, 5, 0);
+        gbc_btnSljedece.gridx = 2;
+        gbc_btnSljedece.gridy = 0;
+        prodajnoMjestoJPanel.add(btnSljedece, gbc_btnSljedece);
 
         JLabel prodajnoMjestoNazivJLabel = new JLabel("Naziv:");
         prodajnoMjestoNazivJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -239,7 +261,6 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
         return traziJComboBox;
     }
  
-
     public JTextField getNazivFirmeJTextField() {
         return nazivFirmeJTextField;
     }
@@ -264,10 +285,6 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
         return dodajKlijentaJButton;
     }
 
-    public JComboBox getProdajnoMjestoJComboBox() {
-        return prodajnoMjestoJComboBox;
-    }
-
     public JButton getObrisiProdajnoMjestoJButton() {
         return obrisiProdajnoMjestoJButton;
     }
@@ -275,55 +292,57 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
     public JButton getDodajProdajnoMjestoJButton() {
         return dodajProdajnoMjestoJButton;
     }
+    
+    public JButton getBtnSljedece() {
+		return btnSljedece;
+	}
+    
+    public JLabel getLblBroj() {
+		return lblBroj;
+	}
+
+	public void setLblBroj(JLabel lblBroj) {
+		this.lblBroj = lblBroj;
+	}
 
     public void dodajListeners() {
     	RacunovodstvoKlijentiController racunovodstvoKlijentiController = new RacunovodstvoKlijentiController(this);
-
+    	
         getTraziJComboBox().addItemListener(racunovodstvoKlijentiController.getKlijentiTraziJComboBoxItemListener());
-        getTraziJComboBox().addItemListener(racunovodstvoKlijentiController.getKlijentiProdajnoMjestoJComboBoxItemListener());
-
         getObrisiKlijentaJButton().addActionListener(racunovodstvoKlijentiController.getKlijentiObrisiJButtonActionListener());
         getDodajKlijentaJButton().addActionListener(racunovodstvoKlijentiController.getKlijentiDodajJButtonActionListener());
+        getBtnSljedece().addActionListener(racunovodstvoKlijentiController.getSljedeceProdajnoMjestoJButtonActionListener());
+        getDodajProdajnoMjestoJButton().addActionListener(racunovodstvoKlijentiController.getDodajProdajnoMjestoJButtonActionListener());
+        getObrisiProdajnoMjestoJButton().addActionListener(racunovodstvoKlijentiController.getObrisiProdajnoMjestoJButtonActionListener());
     }
 
     public void popuniSaPodacima(List<Klijent> sviKlijenti, long idSelektovanogKlijenta) {
-    	// TODO: Vjerovatno bi se još malo moglo refaktorisati ...
         if (sviKlijenti == null || sviKlijenti.size() <= 0) {
-            ocistiPanel();
+            ocistiGornjiDioPanela();
             return;
         }
         
         Klijent selektovaniKlijent = popuniTraziJComboBoxSa(sviKlijenti, idSelektovanogKlijenta);
         
         nazivFirmeJTextField.setText(selektovaniKlijent.getIme());
-        telefonJTextField.setText(selektovaniKlijent.getTelefon());
-        
+        telefonJTextField.setText(selektovaniKlijent.getTelefon());       
+
         Baza baza = Baza.getBaza();
-        List<ProdajnoMjesto> svaProdajnaMjesta = baza.dajSve(ProdajnoMjesto.class);
+        List<ProdajnoMjesto> svaProdajnaMjesta = baza.dajSveNeobrisano(ProdajnoMjesto.class);
         List<ProdajnoMjesto> klijentovaProdajnaMjesta = new ArrayList<ProdajnoMjesto>();
         for(ProdajnoMjesto pm : svaProdajnaMjesta){
         	if(pm.getKlijent().getId() == selektovaniKlijent.getId())
         		klijentovaProdajnaMjesta.add(pm);
         }
-        List<JComboBoxItem> klijentovaProdajnaMjestaJComboBoxItemi = napraviJComboBoxItemoveOdListeProdajnihMjesta(klijentovaProdajnaMjesta);
-        GuiUtilities.popuniJComboBoxListom(klijentovaProdajnaMjestaJComboBoxItemi, prodajnoMjestoJComboBox);
-        //ProdajnoMjesto selektiranoMjesto = popuniProdajnoMjestoJComboBoxSa(klijentovaProdajnaMjesta,idSelektovanogMjesta);
         
-        //prodajnoMjestoNazivJTextField.setText(selektiranoMjesto.getMjesto());
-        //prodajnoMjestoAdresaJTextField.setText(selektiranoMjesto.getAdresa());
-        //GuiUtilities.selektirajStavkuComboBoxaKojaImaId(selektovaniKlijent.getProdajnoMjesto().getId(), prodajnoMjestoJComboBox);
-
+        ProdajnoMjesto aktivno = klijentovaProdajnaMjesta.get(0);
+        prodajnoMjestoNazivJTextField.setText(aktivno.getMjesto());
+        prodajnoMjestoAdresaJTextField.setText(aktivno.getAdresa());
+        lblBroj.setText("1");
     }
     
-    private List<JComboBoxItem> napraviJComboBoxItemoveOdListeProdajnihMjesta(List<ProdajnoMjesto> svaProdajnaMjesta) {
-        List<JComboBoxItem> svaProdajnaMjestaJComboBoxItemi = new ArrayList<JComboBoxItem>();
-        for (ProdajnoMjesto pm : svaProdajnaMjesta) {
-        	svaProdajnaMjestaJComboBoxItemi.add(new JComboBoxItem(pm.getId(), pm.getMjesto()));
-        }
-        return svaProdajnaMjestaJComboBoxItemi;
-    }
 
-    private Klijent popuniTraziJComboBoxSa(List<Klijent> sviKlijenti, long idSelektovanogKlijenta) {
+    public Klijent popuniTraziJComboBoxSa(List<Klijent> sviKlijenti, long idSelektovanogKlijenta) {
     	Klijent selektovaniKlijent = null;
         JComboBox comboBoxKlijenti = getTraziJComboBox();
         // Izbjegavanje okidanja eventa SELECTED prilikom dinamickog dodavanja itemova
@@ -358,68 +377,37 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
         }
         return selektovaniKlijent;
     }
-    
-    private ProdajnoMjesto popuniProdajnoMjestoJComboBoxSa(List<ProdajnoMjesto> svaMjesta, long idSelektovanogMjesta) {
-    	ProdajnoMjesto selektovanoMjesto = null;
-        JComboBox comboBoxMjesta = getProdajnoMjestoJComboBox();
-        // Izbjegavanje okidanja eventa SELECTED prilikom dinamickog dodavanja itemova
-        ItemListener[] itemListeners = comboBoxMjesta.getItemListeners();
-        for (int i = 0; i < itemListeners.length; i++) {
-        	comboBoxMjesta.removeItemListener(itemListeners[i]);
-        }
 
-        int indexSelektovanogKlijentaUJComboBox = 0;
-        int index = 0;
-        comboBoxMjesta.removeAllItems();
-        for (ProdajnoMjesto m : svaMjesta) {
-        	comboBoxMjesta.addItem(new JComboBoxItem(m.getId(), m.getMjesto()));
-            if (m.getId() == idSelektovanogMjesta) {
-            	selektovanoMjesto = m;
-                indexSelektovanogKlijentaUJComboBox = index;
-            }
-            index++;
-        }
-
-        if (selektovanoMjesto == null) {
-            throw new NePostojiUBaziStavkaSaDatomIdVrijednosti("Pokusavate popuniti formu za " +
-                    "upravljanje korisnickim racunima. Id koji ste proslijedili ne postoji u bazi. " +
-                    "Taj id je: " + idSelektovanogMjesta);
-        }
-
-        comboBoxMjesta.setSelectedIndex(indexSelektovanogKlijentaUJComboBox);
-
-        // Vracanje EventListener-a na JComboBox
-        for (int i = 0; i < itemListeners.length; i++) {
-        	comboBoxMjesta.addItemListener(itemListeners[i]);
-        }
-        return selektovanoMjesto;
-    }
-
-    private void ocistiPanel() {
+    public void ocistiGornjiDioPanela() {
     	traziJComboBox.removeAllItems();
         nazivFirmeJTextField.setText("");
         telefonJTextField.setText("");
-
     }
 
     public Klijent dajPodatkeONovomKlijentu() {
     	Klijent klijent = new Klijent();
         klijent.setIme(getNazivFirmeJTextField().getText());
         klijent.setTelefon(getTelefonJTextField().getText());
-        if(prodajnoMjestoNazivJTextField.getText()!="" && prodajnoMjestoAdresaJTextField.getText()!=""){
+        //if(prodajnoMjestoNazivJTextField.getText()!="" && prodajnoMjestoAdresaJTextField.getText()!=""){
         	ProdajnoMjesto pm = new ProdajnoMjesto();
         	pm.setMjesto(prodajnoMjestoNazivJTextField.getText());
         	pm.setAdresa(prodajnoMjestoAdresaJTextField.getText());
         	pm.setKlijent(klijent);
         	Baza baza = Baza.getBaza();
         	baza.spasiUBazu(pm);
-        }
+        //}
         return klijent;
     }
+    
+    public void ocistiDonjiDioPanela() {
+    	prodajnoMjestoNazivJTextField.setText("");
+    	prodajnoMjestoAdresaJTextField.setText("");
+    }
+    
 
     public void popuniSaSvimPodacimaIzBaze() {
     	Baza baza = Baza.getBaza();
-        java.util.List<Klijent> sviKlijenti = baza.dajSve(Klijent.class);
+        java.util.List<Klijent> sviKlijenti = baza.dajSveNeobrisano(Klijent.class);
         long idSelektiranogKlijenta = 0;
         if (sviKlijenti.size() > 0) {
             idSelektiranogKlijenta = sviKlijenti.get(0).getId();

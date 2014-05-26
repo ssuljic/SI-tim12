@@ -4,6 +4,7 @@ import entities.Klijent;
 import entities.ProdajnoMjesto;
 import utilities.Baza;
 import utilities.JComboBoxItem;
+import views.RacunovodstvoJFrame;
 import views.RacunovodstvoKlijentiJPanel;
 
 import javax.swing.*;
@@ -18,6 +19,9 @@ import java.util.List;
 public class RacunovodstvoKlijentiController {
     private RacunovodstvoKlijentiJPanel racunovodstvoKlijentiJPanel;
 
+    
+    public int brojKlikova = 0;
+    public int brojKlikova2 = 0;
     public RacunovodstvoKlijentiController(RacunovodstvoKlijentiJPanel racunovodstvoKlijentiJPanel) {
         this.racunovodstvoKlijentiJPanel = racunovodstvoKlijentiJPanel;
     }
@@ -28,36 +32,14 @@ public class RacunovodstvoKlijentiController {
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     long idSelektiranogKlijenta = ((JComboBoxItem) racunovodstvoKlijentiJPanel.getTraziJComboBox().getSelectedItem()).getId();
-                    long idSelektiranogMjesta = ((JComboBoxItem) racunovodstvoKlijentiJPanel.getProdajnoMjestoJComboBox().getSelectedItem()).getId();
                     Baza baza = Baza.getBaza();
-                    List<Klijent> sviKlijenti = baza.dajSve(Klijent.class);
-                    List<ProdajnoMjesto> svaMjesta = baza.dajSve(ProdajnoMjesto.class);
+                    List<Klijent> sviKlijenti = baza.dajSveNeobrisano(Klijent.class);
                     racunovodstvoKlijentiJPanel.popuniSaPodacima(sviKlijenti, idSelektiranogKlijenta);
                 }
             }
         };
     }
     
-    public ItemListener getKlijentiProdajnoMjestoJComboBoxItemListener() {
-        return new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    long idSelektiranogKlijenta = ((JComboBoxItem) racunovodstvoKlijentiJPanel.getTraziJComboBox().getSelectedItem()).getId();
-                    long idSelektiranogMjesta = ((JComboBoxItem) racunovodstvoKlijentiJPanel.getProdajnoMjestoJComboBox().getSelectedItem()).getId();
-                    Baza baza = Baza.getBaza();
-                    List<Klijent> sviKlijenti = baza.dajSve(Klijent.class);
-                    List<ProdajnoMjesto> svaMjesta = baza.dajSve(ProdajnoMjesto.class);
-                    List<ProdajnoMjesto> klijentovaProdajnaMjesta = new ArrayList<ProdajnoMjesto>();
-                    for(ProdajnoMjesto pm : svaMjesta){
-                    	if(pm.getKlijent().getId() == idSelektiranogKlijenta)
-                    		klijentovaProdajnaMjesta.add(pm);
-                    }
-                    //racunovodstvoKlijentiJPanel.popuniSaPodacima(svaMjesta, idSelektiranogMjesta);
-                }
-            }
-        };
-    }
 
     public ActionListener getKlijentiObrisiJButtonActionListener() {
         return new ActionListener() {
@@ -66,21 +48,30 @@ public class RacunovodstvoKlijentiController {
                 if (racunovodstvoKlijentiJPanel.getTraziJComboBox().getItemCount() > 0) {
                     idSelektiranogKlijenta = ((JComboBoxItem) racunovodstvoKlijentiJPanel.getTraziJComboBox().getSelectedItem()).getId();
                 }
-                long idSelektiranogMjesta = ((JComboBoxItem) racunovodstvoKlijentiJPanel.getProdajnoMjestoJComboBox().getSelectedItem()).getId();
 
                 Baza baza = Baza.getBaza();
-                if (idSelektiranogKlijenta > 0) {
-                    baza.obrisiIzBaze(Klijent.class, idSelektiranogKlijenta);
+                
+                List<ProdajnoMjesto> svaProdajnaMjesta = baza.dajSveNeobrisano(ProdajnoMjesto.class);
+                for(ProdajnoMjesto pm : svaProdajnaMjesta){
+                	if(pm.getKlijent().getId() == idSelektiranogKlijenta){
+                		pm.setObrisano(true);
+                		baza.azuriraj(pm);
+                	}
                 }
-                List<ProdajnoMjesto> svaMjesta = baza.dajSve(ProdajnoMjesto.class);
-
-                List<Klijent> sviKlijenti = baza.dajSve(Klijent.class);
-                long idPrvogKlijenta = 0;
-                if (sviKlijenti.size() > 0) {
-                    idPrvogKlijenta = sviKlijenti.get(0).getId();
+                List<Klijent> sviKlijenti = baza.dajSveNeobrisano(Klijent.class);
+                int index = (int)(idSelektiranogKlijenta-1);
+                if (idSelektiranogKlijenta > 0) {
+                	sviKlijenti.get(index).setObrisano(true);
+                    baza.azuriraj(sviKlijenti.get(index));
                 }
                 
-                racunovodstvoKlijentiJPanel.popuniSaPodacima(sviKlijenti, idPrvogKlijenta);
+                List<Klijent> sviKlijenti2 = baza.dajSveNeobrisano(Klijent.class);
+                long idPrvogKlijenta = 0;
+                if (sviKlijenti2.size() > 0) {
+                    idPrvogKlijenta = sviKlijenti2.get(0).getId();
+                }
+                
+                racunovodstvoKlijentiJPanel.popuniSaPodacima(sviKlijenti2, idPrvogKlijenta); 
                 JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Uspješno ste izbrisali klijenta!");
             }
         };
@@ -89,10 +80,150 @@ public class RacunovodstvoKlijentiController {
     public ActionListener getKlijentiDodajJButtonActionListener() {
         return new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
-            	Klijent noviKlijent = racunovodstvoKlijentiJPanel.dajPodatkeONovomKlijentu();
+            	if(brojKlikova2 == 0 && racunovodstvoKlijentiJPanel.getNazivFirmeJTextField().getText()!="" && racunovodstvoKlijentiJPanel.getTelefonJTextField().getText()!=""){
+            		racunovodstvoKlijentiJPanel.getNazivFirmeJTextField().setText("");
+                	racunovodstvoKlijentiJPanel.getTelefonJTextField().setText("");
+                	racunovodstvoKlijentiJPanel.ocistiDonjiDioPanela();
+                	racunovodstvoKlijentiJPanel.ocistiGornjiDioPanela();
+                    racunovodstvoKlijentiJPanel.getDodajProdajnoMjestoJButton().setVisible(false);
+                    racunovodstvoKlijentiJPanel.getObrisiProdajnoMjestoJButton().setVisible(false);
+                    racunovodstvoKlijentiJPanel.getBtnSljedece().setVisible(false);
+                    racunovodstvoKlijentiJPanel.getObrisiKlijentaJButton().setVisible(false);
+                	brojKlikova2=1;
+                    JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Sada možete unijeti podatke za novog klijenta");
+
+            	}
+            	else{
+            		Klijent noviKlijent = racunovodstvoKlijentiJPanel.dajPodatkeONovomKlijentu();
+                    Baza baza = Baza.getBaza();
+                    baza.spasiUBazu(noviKlijent);
+                    
+                    List<Klijent> sviKlijenti2 = baza.dajSveNeobrisano(Klijent.class);
+                    long idPrvogKlijenta = 0;
+                    if (sviKlijenti2.size() > 0) {
+                        idPrvogKlijenta = sviKlijenti2.get(0).getId();
+                    }
+                    
+                    racunovodstvoKlijentiJPanel.popuniSaPodacima(sviKlijenti2, idPrvogKlijenta);
+                    brojKlikova2=0;
+                    racunovodstvoKlijentiJPanel.getDodajProdajnoMjestoJButton().setVisible(true);
+                    racunovodstvoKlijentiJPanel.getObrisiProdajnoMjestoJButton().setVisible(true);
+                    racunovodstvoKlijentiJPanel.getBtnSljedece().setVisible(true);
+                    racunovodstvoKlijentiJPanel.getObrisiKlijentaJButton().setVisible(true);
+                    JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Uspješno ste dodali klijenta: " + noviKlijent.getIme());
+
+            	}           	
+            }
+        };
+    }
+    
+    public ActionListener getSljedeceProdajnoMjestoJButtonActionListener() {
+        return new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+            	long idSelektiranogKlijenta = ((JComboBoxItem) racunovodstvoKlijentiJPanel.getTraziJComboBox().getSelectedItem()).getId();
                 Baza baza = Baza.getBaza();
-                baza.spasiUBazu(noviKlijent);
-                JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Uspješno ste dodali klijenta: " + noviKlijent.getIme());
+                List<Klijent> sviKlijenti = baza.dajSveNeobrisano(Klijent.class);
+            	Klijent selektovaniKlijent = racunovodstvoKlijentiJPanel.popuniTraziJComboBoxSa(sviKlijenti,idSelektiranogKlijenta);
+            	
+            	String redniBrojPolje = racunovodstvoKlijentiJPanel.getLblBroj().getText();
+            	int id; 
+            	if(redniBrojPolje == "Kliknite dugme Sljedeæi"){
+            		id=1;
+            	}
+            	else{
+            		id = Integer.parseInt(racunovodstvoKlijentiJPanel.getLblBroj().getText());
+            	}
+            	List<ProdajnoMjesto> svaProdajnaMjesta = baza.dajSveNeobrisano(ProdajnoMjesto.class);
+            	List<ProdajnoMjesto> klijentovaProdajnaMjesta = new ArrayList<ProdajnoMjesto>();
+                for(ProdajnoMjesto pm : svaProdajnaMjesta){
+                	if(pm.getKlijent().getId() == selektovaniKlijent.getId())
+                		klijentovaProdajnaMjesta.add(pm);
+                }
+                
+                if(id == klijentovaProdajnaMjesta.size())
+                	id=0;
+                
+                int novi_id = id+1;
+                racunovodstvoKlijentiJPanel.getProdajnoMjestoNazivJTextField().setText(klijentovaProdajnaMjesta.get(id).getMjesto());
+                racunovodstvoKlijentiJPanel.getProdajnoMjestoAdresaJTextField().setText(klijentovaProdajnaMjesta.get(id).getAdresa());
+                racunovodstvoKlijentiJPanel.getLblBroj().setText(""+novi_id+"");
+
+            }
+        };
+    }
+    
+    public ActionListener getDodajProdajnoMjestoJButtonActionListener() {
+        return new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+            	if(brojKlikova == 0 && racunovodstvoKlijentiJPanel.getProdajnoMjestoNazivJTextField().getText()!="" && racunovodstvoKlijentiJPanel.getProdajnoMjestoAdresaJTextField().getText()!=""){
+            		racunovodstvoKlijentiJPanel.getProdajnoMjestoNazivJTextField().setText("");
+                	racunovodstvoKlijentiJPanel.getProdajnoMjestoAdresaJTextField().setText("");
+                	brojKlikova=1;
+                    JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Sada možete unijeti podatke za novo prodajno mjesto odabranog klijenta");
+            	}
+            	else if((racunovodstvoKlijentiJPanel.getProdajnoMjestoNazivJTextField().getText()=="" || racunovodstvoKlijentiJPanel.getProdajnoMjestoAdresaJTextField().getText()=="") && brojKlikova==1){
+            		brojKlikova=0;
+                    JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Morate unijeti neke podatke kako bi mogli dodati mjesto: ");
+            	}
+            	else if(racunovodstvoKlijentiJPanel.getProdajnoMjestoNazivJTextField().getText()!="" && racunovodstvoKlijentiJPanel.getProdajnoMjestoAdresaJTextField().getText()!="" && brojKlikova==1){
+	        		long idSelektiranogKlijenta = ((JComboBoxItem) racunovodstvoKlijentiJPanel.getTraziJComboBox().getSelectedItem()).getId();
+	                Baza baza = Baza.getBaza();
+	                List<Klijent> sviKlijenti = baza.dajSveNeobrisano(Klijent.class);
+	            	Klijent selektovaniKlijent = racunovodstvoKlijentiJPanel.popuniTraziJComboBoxSa(sviKlijenti,idSelektiranogKlijenta);
+	            	
+	            	int id = Integer.parseInt(racunovodstvoKlijentiJPanel.getLblBroj().getText())+1;
+	            	
+	            	List<ProdajnoMjesto> svaProdajnaMjesta = baza.dajSveNeobrisano(ProdajnoMjesto.class);
+	            	List<ProdajnoMjesto> klijentovaProdajnaMjesta = new ArrayList<ProdajnoMjesto>();
+	                for(ProdajnoMjesto pm : svaProdajnaMjesta){
+	                	if(pm.getKlijent().getId() == selektovaniKlijent.getId())
+	                		klijentovaProdajnaMjesta.add(pm);
+	                }
+					
+					ProdajnoMjesto pm = new ProdajnoMjesto();
+					pm.setMjesto(racunovodstvoKlijentiJPanel.getProdajnoMjestoNazivJTextField().getText());
+					pm.setAdresa(racunovodstvoKlijentiJPanel.getProdajnoMjestoAdresaJTextField().getText());
+					pm.setKlijent(selektovaniKlijent);
+					baza.spasiUBazu(pm);
+					brojKlikova = 0;
+					racunovodstvoKlijentiJPanel.getLblBroj().setText("" + id + "");
+					JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(),"Uspješno ste dodali prodajno mjesto: "
+									+ pm.getMjesto() + " sa adresom: "
+									+ pm.getAdresa());
+            	}
+            }
+        };
+    }
+    
+    public ActionListener getObrisiProdajnoMjestoJButtonActionListener() {
+        return new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+
+				long idSelektiranogKlijenta = ((JComboBoxItem) racunovodstvoKlijentiJPanel.getTraziJComboBox().getSelectedItem()).getId();
+				Baza baza = Baza.getBaza();
+				List<Klijent> sviKlijenti = baza.dajSveNeobrisano(Klijent.class);
+				Klijent selektovaniKlijent = racunovodstvoKlijentiJPanel.popuniTraziJComboBoxSa(sviKlijenti,idSelektiranogKlijenta);
+
+				int indexUlisti = Integer.parseInt(racunovodstvoKlijentiJPanel.getLblBroj().getText()) -1;
+				
+				List<ProdajnoMjesto> svaProdajnaMjesta = baza.dajSveNeobrisano(ProdajnoMjesto.class);
+				List<ProdajnoMjesto> klijentovaProdajnaMjesta = new ArrayList<ProdajnoMjesto>();
+				for (ProdajnoMjesto pm : svaProdajnaMjesta) {
+					if (pm.getKlijent().getId() == selektovaniKlijent.getId())
+						klijentovaProdajnaMjesta.add(pm);
+				}
+				
+				if(indexUlisti==klijentovaProdajnaMjesta.size())
+					indexUlisti=0;
+				
+				klijentovaProdajnaMjesta.get(indexUlisti).setObrisano(true);
+                baza.azuriraj(klijentovaProdajnaMjesta.get(indexUlisti));
+
+                racunovodstvoKlijentiJPanel.getLblBroj().setText("Kliknite dugme Sljedeæi");
+                racunovodstvoKlijentiJPanel.ocistiDonjiDioPanela();            	
+
+                JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Uspješno ste izbrisali prodajno mjesto.");
+                
             }
         };
     }
