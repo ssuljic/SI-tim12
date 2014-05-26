@@ -23,6 +23,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.List;
+
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
@@ -35,22 +36,25 @@ import views.DostavljacPotvrdaDostaveJPanel;
 public class DostavljacPotvrdaDostaveController {
 	private DostavljacPotvrdaDostaveJPanel dostavljacPotvrdaDostaveJPanel;
 
+    /**
+     * @wbp.parser.entryPoint
+     */
     public DostavljacPotvrdaDostaveController(DostavljacPotvrdaDostaveJPanel dostavljacPotvrdaDostaveJPanel) {
         this.dostavljacPotvrdaDostaveJPanel = dostavljacPotvrdaDostaveJPanel;
     }
    
 
-    public ListSelectionListener getDostavljacPotvrdaDostaveZaJTableItemListener() {
+    /**
+     * @wbp.parser.entryPoint
+     */
+    public ListSelectionListener getDostavljacPotvrdaDostaveZaJTableListSelectionListener() {
         return new ListSelectionListener() {
 			
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				// TODO Auto-generated method stub
-				if (e.getFirstIndex() == ItemEvent.SELECTED) {
-                    long idSelektiraneDostave =(long)(dostavljacPotvrdaDostaveJPanel.getDostaveJTable().getSelectedRow());
-                    Baza baza = Baza.getBaza();
-                    List<Dostava> sveDostave= baza.dajSve(Dostava.class);
-                    dostavljacPotvrdaDostaveJPanel.popuniSaPodacima(sveDostave, idSelektiraneDostave);              
+				if (!e.getValueIsAdjusting()) {
+                    dostavljacPotvrdaDostaveJPanel.popuniSaPodacima(dostavljacPotvrdaDostaveJPanel.dajSelektiranuDostavu());              
                     
                 }
 			}

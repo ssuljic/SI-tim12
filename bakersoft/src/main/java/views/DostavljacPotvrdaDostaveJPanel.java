@@ -1,6 +1,12 @@
 package views;
 
 import javax.swing.*;
+
+import entities.Dostava;
+import entities.Klijent;
+import entities.Korisnik;
+import entities.Pecivo;
+
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionListener;
@@ -10,6 +16,7 @@ import controllers.DostavljacIzbornikController;
 import controllers.DostavljacPotvrdaDostaveController;
 import controllers.RacunovodstvoObracunavanjeController;
 import utilities.Baza;
+import utilities.GuiUtilities;
 import utilities.JComboBoxItem;
 import entities.Dostava;
 import entities.Klijent;
@@ -19,6 +26,8 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class DostavljacPotvrdaDostaveJPanel extends JPanel {
@@ -93,23 +102,59 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
         gbc_dostavaIzvrsenaJButton.gridy = 2;
         add(dostavaIzvrsenaJButton, gbc_dostavaIzvrsenaJButton);
         
-       // dodajListeners();
+        dodajListeners();
+        
+       
+        
+       
+   
+    
+     }
+    
+    private void osvjeziJPanel() {
+        this.validate();
+        this.repaint();
     }
     
-    
-    
-    public void popuniSaPodacima(List<Dostava> sveDostave, long idSelektovaneDostave) {
-    	// TODO: Vjerovatno bi se jo� malo moglo refaktorisati ...
-        if (sveDostave == null || sveDostave.size() <= 0) {
-            ocistiPanel();
-            return;
-        }
-        
-      //  Dostava selektovanaDostava= popuniTraziJComboBoxSa(sveDostave, idSelektovaneDostave);
-        
-       // nazivFirmeJTextField.setText(selektovaniKlijent.getIme());
-       // telefonJTextField.setText(selektovaniKlijent.getTelefon());
+    public void popuniSaPodacima(Dostava dostava) {
+        // Isprazni tabelu dostava
+        dostaveJTable.setModel(new DostaveTableModel());
+        // Isprazni tabelu peciva u dostavi
+        podaciODostaviJTable.setModel(new PecivaDostaveTableModel());
 
+        // Uzmi sve klijente iz baze
+        Baza baza = Baza.getBaza();
+      /*  List<Pecivo> svaPeciva= baza.dajSve(Pecivo.class);
+
+        // Napravi jComboBoxItem-ove sa svim klijentima
+        List<JComboBoxItem> sviKlijentiJComboBoxItemi = new ArrayList<JComboBoxItem>();
+        for (Klijent k : sviKlijenti) {
+            sviKlijentiJComboBoxItemi.add(new JComboBoxItem(k.getId(), k.getIme()));
+        }
+
+        // Popuni tabelu dostave sa dostavama za klijenta koji ima idSelektiranogKlijenta
+        Klijent selektiraniKlijent = baza.dajPoId(Klijent.class, idSelektiranogKlijenta);
+        popuniDostaveJTableSaPodacimaOKlijentu(selektiraniKlijent);
+     */ 
+        // Oznaci prvi red u tabeli za dostave
+        if (dostaveJTable.getRowCount() > 0) {
+            ListSelectionModel selectionModel = dostaveJTable.getSelectionModel();
+            selectionModel.setSelectionInterval(0, 0);
+
+            // Uzmi oznacenu dostavu iz tabele Dostave
+            Dostava oznacenaDostava = ((DostaveTableModel) dostaveJTable.getModel()).getDostaveZaKlijenta()
+                    .get(dostaveJTable.getSelectedRow());
+/*
+            // Popuni tabelu peciva sa podacima o pecivima iz oznacene dostave
+            PecivaDostaveTableModel pecivaDostaveTableModel = new PecivaDostaveTableModel(oznacenaDostava);
+            pecivaDostaveJTable.setModel(pecivaDostaveTableModel);
+
+            // Izracunati zaradu i upisati ju u zarada labelu
+            izracunajZaraduNaStavkeUPecivaDostaveJTable();
+        
+*/
+        }   // Refreshati panel
+        osvjeziJPanel();
     }
     
     private void ocistiPanel() {
@@ -129,24 +174,190 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
         return dostavaIzvrsenaJButton;
     }
     
-  //  private void dodajListeners() {
-       // RacunovodstvoObracunavanjeController racunovodstvoObracunavanjeController = new RacunovodstvoObracunavanjeController(this);
-    	//DostavljacPotvrdaDostaveController dostavljacPotvrdaDostaveController = new DostavljacPotvrdaDostaveController(this);
-    	//obracunZaJComboBox.addItemListener(racunovodstvoObracunavanjeController.getRacunovodstvoObracunZaJComboBoxItemListener());
-    	////// getDostaveJTable()).addListSelectionListener(dostavljacPotvrdaDostaveController.getDostavljacPotvrdaDostaveZaJTableItemListener());
-        //DostavljacIzbornikController dostavljacIzbornikController = new DostavljacIzbornikController(this);
-        //obracunZaJComboBox.addItemListener(racunovodstvoObracunavanjeController.getObracunavanjeObracunZaJComboBoxItemListener());
+   private void dodajListeners() {
+    	DostavljacPotvrdaDostaveController dostavljacPotvrdaDostaveController = new DostavljacPotvrdaDostaveController(this);
+    	dostaveJTable.getSelectionModel().addListSelectionListener(dostavljacPotvrdaDostaveController.getDostavljacPotvrdaDostaveZaJTableListSelectionListener());
+   }
+   class DostaveTableModel extends DefaultTableModel {
 
-   // }
+	    private Klijent klijent;
+	    private List<Dostava> dostaveZaKlijenta;
 
+	    DostaveTableModel() {
+	    }
+
+	    DostaveTableModel(Klijent klijent) {
+	        if(klijent != null) {
+	            this.klijent = klijent;
+	            this.dostaveZaKlijenta = (List<Dostava>) klijent.getDostave();
+	            List<Dostava> obrisaneDostave = new ArrayList<Dostava>();
+	            for (Dostava d : obrisaneDostave) {
+	                if (d.isObrisano()) {
+	                    obrisaneDostave.add(d);
+	                }
+	            }
+	            dostaveZaKlijenta.removeAll(obrisaneDostave);
+	        }
+	    }
+
+	    public Klijent getKlijent() {
+	        return klijent;
+	    }
+
+	    public List<Dostava> getDostaveZaKlijenta() {
+	        return dostaveZaKlijenta;
+	    }
+
+	    @Override
+	    public int getRowCount() {
+	        if (dostaveZaKlijenta != null) {
+	            return dostaveZaKlijenta.size();
+	        }
+
+	        return 0;
+	    }
+
+	    @Override
+	    public int getColumnCount() {
+	        return 4;
+	    }
+
+	    @Override
+	    public String getColumnName(int columnIndex) {
+	        switch (columnIndex) {
+	            case 0:
+	                return "Naziv dostave";
+	            case 1:
+	                return "Isporucioc";
+	            case 2:
+	                return "Datum dostave";
+	            case 3:
+	                return "Dostava isporucena";
+	            default:
+	                return null;
+	        }
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass(int columnIndex) {
+	        switch (columnIndex) {
+	            case 0:
+	                return String.class;
+	            case 1:
+	                return String.class;
+	            case 2:
+	                return Date.class;
+	            case 3:
+	                return Boolean.class;
+	            default:
+	                return null;
+	        }
+	    }
+
+	    @Override
+	    public boolean isCellEditable(int rowIndex, int columnIndex) {
+	        return false;
+	    }
+
+	    @Override
+	    public Object getValueAt(int rowIndex, int columnIndex) {
+	        if(dostaveZaKlijenta != null) {
+	            switch (columnIndex) {
+	                case 0:
+	                    return dostaveZaKlijenta.get(rowIndex).getNaziv();
+	                case 1:
+	                    Korisnik korisnikKojiJePreuzeoDostavu = dostaveZaKlijenta.get(rowIndex).getPreuzeo();
+	                    return korisnikKojiJePreuzeoDostavu.getIme() + " " + korisnikKojiJePreuzeoDostavu.getPrezime();
+	                case 2:
+	                    return dostaveZaKlijenta.get(rowIndex).getDatum();
+	                case 3:
+	                    return dostaveZaKlijenta.get(rowIndex).isJeIsporuceno() ? Boolean.TRUE : Boolean.FALSE;
+	                default:
+	                    return null;
+	            }
+	        }
+
+	        return null;
+	    }
+
+	    /*@Override
+	    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+
+	    }
+
+	    @Override
+	    public void addTableModelListener(TableModelListener l) {
+
+	    }
+
+	    @Override
+	    public void removeTableModelListener(TableModelListener l) {
+
+	    }*/
+	}
+   
+   public Dostava dajSelektiranuDostavu() {
+       if(((DostaveTableModel)dostaveJTable.getModel()).getDostaveZaKlijenta() != null) {
+           if(dostaveJTable.getSelectedRow() >= 0 && dostaveJTable.getSelectedRow() < ((DostaveTableModel)dostaveJTable.getModel()).getDostaveZaKlijenta().size()) {
+               return ((DostaveTableModel)dostaveJTable.getModel()).getDostaveZaKlijenta().get(dostaveJTable.getSelectedRow());
+           }
+       }
+
+       return null;
+   }
+   private void oznaciNtiRedUJTable(JTable jTable, int rowIndex) {
+       ListSelectionModel selectionModel = jTable.getSelectionModel();
+       ListSelectionListener[] listeners = ((DefaultListSelectionModel) selectionModel).getListSelectionListeners();
+       for (ListSelectionListener l : listeners) {
+           selectionModel.removeListSelectionListener(l);
+       }
+       selectionModel.setSelectionInterval(rowIndex, rowIndex);
+       for (ListSelectionListener l : listeners) {
+           selectionModel.addListSelectionListener(l);
+       }
+   }
     public void popuniSaSvimPodacimaIzBaze() {
-    	Baza baza = Baza.getBaza();
-    	 java.util.List<Dostava> sveDostave = baza.dajSve(Dostava.class);
-        long idSelektiraneDostave = 0;
-        if (sveDostave.size() > 0) {
-            idSelektiraneDostave= sveDostave.get(0).getId();
+    	// Uzmi sve klijente iz baze
+        Baza baza = Baza.getBaza();
+        List<Klijent> sviKlijenti = baza.dajSve(Klijent.class);
+
+     /*
+
+        // Napravi jComboBoxItem-ove sa svim klijentima
+        List<JComboBoxItem> sviKlijentiJComboBoxItemi = new ArrayList<JComboBoxItem>();
+        for (Klijent k : sviKlijenti) {
+            sviKlijentiJComboBoxItemi.add(new JComboBoxItem(k.getId(), k.getIme()));
         }
-        popuniSaPodacima(sveDostave, idSelektiraneDostave);
-        
+        // Popuni obracunZaJComboBox sa JComboBoxItem-ovima
+        if(sviKlijentiJComboBoxItemi.size() > 0){
+            GuiUtilities.popuniJComboBoxSa(sviKlijentiJComboBoxItemi, obracunZaJComboBox, sviKlijentiJComboBoxItemi.get(0).getId());
+        }
+
+        // Popuni tabelu dostave sa dostavama za trenutnog klijenta
+        if(sviKlijenti.size() > 0) {
+            Klijent prviKlijentUJComboBoxu = sviKlijenti.get(0);
+            popuniDostaveJTableSaPodacimaOKlijentu(prviKlijentUJComboBoxu);
+        }
+*/
+        // Oznaci prvi red u tabeli za dostave
+        if(dostaveJTable.getRowCount() > 0) {
+            oznaciNtiRedUJTable(dostaveJTable, 0);
+        }
+
+        // Uzmi oznacenu dostavu iz tabele Dostave
+        if(((DostaveTableModel) dostaveJTable.getModel()).getDostaveZaKlijenta() != null) {
+            Dostava oznacenaDostava = ((DostaveTableModel) dostaveJTable.getModel()).getDostaveZaKlijenta()
+                    .get(dostaveJTable.getSelectedRow());
+
+            // Popuni tabelu peciva sa podacima o pecivima iz oznacene dostave
+      //////   } else {
+   //         pecivaDostaveJTable.setModel(new PecivaDostaveTableModel());
+        }
+
+        // Izracunati zaradu i upisati ju u zarada labelu
+      //  izracunajZaraduNaStavkeUPecivaDostaveJTable();
+
+        // Refreshati panel
+        osvjeziJPanel();
     }
 }
