@@ -84,7 +84,8 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
         JPanel podaciOFirmiJPanel = new JPanel();
         podaciOFirmiJPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Podaci o firmi:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
         GridBagConstraints gbc_podaciOFirmiJPanel = new GridBagConstraints();
-        gbc_podaciOFirmiJPanel.insets = new Insets(0, 0, 5, 0);
+        gbc_podaciOFirmiJPanel.ipady = 12;
+        gbc_podaciOFirmiJPanel.insets = new Insets(0, 0, 10, 0);
         gbc_podaciOFirmiJPanel.fill = GridBagConstraints.BOTH;
         gbc_podaciOFirmiJPanel.gridx = 0;
         gbc_podaciOFirmiJPanel.gridy = 1;
@@ -134,7 +135,8 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
         JPanel prodajnoMjestoJPanel = new JPanel();
         prodajnoMjestoJPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Prodajna mjesta odabranog klijenta:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         GridBagConstraints gbc_prodajnoMjestoJPanel = new GridBagConstraints();
-        gbc_prodajnoMjestoJPanel.insets = new Insets(0, 0, 5, 0);
+        gbc_prodajnoMjestoJPanel.ipady = 5;
+        gbc_prodajnoMjestoJPanel.insets = new Insets(0, 0, 12, 0);
         gbc_prodajnoMjestoJPanel.fill = GridBagConstraints.BOTH;
         gbc_prodajnoMjestoJPanel.gridx = 0;
         gbc_prodajnoMjestoJPanel.gridy = 2;
@@ -226,7 +228,11 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
 
         JPanel dugmadJPanel = new JPanel();
         GridBagConstraints gbc_dugmadJPanel = new GridBagConstraints();
-        gbc_dugmadJPanel.fill = GridBagConstraints.BOTH;
+        gbc_dugmadJPanel.ipady = 3;
+        gbc_dugmadJPanel.anchor = GridBagConstraints.SOUTH;
+        gbc_dugmadJPanel.weighty = 1.0;
+        gbc_dugmadJPanel.fill = GridBagConstraints.HORIZONTAL;
+        gbc_dugmadJPanel.ipadx = 20;
         gbc_dugmadJPanel.gridx = 0;
         gbc_dugmadJPanel.gridy = 3;
         add(dugmadJPanel, gbc_dugmadJPanel);
