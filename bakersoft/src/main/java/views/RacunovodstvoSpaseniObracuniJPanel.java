@@ -167,6 +167,7 @@ public class RacunovodstvoSpaseniObracuniJPanel extends JPanel {
         RacunovodstvoSpaseniObracuniController racunovodstvoSpaseniObracuniController = new RacunovodstvoSpaseniObracuniController(this);
 
         obracunZaJComboBox.addItemListener(racunovodstvoSpaseniObracuniController.getSpaseniObracuniObracunZaJComboBoxItemListener());
+        obrisiObracunJButton.addActionListener(racunovodstvoSpaseniObracuniController.getSpaseniObracuniObrisiJButtonActionListener());
     }
     
     class ObracuniTableModel extends DefaultTableModel {
@@ -181,10 +182,9 @@ public class RacunovodstvoSpaseniObracuniJPanel extends JPanel {
             if(klijent != null) {
                 this.klijent = klijent;
                 this.racuniZaKlijenta = (List<Racun>) klijent.getRacuni();
-                System.out.print(this.racuniZaKlijenta.size());
                 List<Racun> obrisaniRacuni = new ArrayList<Racun>();
-                for (Racun d : obrisaniRacuni) {
-                    if (d.isObrisano()) {
+                for (Racun d : this.racuniZaKlijenta) {
+                	if (d.isObrisano()) {
                         obrisaniRacuni.add(d);
                     }
                 }
@@ -306,7 +306,7 @@ public class RacunovodstvoSpaseniObracuniJPanel extends JPanel {
         sviKlijenti.removeAll(obrisaniKlijenti);
     }
     
-    private void popuniObracuniJTableSaPodacimaOKlijentu(Klijent selektiraniKlijent) {
+    public void popuniObracuniJTableSaPodacimaOKlijentu(Klijent selektiraniKlijent) {
         TableModel obracuniTableModel;
         if (selektiraniKlijent != null) {
             obracuniTableModel = new ObracuniTableModel(selektiraniKlijent);
@@ -316,7 +316,6 @@ public class RacunovodstvoSpaseniObracuniJPanel extends JPanel {
             obracuniTableModel = new DostaveTableModel(prazanKlijent);
         }
         obracuniJTable.setModel(obracuniTableModel);
-        System.out.print(obracuniJTable.getRowCount());
     }
     
     public void popuniSaPodacima(long idSelektiranogKlijenta) {

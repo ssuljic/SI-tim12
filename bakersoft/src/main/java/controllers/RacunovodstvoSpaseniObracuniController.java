@@ -19,6 +19,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import utilities.JComboBoxItem;
 import views.RacunovodstvoSpaseniObracuniJPanel;
@@ -38,6 +39,26 @@ public class RacunovodstvoSpaseniObracuniController {
                     long idSelektiranogKlijenta = ((JComboBoxItem) racunovodstvoSpaseniObracuniJPanel.getObracunZaJComboBox().getSelectedItem()).getId();
                     racunovodstvoSpaseniObracuniJPanel.popuniSaPodacima(idSelektiranogKlijenta);
                 }
+            }
+        };
+    }
+    
+    public ActionListener getSpaseniObracuniObrisiJButtonActionListener() {
+        return new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                int rbSelektiranogRacuna = 0;
+                long idSelektiranogKorisnika = 0;
+                if (racunovodstvoSpaseniObracuniJPanel.getObracunZaJComboBox().getItemCount() > 0) {
+                    idSelektiranogKorisnika = ((JComboBoxItem) racunovodstvoSpaseniObracuniJPanel.getObracunZaJComboBox().getSelectedItem()).getId();
+                }
+                rbSelektiranogRacuna = (int) racunovodstvoSpaseniObracuniJPanel.getObracuniJTable().getSelectedRow();
+                
+                Baza baza = Baza.getBaza();
+                Klijent klijent = baza.dajPoId(Klijent.class, idSelektiranogKorisnika);
+                ((Racun)klijent.getRacuni().toArray()[rbSelektiranogRacuna]).setObrisano(true);
+                
+                baza.spasiUBazu(klijent);
+                racunovodstvoSpaseniObracuniJPanel.popuniObracuniJTableSaPodacimaOKlijentu(klijent);
             }
         };
     }
