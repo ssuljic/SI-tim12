@@ -23,7 +23,8 @@ import java.util.Collection;
 import java.util.List;
 
 public class RacunovodstvoKlijentiJPanel extends JPanel {
-    private JTextField nazivFirmeJTextField;
+
+	private JTextField nazivFirmeJTextField;
     private JTextField telefonJTextField;
     private JTextField prodajnoMjestoNazivJTextField;
     private JTextField prodajnoMjestoAdresaJTextField;
@@ -310,6 +311,8 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
 	public void setLblBroj(JLabel lblBroj) {
 		this.lblBroj = lblBroj;
 	}
+	
+
 
     public void dodajListeners() {
     	RacunovodstvoKlijentiController racunovodstvoKlijentiController = new RacunovodstvoKlijentiController(this);
@@ -385,7 +388,6 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
     }
 
     public void ocistiGornjiDioPanela() {
-    	traziJComboBox.removeAllItems();
         nazivFirmeJTextField.setText("");
         telefonJTextField.setText("");
     }
@@ -408,6 +410,20 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
     public void ocistiDonjiDioPanela() {
     	prodajnoMjestoNazivJTextField.setText("");
     	prodajnoMjestoAdresaJTextField.setText("");
+    }
+    
+    public void sakrijDugmad() {
+    	getDodajProdajnoMjestoJButton().setVisible(false);
+        getObrisiProdajnoMjestoJButton().setVisible(false);
+        getBtnSljedece().setVisible(false);
+        getObrisiKlijentaJButton().setVisible(false);
+    }
+    
+    public void prikaziDugmad() {
+    	getDodajProdajnoMjestoJButton().setVisible(true);
+        getObrisiProdajnoMjestoJButton().setVisible(true);
+        getBtnSljedece().setVisible(true);
+        getObrisiKlijentaJButton().setVisible(true);
     }
     
 

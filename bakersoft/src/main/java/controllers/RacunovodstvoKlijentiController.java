@@ -81,14 +81,9 @@ public class RacunovodstvoKlijentiController {
         return new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
             	if(brojKlikova2 == 0 && racunovodstvoKlijentiJPanel.getNazivFirmeJTextField().getText()!="" && racunovodstvoKlijentiJPanel.getTelefonJTextField().getText()!=""){
-            		racunovodstvoKlijentiJPanel.getNazivFirmeJTextField().setText("");
-                	racunovodstvoKlijentiJPanel.getTelefonJTextField().setText("");
                 	racunovodstvoKlijentiJPanel.ocistiDonjiDioPanela();
                 	racunovodstvoKlijentiJPanel.ocistiGornjiDioPanela();
-                    racunovodstvoKlijentiJPanel.getDodajProdajnoMjestoJButton().setVisible(false);
-                    racunovodstvoKlijentiJPanel.getObrisiProdajnoMjestoJButton().setVisible(false);
-                    racunovodstvoKlijentiJPanel.getBtnSljedece().setVisible(false);
-                    racunovodstvoKlijentiJPanel.getObrisiKlijentaJButton().setVisible(false);
+                    racunovodstvoKlijentiJPanel.sakrijDugmad();
                 	brojKlikova2=1;
                     JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Sada možete unijeti podatke za novog klijenta");
 
@@ -106,10 +101,7 @@ public class RacunovodstvoKlijentiController {
                     
                     racunovodstvoKlijentiJPanel.popuniSaPodacima(sviKlijenti2, idPrvogKlijenta);
                     brojKlikova2=0;
-                    racunovodstvoKlijentiJPanel.getDodajProdajnoMjestoJButton().setVisible(true);
-                    racunovodstvoKlijentiJPanel.getObrisiProdajnoMjestoJButton().setVisible(true);
-                    racunovodstvoKlijentiJPanel.getBtnSljedece().setVisible(true);
-                    racunovodstvoKlijentiJPanel.getObrisiKlijentaJButton().setVisible(true);
+                    racunovodstvoKlijentiJPanel.prikaziDugmad();
                     JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Uspješno ste dodali klijenta: " + noviKlijent.getIme());
 
             	}           	
@@ -156,8 +148,7 @@ public class RacunovodstvoKlijentiController {
         return new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
             	if(brojKlikova == 0 && racunovodstvoKlijentiJPanel.getProdajnoMjestoNazivJTextField().getText()!="" && racunovodstvoKlijentiJPanel.getProdajnoMjestoAdresaJTextField().getText()!=""){
-            		racunovodstvoKlijentiJPanel.getProdajnoMjestoNazivJTextField().setText("");
-                	racunovodstvoKlijentiJPanel.getProdajnoMjestoAdresaJTextField().setText("");
+            		racunovodstvoKlijentiJPanel.ocistiDonjiDioPanela();
                 	brojKlikova=1;
                     JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Sada možete unijeti podatke za novo prodajno mjesto odabranog klijenta");
             	}
