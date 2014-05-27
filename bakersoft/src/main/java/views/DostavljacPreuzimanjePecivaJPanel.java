@@ -5,6 +5,8 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class DostavljacPreuzimanjePecivaJPanel extends JPanel {
     private JTextField nazivDostaveJTextField;
@@ -34,6 +36,8 @@ public class DostavljacPreuzimanjePecivaJPanel extends JPanel {
         add(nazivDostaveJLabel, gbc_nazivDostaveJLabel);
 
         nazivDostaveJTextField = new JTextField();
+        
+        
         GridBagConstraints gbc_nazivDostaveJTextField = new GridBagConstraints();
         gbc_nazivDostaveJTextField.insets = new Insets(0, 0, 5, 0);
         gbc_nazivDostaveJTextField.fill = GridBagConstraints.HORIZONTAL;
@@ -76,6 +80,13 @@ public class DostavljacPreuzimanjePecivaJPanel extends JPanel {
         dugmadJPanel.setLayout(gbl_dugmadJPanel);
 
         ukloniPecivoJButton = new JButton("Ukloni pecivo");
+        ukloniPecivoJButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        		
+        	}
+        });
+        
+        
         GridBagConstraints gbc_ukloniPecivoJButton = new GridBagConstraints();
         gbc_ukloniPecivoJButton.fill = GridBagConstraints.HORIZONTAL;
         gbc_ukloniPecivoJButton.insets = new Insets(0, 0, 5, 5);
@@ -100,6 +111,7 @@ public class DostavljacPreuzimanjePecivaJPanel extends JPanel {
         gbc_preuzmiDostavuJButton.gridy = 1;
         dugmadJPanel.add(preuzmiDostavuJButton, gbc_preuzmiDostavuJButton);
 
+        
     }
 
     public JTable getDostavaJTable() {
