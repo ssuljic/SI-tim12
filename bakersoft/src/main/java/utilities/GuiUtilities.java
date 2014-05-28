@@ -120,4 +120,36 @@ public class GuiUtilities {
             jComboBox.addItemListener(itemListeners[i]);
         }
     }
+    
+    
+    public static void popuniJComboBoxSa(List<JComboBoxItem> jComboBoxStavke, JComboBox jComboBox, String naziv) {
+        // Izbjegavanje okidanja eventa SELECTED prilikom dinamickog dodavanja itemova
+        ItemListener[] itemListeners = jComboBox.getItemListeners();
+        for (int i = 0; i < itemListeners.length; i++) {
+            jComboBox.removeItemListener(itemListeners[i]);
+        }
+
+        // Brisanje prethodnog sadrzaja jComboBox-a
+        jComboBox.removeAllItems();
+
+        // Pronalazenje indeksa unutar JComboBox-a za selektirani jComboBoxItem
+        int indeksSelektiraneStavke = -1;
+        int tekucaStavkaUJComboBoxu = 0;
+        for (JComboBoxItem j : jComboBoxStavke) {
+            jComboBox.addItem(j);
+            if(j.getSadrzaj() == naziv) {
+                indeksSelektiraneStavke = tekucaStavkaUJComboBoxu;
+            }
+            tekucaStavkaUJComboBoxu ++;
+        }
+
+        if(indeksSelektiraneStavke >= 0) {
+            jComboBox.setSelectedIndex(indeksSelektiraneStavke);
+        }
+
+        // Vracanje EventListener-a na JComboBox
+        for (int i = 0; i < itemListeners.length; i++) {
+            jComboBox.addItemListener(itemListeners[i]);
+        }
+    }
 }
