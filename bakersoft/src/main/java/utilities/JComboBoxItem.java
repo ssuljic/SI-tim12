@@ -13,6 +13,11 @@ public class JComboBoxItem implements Serializable {
         this.id = id;
         this.sadrzaj = sadrzaj;
     }
+    
+    public JComboBoxItem(String sadrzaj)
+    {
+    	this.sadrzaj=sadrzaj;
+    }
 
     public long getId() {
         return id;
