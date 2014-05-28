@@ -8,45 +8,40 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-import controllers.DostavljacIzbornikController;
-import controllers.RacunovodstvoObracunavanjeController;
 import utilities.Baza;
 import utilities.JComboBoxItem;
-import views.RacunovodstvoObracunavanjeJPanel;
 import entities.Dostava;
 import entities.Klijent;
+import entities.Korisnik;
+import entities.Racun;
 import exceptions.NePostojiUBaziStavkaSaDatomIdVrijednosti;
-
+import views.DostavljacJFrame;
+import views.DostavljacPotvrdaDostaveJPanel;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import utilities.JTableItem;
-import views.DostavljacPotvrdaDostaveJPanel;
 
 public class DostavljacPotvrdaDostaveController {
-	private DostavljacPotvrdaDostaveJPanel dostavljacPotvrdaDostaveJPanel;
+    private DostavljacPotvrdaDostaveJPanel dostavljacPotvrdaDostaveJPanel;
 
-    /**
-     * @wbp.parser.entryPoint
-     */
-    public DostavljacPotvrdaDostaveController(DostavljacPotvrdaDostaveJPanel dostavljacPotvrdaDostaveJPanel) {
+    public DostavljacPotvrdaDostaveController(DostavljacPotvrdaDostaveJPanel racunovodstvoObracunavanjeJPanel) {
         this.dostavljacPotvrdaDostaveJPanel = dostavljacPotvrdaDostaveJPanel;
     }
    
-
-    /**
-     * @wbp.parser.entryPoint
-     */
     public ListSelectionListener getDostavljacPotvrdaDostaveZaJTableListSelectionListener() {
         return new ListSelectionListener() {
 			
@@ -55,9 +50,9 @@ public class DostavljacPotvrdaDostaveController {
 				// TODO Auto-generated method stub
 				if (!e.getValueIsAdjusting()) {
                     dostavljacPotvrdaDostaveJPanel.popuniSaPodacima(dostavljacPotvrdaDostaveJPanel.dajSelektiranuDostavu());              
-                    
                 }
 			}
 		};
 }
+
 }

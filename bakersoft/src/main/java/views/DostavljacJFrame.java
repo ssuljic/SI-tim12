@@ -3,6 +3,7 @@ package views;
 import controllers.DostavljacIzbornikController;
 
 import javax.swing.*;
+
 import java.awt.*;
 
 public class DostavljacJFrame extends JFrame {
@@ -57,10 +58,14 @@ public class DostavljacJFrame extends JFrame {
         ukloniPostojecePanele();
         dostavljacPotvrdaDostaveJPanel.popuniSaSvimPodacimaIzBaze();
         contentPane.add(dostavljacPotvrdaDostaveJPanel, BorderLayout.CENTER);
+        osvjeziFormu();
+    }
+    
+    public void osvjeziFormu() {
         this.validate();
         this.repaint();
     }
-
+   
     public void dodajListeners() {
         DostavljacIzbornikController dostavljacIzbornikController = new DostavljacIzbornikController(this);
 
