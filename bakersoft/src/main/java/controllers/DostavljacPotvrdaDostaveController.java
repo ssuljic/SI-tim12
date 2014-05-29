@@ -13,6 +13,7 @@ import utilities.JComboBoxItem;
 import entities.Dostava;
 import entities.Klijent;
 import entities.Korisnik;
+import entities.PecivoUDostavi;
 import entities.Racun;
 import exceptions.NePostojiUBaziStavkaSaDatomIdVrijednosti;
 import views.DostavljacJFrame;
@@ -49,8 +50,10 @@ public class DostavljacPotvrdaDostaveController {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				// TODO Auto-generated method stub
+				Baza baza = Baza.getBaza();
+				List<PecivoUDostavi> svaPecivaUDostavi = baza.dajSve(PecivoUDostavi.class);
 				if (!e.getValueIsAdjusting()) {
-                    dostavljacPotvrdaDostaveJPanel.popuniSaPodacima(dostavljacPotvrdaDostaveJPanel.dajSelektiranuDostavu());              
+                    dostavljacPotvrdaDostaveJPanel.popuniSaPodacima(dostavljacPotvrdaDostaveJPanel.dajSelektiranuDostavu(),svaPecivaUDostavi);              
                 }
 			}
 		};

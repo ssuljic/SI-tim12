@@ -73,7 +73,19 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
             public Class getColumnClass(int columnIndex) {
                 return columnTypes[columnIndex];
             }
-        });
+            boolean[] columnEditables = new boolean[]{
+                    false
+            };
+
+            public boolean isCellEditable(int row, int column) {
+                return columnEditables[column];
+            }
+      
+    }
+        
+        		
+        		
+        		);
         dostaveJScrollPane.setViewportView(dostaveJTable);
 
         JScrollPane pecivaUDostaviJScrollPane = new JScrollPane();
@@ -143,6 +155,7 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
         // Uzmi sve klijente iz baze
         Baza baza = Baza.getBaza();
         List<Dostava> sveDostave= baza.dajSve(Dostava.class);   
+        List<PecivoUDostavi>svaPecivaUDostavi = baza.dajSve(PecivoUDostavi.class);
 
         // izfiltriraj one klijente koji su obrisani
        ukloniObrisaneDostaveIz(sveDostave);
@@ -179,7 +192,7 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
             Dostava oznacenaDostava = ((DostaveTableModel) dostaveJTable.getModel()).getDostaveZaKlijenta().get(dostaveJTable.getSelectedRow());
 
             // Popuni tabelu peciva sa podacima o pecivima iz oznacene dostave
-            PecivaDostaveTableModel pecivaDostaveTableModel = new PecivaDostaveTableModel(oznacenaDostava);
+            PecivaDostaveTableModel pecivaDostaveTableModel = new PecivaDostaveTableModel(oznacenaDostava,svaPecivaUDostavi);
            	podaciODostaviJTable.setModel(pecivaDostaveTableModel);
         } else {
             podaciODostaviJTable.setModel(new PecivaDostaveTableModel());
@@ -191,11 +204,11 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
         // Refreshati panel
         osvjeziJPanel();
     }
-
-    private void popuniDostaveJTableSaPodacimaODostavi(Dostava selektiranaDostava) {
+/*
+    private void popuniDostaveJTableSaPodacimaODostavi(Dostava selektiranaDostava , PecivoUDostavi svaPecivaUDostavi) {
         PecivaDostaveTableModel pecivaDostaveTableModel;
         if (selektiranaDostava != null) {
-            pecivaDostaveTableModel = new PecivaDostaveTableModel(selektiranaDostava);
+            pecivaDostaveTableModel = new PecivaDostaveTableModel(selektiranaDostava , svaPecivaUDostavi);
         } else {
             Dostava praznaDostava = new Dostava();
            
@@ -203,7 +216,7 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
         }
         podaciODostaviJTable.setModel(pecivaDostaveTableModel);
     }
-   
+   */
 /*
     private void izracunajZaraduNaStavkeUPecivaDostaveJTable() {
         double zarada = 0.0;
@@ -281,12 +294,12 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
     }
 */
 
-    public void popuniSaPodacima(Dostava selektiranaDostava) {
+    public void popuniSaPodacima(Dostava selektiranaDostava , List<PecivoUDostavi> svaPeciva) {
         // Isprazni tabelu peciva u dostavi
         podaciODostaviJTable.setModel(new PecivaDostaveTableModel());
 
         // Popuni tabelu peciva sa podacima o pecivima iz oznacene dostave
-        PecivaDostaveTableModel pecivaDostaveTableModel = new PecivaDostaveTableModel(selektiranaDostava);
+        PecivaDostaveTableModel pecivaDostaveTableModel = new PecivaDostaveTableModel(selektiranaDostava,svaPeciva);
         podaciODostaviJTable.setModel(pecivaDostaveTableModel);
         
         // Refreshati panel
@@ -402,26 +415,28 @@ public class PecivaDostaveTableModel extends DefaultTableModel {
 
     PecivaDostaveTableModel() {
     }
-/*
-    PecivaDostaveTableModel(Dostava dostava) {
+
+    PecivaDostaveTableModel(Dostava dostava , List<PecivoUDostavi> pecivaUDostavi) {
         if(dostava != null) {
             this.dostava = dostava;
-            this.pecivaUDostavi = (List<PecivoUDostavi>) dostava.getPeciva();
-            List<PecivoUDostavi> obrisanaPecivaUDostavi = new ArrayList<PecivoUDostavi>();
+            this.pecivaUDostavi = pecivaUDostavi;
+          /*  List<PecivoUDostavi> obrisanaPecivaUDostavi = new ArrayList<PecivoUDostavi>();
             for (PecivoUDostavi p : obrisanaPecivaUDostavi) {
                 if (p.isObrisano()) {
                     obrisanaPecivaUDostavi.add(p);
                 }
             }
             pecivaUDostavi.removeAll(obrisanaPecivaUDostavi);
+            */
         }
     }
-*/
+
+    /*
     PecivaDostaveTableModel(Dostava dostava) {
             this.dostava = dostava;
          
     }
-
+*/
     public Dostava getDostava() {
         return dostava;
     }
@@ -441,7 +456,7 @@ public class PecivaDostaveTableModel extends DefaultTableModel {
 
     @Override
     public int getColumnCount() {
-        return 4;
+        return 3;
     }
 
     @Override
@@ -462,7 +477,7 @@ public class PecivaDostaveTableModel extends DefaultTableModel {
     public Class<?> getColumnClass(int columnIndex) {
         switch (columnIndex) {
             case 0:
-                return Pecivo.class;
+                return String.class;
             case 1:
                 return String.class;
             case 2:
