@@ -58,17 +58,19 @@ public class DostavljacPotvrdaDostaveController {
 			}
 		};
 }
-/*
-    public	ListSelectionListener getObracunavanjeObracunZaJComboBoxItemListener() {
+
+    public ListSelectionListener getObracunavanjeObracunZaJComboBoxItemListener() {
         return new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if (e.getValueIsAdjusting()) {
-                    long idSelektiraneDostave = ((long) dostavljacPotvrdaDostaveJPanel.dajSelektiranuDostavu()).getId();
-                    dostavljacPotvrdaDostaveJPanel.popuniSaPodacima(idSelektiraneDostave);
+            	Baza baza = Baza.getBaza();
+    			List<PecivoUDostavi> svaPecivaUDostavi = baza.dajSve(PecivoUDostavi.class);
+                if (!e.getValueIsAdjusting()) {
+                    long idSelektiraneDostave =(long) (dostavljacPotvrdaDostaveJPanel.getDostaveJTable().getSelectedRow());
+
+                    dostavljacPotvrdaDostaveJPanel.popuniSaPodacima(idSelektiraneDostave ,svaPecivaUDostavi);
                 }
             }
         };
     }
-    */
 }

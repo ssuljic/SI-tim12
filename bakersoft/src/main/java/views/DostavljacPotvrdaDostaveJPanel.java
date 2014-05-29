@@ -12,6 +12,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import javax.xml.bind.JAXBElement.GlobalScope;
+import javax.xml.bind.annotation.XmlElementDecl.GLOBAL;
 
 import controllers.DostavljacPotvrdaDostaveController;
 import utilities.Baza;
@@ -149,6 +151,7 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
 
       //  dostavaIzvrsenaJButton.addActionListener(dostavljacPotvrdaDostaveController.getObracunavanjeNapraviObracunJButtonActionListener());
         dostaveJTable.getSelectionModel().addListSelectionListener(dostavljacPotvrdaDostaveController.getDostavljacPotvrdaDostaveZaJTableListSelectionListener());
+        dostaveJTable.getSelectionModel().addListSelectionListener(dostavljacPotvrdaDostaveController.getObracunavanjeObracunZaJComboBoxItemListener());
     }
 
     public void popuniSaSvimPodacimaIzBaze() {
@@ -175,12 +178,12 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
     	   DostaveTableModel dostaveTableModel = new DostaveTableModel(sveDostave);
           	dostaveJTable.setModel(dostaveTableModel);	
        }
- /*       // Popuni tabelu dostave sa dostavama za trenutnog klijenta
+      // Popuni tabelu dostave sa dostavama za trenutnog klijenta
         if(sveDostave.size() > 0) {
             Dostava prvaDostava = sveDostave.get(0);
-            popuniDostaveJTableSaPodacimaODostavi(prvaDostava);
+            popuniDostaveJTableSaPodacimaODostavi(prvaDostava,svaPecivaUDostavi);
         }
-*/
+
         // Oznaci prvi red u tabeli za dostave
         if(dostaveJTable.getRowCount() > 0) {
             oznaciNtiRedUJTable(dostaveJTable, 0);
@@ -204,8 +207,8 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
         // Refreshati panel
         osvjeziJPanel();
     }
-/*
-    private void popuniDostaveJTableSaPodacimaODostavi(Dostava selektiranaDostava , PecivoUDostavi svaPecivaUDostavi) {
+
+    private void popuniDostaveJTableSaPodacimaODostavi(Dostava selektiranaDostava , List<PecivoUDostavi> svaPecivaUDostavi) {
         PecivaDostaveTableModel pecivaDostaveTableModel;
         if (selektiranaDostava != null) {
             pecivaDostaveTableModel = new PecivaDostaveTableModel(selektiranaDostava , svaPecivaUDostavi);
@@ -216,16 +219,8 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
         }
         podaciODostaviJTable.setModel(pecivaDostaveTableModel);
     }
-   */
-/*
-    private void izracunajZaraduNaStavkeUPecivaDostaveJTable() {
-        double zarada = 0.0;
-        for (int i = 0; i < pecivaDostaveJTable.getRowCount(); i++) {
-            zarada += (Double) pecivaDostaveJTable.getValueAt(i, 5);
-        }
-        zaradaIspisJLabel.setText(String.format("%.2f", zarada));
-    }
-*/
+   
+
     private void ukloniObrisaneDostaveIz(List<Dostava> sveDostave) {
         List<Dostava> obrisaneDostave= new ArrayList<Dostava>();
         for (Dostava d : sveDostave) {
@@ -247,8 +242,8 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
             selectionModel.addListSelectionListener(l);
         }
     }
-/*
-    public void popuniSaPodacima(long idSelektiraneDostave) {
+
+    public void popuniSaPodacima(long idSelektiraneDostave ,List<PecivoUDostavi> svaPecivaUDostavi) {
         // Isprazni tabelu dostava
         dostaveJTable.setModel(new DostaveTableModel());
         // Isprazni tabelu peciva u dostavi
@@ -256,20 +251,13 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
 
         // Uzmi sve klijente iz baze
         Baza baza = Baza.getBaza();
-        List<Klijent> sviKlijenti = baza.dajSve(Klijent.class);
+        List<Dostava> sveDostave = baza.dajSve(Dostava.class);
+   //     List<PecivoUDostavi> svaPecivaUDostavi = baza.dajSve(PecivoUDostavi.class);
         // izfiltriraj one klijente koji su obrisani
-     //   ukloniObrisaneKlijenteIz(sviKlijenti);
+        ukloniObrisaneDostaveIz(sveDostave);
 
-        // Napravi jComboBoxItem-ove sa svim klijentima
-        List<JComboBoxItem> sviKlijentiJComboBoxItemi = new ArrayList<JComboBoxItem>();
-        for (Klijent k : sviKlijenti) {
-            sviKlijentiJComboBoxItemi.add(new JComboBoxItem(k.getId(), k.getIme()));
-        }
-        // Popuni obracunZaJComboBox sa JComboBoxItem-ovima
-        if(sviKlijentiJComboBoxItemi.size() > 0){
-            DefaultTableModel dostaveTableModel = (DefaultTableModel)dostaveJTable.getModel();
-             dostaveTableModel.addRow(new Object[] {sviKlijenti});
-         }
+      
+       
         // Popuni tabelu dostave sa dostavama za klijenta koji ima idSelektiranogKlijenta
        // Klijent selektiraniKlijent = baza.dajPoId(Klijent.class, idSelektiranogKlijenta);
    //     popuniDostaveJTableSaPodacimaOKlijentu(selektiraniKlijent);
@@ -282,26 +270,37 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
             Dostava oznacenaDostava = ((DostaveTableModel) dostaveJTable.getModel()).getDostaveZaKlijenta().get(dostaveJTable.getSelectedRow());
 
             // Popuni tabelu peciva sa podacima o pecivima iz oznacene dostave
-            PecivaDostaveTableModel pecivaDostaveTableModel = new PecivaDostaveTableModel(oznacenaDostava);
+            PecivaDostaveTableModel pecivaDostaveTableModel = new PecivaDostaveTableModel(oznacenaDostava , svaPecivaUDostavi);
             podaciODostaviJTable.setModel(pecivaDostaveTableModel);
 
-            // Izracunati zaradu i upisati ju u zarada labelu
-      //      izracunajZaraduNaStavkeUPecivaDostaveJTable();
+        
         }
 
         // Refreshati panel
         osvjeziJPanel();
     }
-*/
+
 
     public void popuniSaPodacima(Dostava selektiranaDostava , List<PecivoUDostavi> svaPeciva) {
         // Isprazni tabelu peciva u dostavi
         podaciODostaviJTable.setModel(new PecivaDostaveTableModel());
 
-        // Popuni tabelu peciva sa podacima o pecivima iz oznacene dostave
+   
+        
+     // Oznaci prvi red u tabeli za dostave
+        if (dostaveJTable.getRowCount() > 0) {
+            ListSelectionModel selectionModel = dostaveJTable.getSelectionModel();
+            selectionModel.setSelectionInterval(0, 0);
+
+            // Uzmi oznacenu dostavu iz tabele Dostave
+            Dostava oznacenaDostava = ((DostaveTableModel) dostaveJTable.getModel()).getDostaveZaKlijenta().get(dostaveJTable.getSelectedRow());
+
+           // Popuni tabelu peciva sa podacima o pecivima iz oznacene dostave
         PecivaDostaveTableModel pecivaDostaveTableModel = new PecivaDostaveTableModel(selektiranaDostava,svaPeciva);
         podaciODostaviJTable.setModel(pecivaDostaveTableModel);
+
         
+        }
         // Refreshati panel
         osvjeziJPanel();
     }
@@ -431,12 +430,7 @@ public class PecivaDostaveTableModel extends DefaultTableModel {
         }
     }
 
-    /*
-    PecivaDostaveTableModel(Dostava dostava) {
-            this.dostava = dostava;
-         
-    }
-*/
+    
     public Dostava getDostava() {
         return dostava;
     }
@@ -494,7 +488,7 @@ public class PecivaDostaveTableModel extends DefaultTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        if(pecivaUDostavi != null) {
+    	if(pecivaUDostavi != null && pecivaUDostavi.get(rowIndex).getDostava()==dostava) {
             switch (columnIndex) {
                
                 case 0:
