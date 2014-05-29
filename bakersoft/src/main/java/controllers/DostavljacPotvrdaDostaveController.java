@@ -17,6 +17,7 @@ import entities.Racun;
 import exceptions.NePostojiUBaziStavkaSaDatomIdVrijednosti;
 import views.DostavljacJFrame;
 import views.DostavljacPotvrdaDostaveJPanel;
+
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -54,5 +55,17 @@ public class DostavljacPotvrdaDostaveController {
 			}
 		};
 }
-
+/*
+    public	ListSelectionListener getObracunavanjeObracunZaJComboBoxItemListener() {
+        return new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (e.getValueIsAdjusting()) {
+                    long idSelektiraneDostave = ((long) dostavljacPotvrdaDostaveJPanel.dajSelektiranuDostavu()).getId();
+                    dostavljacPotvrdaDostaveJPanel.popuniSaPodacima(idSelektiraneDostave);
+                }
+            }
+        };
+    }
+    */
 }
