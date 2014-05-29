@@ -4,9 +4,20 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+
+import utilities.Baza;
+import utilities.GuiUtilities;
+import utilities.JComboBoxItem;
+import entities.Klijent;
+import entities.Pecivo;
+import entities.Status;
+import entities.Tip;
+
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DostavljacPreuzimanjePecivaJPanel extends JPanel {
     private JTextField nazivDostaveJTextField;
@@ -16,8 +27,13 @@ public class DostavljacPreuzimanjePecivaJPanel extends JPanel {
     private JButton preuzmiDostavuJButton;
     private JScrollPane dostavaJScrollPane;
     private JTextField kolicinaJTextField;
+    private JComboBox comboBox;
 
-    /**
+    public JComboBox getComboBox() {
+		return comboBox;
+	}
+
+	/**
      * Create the panel.
      */
     public DostavljacPreuzimanjePecivaJPanel() {
@@ -96,7 +112,7 @@ public class DostavljacPreuzimanjePecivaJPanel extends JPanel {
                                 pecivoJLabel.setBounds(42, 46, 46, 14);
                                 add(pecivoJLabel);
                                 
-                                JComboBox comboBox = new JComboBox();
+                                comboBox = new JComboBox();
                                 comboBox.setBounds(83, 43, 169, 20);
                                 add(comboBox);
                                 
@@ -133,6 +149,30 @@ public class DostavljacPreuzimanjePecivaJPanel extends JPanel {
     }
 
     public void popuniSaSvimPodacimaIzBaze() {
+    	Baza baza = Baza.getBaza();
+        java.util.List<Pecivo> svaPeciva = baza.dajSveNeobrisano(Pecivo.class);
+        long idPeciva = 0;
+        if (svaPeciva.size() > 0) {
+            idPeciva = svaPeciva.get(0).getId();
+        }
+        popuniSaPodacima(svaPeciva, idPeciva);
+    	
+    }
 
+	public void popuniSaPodacima(List<Pecivo> svaPeciva, long idSelektiranogPeciva) {
+        if (svaPeciva == null || svaPeciva.size() <= 0) {
+            //ocistiPanel();
+            return;
+        }
+        List<JComboBoxItem> svaPecivaJComboBoxItemi = napraviJComboBoxItemoveOdListePeciva(svaPeciva);
+        GuiUtilities.popuniJComboBoxListom(svaPecivaJComboBoxItemi, comboBox);
+	}
+	
+	private List<JComboBoxItem> napraviJComboBoxItemoveOdListePeciva(List<Pecivo> svaPeciva) {
+        List<JComboBoxItem> svaPecivaJComboBoxItemi = new ArrayList<JComboBoxItem>();
+        for (Pecivo p : svaPeciva) {
+        	svaPecivaJComboBoxItemi.add(new JComboBoxItem(p.getId(), p.getNaziv()));
+        }
+        return svaPecivaJComboBoxItemi;
     }
 }
