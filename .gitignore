@@ -103,3 +103,4 @@ dist/
 nbdist/
 nbactions.xml
 nb-configuration.xml
+bakersoft/src/main/resources/META-INF/persistence.xml
