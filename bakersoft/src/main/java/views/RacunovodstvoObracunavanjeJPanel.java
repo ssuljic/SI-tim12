@@ -328,26 +328,25 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
             sviKlijentiJComboBoxItemi.add(new JComboBoxItem(k.getId(), k.getIme()));
         }
         // Popuni obracunZaJComboBox sa JComboBoxItem-ovima
-        if(sviKlijentiJComboBoxItemi.size() > 0){
+        if (sviKlijentiJComboBoxItemi.size() > 0) {
             GuiUtilities.popuniJComboBoxSa(sviKlijentiJComboBoxItemi, obracunZaJComboBox, sviKlijentiJComboBoxItemi.get(0).getId());
         }
 
         // Popuni tabelu dostave sa dostavama za trenutnog klijenta
-        if(sviKlijenti.size() > 0) {
+        if (sviKlijenti.size() > 0) {
             Klijent prviKlijentUJComboBoxu = sviKlijenti.get(0);
             popuniDostaveJTableSaPodacimaOKlijentu(prviKlijentUJComboBoxu);
         }
 
         // Oznaci prvi red u tabeli za dostave
-        if(dostaveJTable.getRowCount() > 0) {
+        if (dostaveJTable.getRowCount() > 0) {
             oznaciNtiRedUJTable(dostaveJTable, 0);
         }
 
         // Uzmi oznacenu dostavu iz tabele Dostave
-        if(((DostaveTableModel) dostaveJTable.getModel()).getDostaveZaKlijenta() != null) {
+        if (((DostaveTableModel) dostaveJTable.getModel()).getDostaveZaKlijenta() != null && dostaveJTable.getSelectedRow() >= 0) {
             Dostava oznacenaDostava = ((DostaveTableModel) dostaveJTable.getModel()).getDostaveZaKlijenta()
                     .get(dostaveJTable.getSelectedRow());
-
             // Popuni tabelu peciva sa podacima o pecivima iz oznacene dostave
             PecivaDostaveTableModel pecivaDostaveTableModel = new PecivaDostaveTableModel(oznacenaDostava);
             pecivaDostaveJTable.setModel(pecivaDostaveTableModel);
@@ -525,9 +524,9 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
     }
 
     public Dostava dajSelektiranuDostavu() {
-        if(((DostaveTableModel)dostaveJTable.getModel()).getDostaveZaKlijenta() != null) {
-            if(dostaveJTable.getSelectedRow() >= 0 && dostaveJTable.getSelectedRow() < ((DostaveTableModel)dostaveJTable.getModel()).getDostaveZaKlijenta().size()) {
-                return ((DostaveTableModel)dostaveJTable.getModel()).getDostaveZaKlijenta().get(dostaveJTable.getSelectedRow());
+        if (((DostaveTableModel) dostaveJTable.getModel()).getDostaveZaKlijenta() != null) {
+            if (dostaveJTable.getSelectedRow() >= 0 && dostaveJTable.getSelectedRow() < ((DostaveTableModel) dostaveJTable.getModel()).getDostaveZaKlijenta().size()) {
+                return ((DostaveTableModel) dostaveJTable.getModel()).getDostaveZaKlijenta().get(dostaveJTable.getSelectedRow());
             }
         }
 
@@ -544,7 +543,7 @@ class DostaveTableModel extends DefaultTableModel {
     }
 
     DostaveTableModel(Klijent klijent) {
-        if(klijent != null) {
+        if (klijent != null) {
             this.klijent = klijent;
             this.dostaveZaKlijenta = (List<Dostava>) klijent.getDostave();
             List<Dostava> obrisaneDostave = new ArrayList<Dostava>();
@@ -618,7 +617,7 @@ class DostaveTableModel extends DefaultTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        if(dostaveZaKlijenta != null) {
+        if (dostaveZaKlijenta != null) {
             switch (columnIndex) {
                 case 0:
                     return dostaveZaKlijenta.get(rowIndex).getNaziv();
@@ -662,7 +661,7 @@ class PecivaDostaveTableModel extends DefaultTableModel {
     }
 
     PecivaDostaveTableModel(Dostava dostava) {
-        if(dostava != null) {
+        if (dostava != null) {
             this.dostava = dostava;
             this.pecivaUDostavi = (List<PecivoUDostavi>) dostava.getPeciva();
             List<PecivoUDostavi> obrisanaPecivaUDostavi = new ArrayList<PecivoUDostavi>();
@@ -744,7 +743,7 @@ class PecivaDostaveTableModel extends DefaultTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        if(pecivaUDostavi != null) {
+        if (pecivaUDostavi != null) {
             switch (columnIndex) {
                 case 0:
                     return pecivaUDostavi.get(rowIndex).getPecivo().getSifra();
