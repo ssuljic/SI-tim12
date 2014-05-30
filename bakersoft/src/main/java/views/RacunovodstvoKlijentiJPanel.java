@@ -396,15 +396,16 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
     	Klijent klijent = new Klijent();
         klijent.setIme(getNazivFirmeJTextField().getText());
         klijent.setTelefon(getTelefonJTextField().getText());
-        //if(prodajnoMjestoNazivJTextField.getText()!="" && prodajnoMjestoAdresaJTextField.getText()!=""){
+        if(!prodajnoMjestoNazivJTextField.getText().isEmpty() || !prodajnoMjestoAdresaJTextField.getText().isEmpty()){
         	ProdajnoMjesto pm = new ProdajnoMjesto();
         	pm.setMjesto(prodajnoMjestoNazivJTextField.getText());
         	pm.setAdresa(prodajnoMjestoAdresaJTextField.getText());
         	pm.setKlijent(klijent);
         	Baza baza = Baza.getBaza();
         	baza.spasiUBazu(pm);
-        //}
-        return klijent;
+        	return klijent;
+        }
+        else throw new IllegalArgumentException("Pri dodavanju novog klijenta morate odmah dodati i barem jedno prodajno mjesto.");
     }
     
     public void ocistiDonjiDioPanela() {

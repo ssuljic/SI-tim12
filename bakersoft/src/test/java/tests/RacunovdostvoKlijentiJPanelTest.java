@@ -41,10 +41,6 @@ public class RacunovdostvoKlijentiJPanelTest {
 
 	}
 	
-	@Test
-	public void testPopuniTraziJComboBoxSa() {
-		fail("Not yet implemented");
-	}
 
 	@Test//Da li metoda èisti gornja dva textfielda
 	public void testOcistiGornjiDioPanela() {
@@ -150,9 +146,5 @@ RacunovodstvoKlijentiJPanel rp = new RacunovodstvoKlijentiJPanel();
 		
 	}
 	
-	@Test
-	public void testPopuniSaSvimPodacimaIzBaze() {
-		fail("Not yet implemented");
-	}
 
 }

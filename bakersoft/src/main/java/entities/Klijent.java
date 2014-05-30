@@ -38,11 +38,15 @@ public class Klijent {
     }
 
     public String getIme() {
-        return ime;
+    	return ime;
     }
 
-    public void setIme(String ime) {
-        this.ime = ime;
+    public void setIme(String ime2) {
+    	if(ime2.isEmpty()) {
+    		throw new IllegalArgumentException("Polje Ime ne može biti prazno.");
+    	}
+    	else
+        this.ime = ime2;
     }
 
     public Date getDatum() {
@@ -57,8 +61,13 @@ public class Klijent {
         return telefon;
     }
 
-    public void setTelefon(String telefon) {
-        this.telefon = telefon;
+    public void setTelefon(String telefon2) {
+    	if(telefon2.isEmpty()) {
+    		throw new IllegalArgumentException("Polje Telefon ne može biti prazno.");
+    	}
+    	else
+        this.telefon = telefon2;
+
     }
 
     public Collection<ProdajnoMjesto> getProdajnaMjesta() {

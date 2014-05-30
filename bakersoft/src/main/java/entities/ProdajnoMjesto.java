@@ -30,19 +30,25 @@ public class ProdajnoMjesto {
     }
 
     public String getMjesto() {
-        return mjesto;
+    	return mjesto;
     }
 
-    public void setMjesto(String mjesto) {
-        this.mjesto = mjesto;
+    public void setMjesto(String mjesto2) {
+    	if(mjesto2.isEmpty()) {
+    		throw new IllegalArgumentException("Polje Naziv prodajnog mjesta ne može biti prazno.");
+    	}
+        this.mjesto = mjesto2;
     }
 
     public String getAdresa() {
         return adresa;
     }
 
-    public void setAdresa(String adresa) {
-        this.adresa = adresa;
+    public void setAdresa(String adresa2) {
+    	if(adresa2.isEmpty()) {
+    		throw new IllegalArgumentException("Polje Naziv prodajnog mjesta ne može biti prazno.");
+    	}
+        this.adresa = adresa2;
     }
 
     public Klijent getKlijent() {
