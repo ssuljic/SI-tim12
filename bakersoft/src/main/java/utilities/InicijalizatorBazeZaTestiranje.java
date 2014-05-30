@@ -143,7 +143,7 @@ public class InicijalizatorBazeZaTestiranje {
         dostava1.setKlijent(klijent1);
         dostava1.setNaziv("Dostava krofne i kifle");
         dostava1.setPreuzeo(korisnik1);
-        dostava1.setJeIsporuceno(true);
+        dostava1.setJeIsporuceno(false);
         dostava1.setPeciva(new ArrayList<PecivoUDostavi>());
         dostava1.getPeciva().add(pecivoUDostavi1);
         dostava1.getPeciva().add(pecivoUDostavi2);

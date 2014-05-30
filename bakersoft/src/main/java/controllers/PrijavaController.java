@@ -38,13 +38,15 @@ public class PrijavaController implements ActionListener {
         if (korisnik.getTip().getTip().equals(Tip.RACUNOVODJA)) {
             pokreniPanelZaRacunovodstvo(korisnik);
         } else if (korisnik.getTip().getTip().equals(Tip.DOSTAVLJAC)) {
-            pokreniPanelZaDostavljaca();
+            pokreniPanelZaDostavljaca(korisnik);
         }
     }
 
 
-    private void pokreniPanelZaDostavljaca() {
+    private void pokreniPanelZaDostavljaca(Korisnik korisnik) {
         DostavljacJFrame dostavljacJFrame = new DostavljacJFrame(prijavaJFrame);
+        dostavljacJFrame.setKorisnik(korisnik);
+        dostavljacJFrame.setKorisnik(korisnik);
         prijavaJFrame.setVisible(false);
         dostavljacJFrame.setSize(new Dimension(800, 600));
         dostavljacJFrame.setVisible(true);

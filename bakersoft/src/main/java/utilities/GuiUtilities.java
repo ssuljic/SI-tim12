@@ -1,6 +1,7 @@
 package utilities;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionListener;
 import java.awt.event.ItemListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -150,6 +151,18 @@ public class GuiUtilities {
         // Vracanje EventListener-a na JComboBox
         for (int i = 0; i < itemListeners.length; i++) {
             jComboBox.addItemListener(itemListeners[i]);
+        }
+    }
+
+    public static void oznaciNtiRedUJTable(JTable jTable, int rowIndex) {
+        ListSelectionModel selectionModel = jTable.getSelectionModel();
+        ListSelectionListener[] listeners = ((DefaultListSelectionModel) selectionModel).getListSelectionListeners();
+        for (ListSelectionListener l : listeners) {
+            selectionModel.removeListSelectionListener(l);
+        }
+        selectionModel.setSelectionInterval(rowIndex, rowIndex);
+        for (ListSelectionListener l : listeners) {
+            selectionModel.addListSelectionListener(l);
         }
     }
 }

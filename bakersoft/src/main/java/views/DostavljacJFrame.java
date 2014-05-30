@@ -1,12 +1,14 @@
 package views;
 
 import controllers.DostavljacIzbornikController;
+import entities.Korisnik;
 
 import javax.swing.*;
 
 import java.awt.*;
 
 public class DostavljacJFrame extends JFrame {
+     Korisnik korisnik;
 
     private JFrame pozivaocJFrame;
 
@@ -56,8 +58,8 @@ public class DostavljacJFrame extends JFrame {
 
     public void postaviPotvrdaDostaveJPanel() {
         ukloniPostojecePanele();
-        dostavljacPotvrdaDostaveJPanel.popuniSaSvimPodacimaIzBaze();
         contentPane.add(dostavljacPotvrdaDostaveJPanel, BorderLayout.CENTER);
+        dostavljacPotvrdaDostaveJPanel.popuniSaSvimPodacimaIzBaze(0);
         osvjeziFormu();
     }
     
@@ -86,4 +88,11 @@ public class DostavljacJFrame extends JFrame {
         return pozivaocJFrame;
     }
 
+    public Korisnik getKorisnik() {
+        return korisnik;
+    }
+
+    public void setKorisnik(Korisnik korisnik) {
+        this.korisnik = korisnik;
+    }
 }

@@ -1,43 +1,26 @@
 package views;
 
-import javax.swing.*;
-
-import entities.Dostava;
-import entities.Klijent;
-import entities.Korisnik;
-import entities.Pecivo;
-
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.TitledBorder;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import javax.xml.bind.JAXBElement.GlobalScope;
-import javax.xml.bind.annotation.XmlElementDecl.GLOBAL;
-
 import controllers.DostavljacPotvrdaDostaveController;
+import entities.Dostava;
+import entities.Korisnik;
+import entities.PecivoUDostavi;
 import utilities.Baza;
 import utilities.GuiUtilities;
-import utilities.JComboBoxItem;
-import utilities.JTableItem;
-import entities.Dostava;
-import entities.Klijent;
-import exceptions.NePostojiUBaziStavkaSaDatomIdVrijednosti;
-import entities.PecivoUDostavi;
 
+import javax.swing.*;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
+import java.util.EventObject;
 import java.util.List;
-import java.util.Vector;
 
 public class DostavljacPotvrdaDostaveJPanel extends JPanel {
     private JTable dostaveJTable;
-    private JTable podaciODostaviJTable;
+    private JTable pecivaUDostaviJTable;
     private JButton dostavaIzvrsenaJButton;
 
     /**
@@ -62,32 +45,31 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
 
         dostaveJTable = new JTable();
         dostaveJTable.setModel(new DefaultTableModel(
-                new Object[][]{
-                },
-                new String[]{
-                        "Naziv dostave"
-                }
-        		) {
-            Class[] columnTypes = new Class[]{
-                    Object.class
-            };
+                                       new Object[][]{
+                                       },
+                                       new String[]{
+                                               "Naziv dostave"
+                                       }
+                               ) {
+                                   Class[] columnTypes = new Class[]{
+                                           Object.class
+                                   };
+                                   boolean[] columnEditables = new boolean[]{
+                                           false
+                                   };
 
-            public Class getColumnClass(int columnIndex) {
-                return columnTypes[columnIndex];
-            }
-            boolean[] columnEditables = new boolean[]{
-                    false
-            };
+                                   public Class getColumnClass(int columnIndex) {
+                                       return columnTypes[columnIndex];
+                                   }
 
-            public boolean isCellEditable(int row, int column) {
-                return columnEditables[column];
-            }
-      
-    }
-        
-        		
-        		
-        		);
+                                   public boolean isCellEditable(int row, int column) {
+                                       return columnEditables[column];
+                                   }
+
+                               }
+
+
+        );
         dostaveJScrollPane.setViewportView(dostaveJTable);
 
         JScrollPane pecivaUDostaviJScrollPane = new JScrollPane();
@@ -98,8 +80,8 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
         gbc_pecivaUDostaviJScrollPane.gridy = 1;
         add(pecivaUDostaviJScrollPane, gbc_pecivaUDostaviJScrollPane);
 
-        podaciODostaviJTable = new JTable();
-        podaciODostaviJTable.setModel(new DefaultTableModel(
+        pecivaUDostaviJTable = new JTable();
+        pecivaUDostaviJTable.setModel(new DefaultTableModel(
                 new Object[][]{
                 },
                 new String[]{
@@ -114,7 +96,7 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
                 return columnEditables[column];
             }
         });
-        pecivaUDostaviJScrollPane.setViewportView(podaciODostaviJTable);
+        pecivaUDostaviJScrollPane.setViewportView(pecivaUDostaviJTable);
 
         dostavaIzvrsenaJButton = new JButton("Dostava izvr\u0161ena");
         GridBagConstraints gbc_dostavaIzvrsenaJButton = new GridBagConstraints();
@@ -122,10 +104,10 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
         gbc_dostavaIzvrsenaJButton.gridx = 0;
         gbc_dostavaIzvrsenaJButton.gridy = 2;
         add(dostavaIzvrsenaJButton, gbc_dostavaIzvrsenaJButton);
-        
+
         dodajListeners();
     }
-    
+
     private void osvjeziJPanel() {
         this.validate();
         this.repaint();
@@ -140,89 +122,118 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
     }
 
 
-    public JTable getPodaciODostaviJTable() {
-        return podaciODostaviJTable;
+    public JTable getPecivaUDostaviJTable() {
+        return pecivaUDostaviJTable;
     }
-
 
 
     private void dodajListeners() {
         DostavljacPotvrdaDostaveController dostavljacPotvrdaDostaveController = new DostavljacPotvrdaDostaveController(this);
 
-      //  dostavaIzvrsenaJButton.addActionListener(dostavljacPotvrdaDostaveController.getObracunavanjeNapraviObracunJButtonActionListener());
-        dostaveJTable.getSelectionModel().addListSelectionListener(dostavljacPotvrdaDostaveController.getDostavljacPotvrdaDostaveZaJTableListSelectionListener());
-        dostaveJTable.getSelectionModel().addListSelectionListener(dostavljacPotvrdaDostaveController.getObracunavanjeObracunZaJComboBoxItemListener());
+        dostaveJTable.getSelectionModel().addListSelectionListener(dostavljacPotvrdaDostaveController.getDostavljacPotvrdaDostaveDostaveJTableListSelectionListener());
+        pecivaUDostaviJTable.getSelectionModel().addListSelectionListener(dostavljacPotvrdaDostaveController.getDostavaljacPotvrdaDostavePecivaUDostaviJTableListSelectionListener());
+        dostavaIzvrsenaJButton.addActionListener(dostavljacPotvrdaDostaveController.getDostavljacPotvrdaDostaveDostavaIzvrsenaActionListener());
     }
 
-    public void popuniSaSvimPodacimaIzBaze() {
+    public void popuniSaSvimPodacimaIzBaze(int oznaceniRed) {
         // Uzmi sve klijente iz baze
         Baza baza = Baza.getBaza();
-        List<Dostava> sveDostave= baza.dajSve(Dostava.class);   
-        List<PecivoUDostavi>svaPecivaUDostavi = baza.dajSve(PecivoUDostavi.class);
+        List<Dostava> sveDostave = baza.dajSve(Dostava.class);
 
         // izfiltriraj one klijente koji su obrisani
-       ukloniObrisaneDostaveIz(sveDostave);
-       
-       dostaveJTable.setModel(new DostaveTableModel());
-  /*   
-       if(sveDostave.size() > 0) {
-    	   DefaultTableModel dostaveTableModel = (DefaultTableModel)dostaveJTable.getModel();
-    	   
-           for(Dostava d : sveDostave) {
-        	  Object[] obj =  new Object[0];
-        	  dostaveTableModel.addRow(new Object[]{d.getNaziv()});
-           }	
-       }
-*/   
-       if(sveDostave.size() > 0) {
-    	   DostaveTableModel dostaveTableModel = new DostaveTableModel(sveDostave);
-          	dostaveJTable.setModel(dostaveTableModel);	
-       }
-      // Popuni tabelu dostave sa dostavama za trenutnog klijenta
-        if(sveDostave.size() > 0) {
-            Dostava prvaDostava = sveDostave.get(0);
-            popuniDostaveJTableSaPodacimaODostavi(prvaDostava,svaPecivaUDostavi);
+        ukloniObrisaneDostaveIz(sveDostave);
+
+        // Izfiltriraj one dostave koje nisu dostave za trenutno ulogovanog korisnika (dostavljaca)
+        Korisnik dostavljac = ((DostavljacJFrame) SwingUtilities.getWindowAncestor(this)).getKorisnik();
+        ukloniDostaveKojeNeIsporucujeKorisnik(sveDostave, dostavljac);
+
+        // Izfiltriraj one dostave koje su vec dostavljene
+        ukloniSveIsporuceneDostaveIz(sveDostave);
+
+        // Popuni tabelu za dostave sa dostavama
+        dostaveJTable.setModel(new PotvrdaDostaveDostaveTableModel());
+
+        if (sveDostave.size() > 0) {
+            PotvrdaDostaveDostaveTableModel dostaveTableModel = new PotvrdaDostaveDostaveTableModel(sveDostave);
+            dostaveJTable.setModel(dostaveTableModel);
         }
 
-        // Oznaci prvi red u tabeli za dostave
-        if(dostaveJTable.getRowCount() > 0) {
-            oznaciNtiRedUJTable(dostaveJTable, 0);
+        // Oznaci zanadni red, ali ukoliko je izvan opsega oznaci prvi red u tabeli za dostave
+        if (dostaveJTable.getRowCount() > 0 && oznaceniRed < dostaveJTable.getRowCount()) {
+            GuiUtilities.oznaciNtiRedUJTable(dostaveJTable, oznaceniRed);
+        } else if (dostaveJTable.getRowCount() > 0) {
+            GuiUtilities.oznaciNtiRedUJTable(dostaveJTable, 0);
         }
-  //  dostaveJTable.setModel(new DostaveTableModel());
 
-        // Uzmi oznacenu dostavu iz tabele Dostave
-        if(((DostaveTableModel)dostaveJTable.getModel()).getDostaveZaKlijenta() != null) {
-            Dostava oznacenaDostava = ((DostaveTableModel) dostaveJTable.getModel()).getDostaveZaKlijenta().get(dostaveJTable.getSelectedRow());
+        popuniPecivaUDostaviTabeluSaPecivimaUDostaviSelektiraneDostave();
 
-            // Popuni tabelu peciva sa podacima o pecivima iz oznacene dostave
-            PecivaDostaveTableModel pecivaDostaveTableModel = new PecivaDostaveTableModel(oznacenaDostava,svaPecivaUDostavi);
-           	podaciODostaviJTable.setModel(pecivaDostaveTableModel);
-        } else {
-            podaciODostaviJTable.setModel(new PecivaDostaveTableModel());
-      }
-
-        // Izracunati zaradu i upisati ju u zarada labelu
-       // izracunajZaraduNaStavkeUPecivaDostaveJTable();
 
         // Refreshati panel
         osvjeziJPanel();
     }
 
-    private void popuniDostaveJTableSaPodacimaODostavi(Dostava selektiranaDostava , List<PecivoUDostavi> svaPecivaUDostavi) {
-        PecivaDostaveTableModel pecivaDostaveTableModel;
-        if (selektiranaDostava != null) {
-            pecivaDostaveTableModel = new PecivaDostaveTableModel(selektiranaDostava , svaPecivaUDostavi);
-        } else {
-            Dostava praznaDostava = new Dostava();
-           
-            pecivaDostaveTableModel = new PecivaDostaveTableModel();
+    private void ukloniSveIsporuceneDostaveIz(List<Dostava> sveDostave) {
+        List<Dostava> isporuceneDostave = new ArrayList<Dostava>();
+        for (Dostava d : sveDostave) {
+            if (d.isJeIsporuceno()) {
+                isporuceneDostave.add(d);
+            }
         }
-        podaciODostaviJTable.setModel(pecivaDostaveTableModel);
+        sveDostave.removeAll(isporuceneDostave);
     }
-   
+
+    private void popuniPecivaUDostaviTabeluSaPecivimaUDostaviSelektiraneDostave() {
+        /**
+         *  Popuni sva peciva u dostavi koja su povezana na trenutno oznacenu dostavu i popuni tabelu koja
+         *  cuva detaljne podatke o dostavi
+         */
+        // Uzmi indeks selektiranog reda u tabeli dostava
+        int selektiraniRed = dostaveJTable.getSelectedRow();
+        // Iz TableModel-a tabele dostava uzmi Dostavu koja je oznacena
+        List<Dostava> dostaveIzDostaveTabele = ((PotvrdaDostaveDostaveTableModel) dostaveJTable.getModel()).getDostave();
+        Dostava selektiranaDostava = null;
+        if (selektiraniRed >= 0 && dostaveIzDostaveTabele != null) {
+            if (selektiraniRed < dostaveIzDostaveTabele.size()) {
+                selektiranaDostava = dostaveIzDostaveTabele.get(selektiraniRed);
+            }
+        }
+        // Za uzetu dostavu uzmi sva peciva iz nje
+        List<PecivoUDostavi> pecivaUDostavi = null;
+        if (selektiranaDostava != null) {
+            pecivaUDostavi = (List<PecivoUDostavi>) selektiranaDostava.getPeciva();
+            // Izfiltriraj sva obrisana peciva u dostavi
+            ukloniObrisanaPecivaUDostavi(pecivaUDostavi);
+        }
+        // Popuni tabelu koja cuva sva peciva u dostavi sa dobijenom listom
+        if (pecivaUDostavi != null) {
+            pecivaUDostaviJTable.setModel(new PotvrdaDostavePecivaUDostaviTableModel(selektiranaDostava, pecivaUDostavi));
+        } else {
+            pecivaUDostaviJTable.setModel(new PotvrdaDostavePecivaUDostaviTableModel());
+        }
+    }
+
+    private void ukloniObrisanaPecivaUDostavi(List<PecivoUDostavi> pecivaUDostavi) {
+        List<PecivoUDostavi> obrisanaPecivaUDostavi = new ArrayList<PecivoUDostavi>();
+        for (PecivoUDostavi p : pecivaUDostavi) {
+            if (p.isObrisano()) {
+                obrisanaPecivaUDostavi.add(p);
+            }
+        }
+        pecivaUDostavi.removeAll(obrisanaPecivaUDostavi);
+    }
+
+    private void ukloniDostaveKojeNeIsporucujeKorisnik(List<Dostava> sveDostave, Korisnik dostavljac) {
+        List<Dostava> dostaveZaObrisati = new ArrayList<Dostava>();
+        for (Dostava d : sveDostave) {
+            if (d.getPreuzeo().getId() != dostavljac.getId()) {
+                dostaveZaObrisati.add(d);
+            }
+        }
+        sveDostave.removeAll(dostaveZaObrisati);
+    }
 
     private void ukloniObrisaneDostaveIz(List<Dostava> sveDostave) {
-        List<Dostava> obrisaneDostave= new ArrayList<Dostava>();
+        List<Dostava> obrisaneDostave = new ArrayList<Dostava>();
         for (Dostava d : sveDostave) {
             if (d.isObrisano()) {
                 obrisaneDostave.add(d);
@@ -231,166 +242,122 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
         sveDostave.removeAll(obrisaneDostave);
     }
 
-    private void oznaciNtiRedUJTable(JTable jTable, int rowIndex) {
-        ListSelectionModel selectionModel = jTable.getSelectionModel();
-        ListSelectionListener[] listeners = ((DefaultListSelectionModel) selectionModel).getListSelectionListeners();
-        for (ListSelectionListener l : listeners) {
-            selectionModel.removeListSelectionListener(l);
-        }
-        selectionModel.setSelectionInterval(rowIndex, rowIndex);
-        for (ListSelectionListener l : listeners) {
-            selectionModel.addListSelectionListener(l);
-        }
-    }
-
-    public void popuniSaPodacima(long idSelektiraneDostave ,List<PecivoUDostavi> svaPecivaUDostavi) {
-        // Isprazni tabelu dostava
-        dostaveJTable.setModel(new DostaveTableModel());
-        // Isprazni tabelu peciva u dostavi
-       podaciODostaviJTable.setModel(new PecivaDostaveTableModel());
-
-        // Uzmi sve klijente iz baze
-        Baza baza = Baza.getBaza();
-        List<Dostava> sveDostave = baza.dajSve(Dostava.class);
-   //     List<PecivoUDostavi> svaPecivaUDostavi = baza.dajSve(PecivoUDostavi.class);
-        // izfiltriraj one klijente koji su obrisani
-        ukloniObrisaneDostaveIz(sveDostave);
-
-      
-       
-        // Popuni tabelu dostave sa dostavama za klijenta koji ima idSelektiranogKlijenta
-       // Klijent selektiraniKlijent = baza.dajPoId(Klijent.class, idSelektiranogKlijenta);
-   //     popuniDostaveJTableSaPodacimaOKlijentu(selektiraniKlijent);
-        // Oznaci prvi red u tabeli za dostave
-        if (dostaveJTable.getRowCount() > 0) {
-            ListSelectionModel selectionModel = dostaveJTable.getSelectionModel();
-            selectionModel.setSelectionInterval(0, 0);
-
-            // Uzmi oznacenu dostavu iz tabele Dostave
-            Dostava oznacenaDostava = ((DostaveTableModel) dostaveJTable.getModel()).getDostaveZaKlijenta().get(dostaveJTable.getSelectedRow());
-
-            // Popuni tabelu peciva sa podacima o pecivima iz oznacene dostave
-            PecivaDostaveTableModel pecivaDostaveTableModel = new PecivaDostaveTableModel(oznacenaDostava , svaPecivaUDostavi);
-            podaciODostaviJTable.setModel(pecivaDostaveTableModel);
-
-        
-        }
-
-        // Refreshati panel
-        osvjeziJPanel();
-    }
-
-
-    public void popuniSaPodacima(Dostava selektiranaDostava , List<PecivoUDostavi> svaPeciva) {
-        // Isprazni tabelu peciva u dostavi
-        podaciODostaviJTable.setModel(new PecivaDostaveTableModel());
-
-   
-        
-     // Oznaci prvi red u tabeli za dostave
-        if (dostaveJTable.getRowCount() > 0) {
-            ListSelectionModel selectionModel = dostaveJTable.getSelectionModel();
-            selectionModel.setSelectionInterval(0, 0);
-
-            // Uzmi oznacenu dostavu iz tabele Dostave
-            Dostava oznacenaDostava = ((DostaveTableModel) dostaveJTable.getModel()).getDostaveZaKlijenta().get(dostaveJTable.getSelectedRow());
-
-           // Popuni tabelu peciva sa podacima o pecivima iz oznacene dostave
-        PecivaDostaveTableModel pecivaDostaveTableModel = new PecivaDostaveTableModel(selektiranaDostava,svaPeciva);
-        podaciODostaviJTable.setModel(pecivaDostaveTableModel);
-
-        
-        }
-        // Refreshati panel
-        osvjeziJPanel();
-    }
-
-  
-
-    public Dostava dajSelektiranuDostavu() {
-        if(((DostaveTableModel)dostaveJTable.getModel()).getDostaveZaKlijenta() != null) {
-            if(dostaveJTable.getSelectedRow() >= 0 && dostaveJTable.getSelectedRow() < ((DostaveTableModel)dostaveJTable.getModel()).getDostaveZaKlijenta().size()) {
-                return ((DostaveTableModel)dostaveJTable.getModel()).getDostaveZaKlijenta().get(dostaveJTable.getSelectedRow());
+    public void popuniSaPodacima(long idSelektiraneDostave) {
+        // Popuni sa svim podacima iz baze
+        popuniSaSvimPodacimaIzBaze(0);
+        // Nadji indeks dostave sa odgovarajucim id-e unutar tabele dostava
+        List<Dostava> dostave = ((PotvrdaDostaveDostaveTableModel) dostaveJTable.getModel()).getDostave();
+        int indeksDostaveSaId = -1;
+        for (int i = 0; i < dostave.size(); i++) {
+            if (dostave.get(i).getId() == idSelektiraneDostave) {
+                indeksDostaveSaId = i;
+                break;
             }
         }
-      
+        // Oznaci red sa pronadjenom dostavom u tabeli
+        if (indeksDostaveSaId >= 0) {
+            GuiUtilities.oznaciNtiRedUJTable(dostaveJTable, indeksDostaveSaId);
+        }
+
+        popuniPecivaUDostaviTabeluSaPecivimaUDostaviSelektiraneDostave();
+
+        // Refreshati panel
+        osvjeziJPanel();
+    }
+
+    public Dostava dajSelektiranuDostavu() {
+        if (((PotvrdaDostaveDostaveTableModel) dostaveJTable.getModel()).getDostave() != null) {
+            if (dostaveJTable.getSelectedRow() >= 0 && dostaveJTable.getSelectedRow() < ((PotvrdaDostaveDostaveTableModel) dostaveJTable.getModel()).getDostave().size()) {
+                return ((PotvrdaDostaveDostaveTableModel) dostaveJTable.getModel()).getDostave().get(dostaveJTable.getSelectedRow());
+            }
+        }
+
         return null;
-
     }
 
-
-public class DostaveTableModel extends DefaultTableModel {
-
-  
-    private List<Dostava> dostaveZaKlijenta;
-
-    DostaveTableModel() {
-    	
+    public List<Dostava> dajSveDostaveIzTabele() {
+        return ((PotvrdaDostaveDostaveTableModel) dostaveJTable.getModel()).getDostave();
     }
 
-    DostaveTableModel(List<Dostava> dostaveZaKlijenta) {
-        this.dostaveZaKlijenta=dostaveZaKlijenta;
-    }
+    class PotvrdaDostaveDostaveTableModel extends DefaultTableModel {
 
-  
-    public List<Dostava> getDostaveZaKlijenta() {
-        return dostaveZaKlijenta;
-    }
+        private List<Dostava> dostave;
 
-    @Override
-    public int getRowCount() {
-        if (dostaveZaKlijenta != null) {
-            return dostaveZaKlijenta.size();
+        PotvrdaDostaveDostaveTableModel() {
         }
 
-        return 0;
-    }
-
-    @Override
-    public int getColumnCount() {
-        return 1;
-    }
-
-    @Override
-    public String getColumnName(int columnIndex) {
-        switch (columnIndex) {
-            case 0:
-                return "Naziv dostave";
-            default:
-                return null;
+        PotvrdaDostaveDostaveTableModel(List<Dostava> dostave) {
+            if (dostave != null) {
+                this.dostave = dostave;
+            } else {
+                this.dostave = new ArrayList<Dostava>(0);
+            }
         }
-    }
 
-    @Override
-    public Class<?> getColumnClass(int columnIndex) {
-        switch (columnIndex) {
-            case 0:
-                return String.class;
-            default:
-                return null;
+        public List<Dostava> getDostave() {
+            return dostave;
         }
-    }
 
-    @Override
-    public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return false;
-    }
+        @Override
+        public int getRowCount() {
+            if (dostave != null) {
+                return dostave.size();
+            }
 
-    @Override
-    public Object getValueAt(int rowIndex, int columnIndex) {
-        if(dostaveZaKlijenta != null) {
+            return 0;
+        }
+
+        @Override
+        public int getColumnCount() {
+            return 2;
+        }
+
+        @Override
+        public String getColumnName(int columnIndex) {
             switch (columnIndex) {
                 case 0:
-                    return dostaveZaKlijenta.get(rowIndex).getNaziv();
+                    return "Naziv dostave";
+                case 1:
+                    return "Klijent";
                 default:
                     return null;
             }
         }
 
-        return null;
-    }
+        @Override
+        public Class<?> getColumnClass(int columnIndex) {
+            switch (columnIndex) {
+                case 0:
+                    return String.class;
+                case 1:
+                    return String.class;
+                default:
+                    return null;
+            }
+        }
 
-   /* @Override
+        @Override
+        public boolean isCellEditable(int rowIndex, int columnIndex) {
+            return false;
+        }
+
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            if (dostave != null) {
+                switch (columnIndex) {
+                    case 0:
+                        return dostave.get(rowIndex).getNaziv();
+                    case 1:
+                        return dostave.get(rowIndex).getKlijent().getIme();
+                    default:
+                        return null;
+                }
+            }
+
+            return null;
+        }
+
+    /* @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 
     }
@@ -402,109 +369,107 @@ public class DostaveTableModel extends DefaultTableModel {
 
     @Override
     public void removeTableModelListener(TableModelListener l) {
-*/
+    */
 
-}
-
-
-public class PecivaDostaveTableModel extends DefaultTableModel {
-
-    private Dostava dostava;
-    private List<PecivoUDostavi> pecivaUDostavi;
-
-    PecivaDostaveTableModel() {
     }
 
-    PecivaDostaveTableModel(Dostava dostava , List<PecivoUDostavi> pecivaUDostavi) {
-        if(dostava != null) {
-            this.dostava = dostava;
-            this.pecivaUDostavi = pecivaUDostavi;
-          /*  List<PecivoUDostavi> obrisanaPecivaUDostavi = new ArrayList<PecivoUDostavi>();
-            for (PecivoUDostavi p : obrisanaPecivaUDostavi) {
-                if (p.isObrisano()) {
-                    obrisanaPecivaUDostavi.add(p);
+    class PotvrdaDostavePecivaUDostaviTableModel extends DefaultTableModel {
+
+        private Dostava dostava;
+        private List<PecivoUDostavi> pecivaUDostavi;
+
+        PotvrdaDostavePecivaUDostaviTableModel() {
+            dostava = null;
+            pecivaUDostavi = new ArrayList<PecivoUDostavi>(0);
+        }
+
+        PotvrdaDostavePecivaUDostaviTableModel(Dostava dostava, List<PecivoUDostavi> pecivaUDostavi) {
+            if (dostava != null) {
+                this.dostava = dostava;
+                this.pecivaUDostavi = pecivaUDostavi;
+                List<PecivoUDostavi> obrisanaPecivaUDostavi = new ArrayList<PecivoUDostavi>();
+                for (PecivoUDostavi p : obrisanaPecivaUDostavi) {
+                    if (p.isObrisano()) {
+                        obrisanaPecivaUDostavi.add(p);
+                    }
                 }
+                pecivaUDostavi.removeAll(obrisanaPecivaUDostavi);
             }
-            pecivaUDostavi.removeAll(obrisanaPecivaUDostavi);
-            */
-        }
-    }
-
-    
-    public Dostava getDostava() {
-        return dostava;
-    }
-
-    public List<PecivoUDostavi> getPecivaUDostavi() {
-        return pecivaUDostavi;
-    }
-
-    @Override
-    public int getRowCount() {
-        if (pecivaUDostavi != null) {
-            return pecivaUDostavi.size();
         }
 
-        return 0;
-    }
 
-    @Override
-    public int getColumnCount() {
-        return 3;
-    }
-
-    @Override
-    public String getColumnName(int columnIndex) {
-        switch (columnIndex) {
-            case 0:
-                return "Pecivo";
-            case 1:
-                return "Šifra";
-            case 2:
-                return "Količina dostavljenog peciva";
-            default:
-                return null;
+        public Dostava getDostava() {
+            return dostava;
         }
-    }
 
-    @Override
-    public Class<?> getColumnClass(int columnIndex) {
-        switch (columnIndex) {
-            case 0:
-                return String.class;
-            case 1:
-                return String.class;
-            case 2:
-                return Double.class;
-            default:
-                return null;
+        public List<PecivoUDostavi> getPecivaUDostavi() {
+            return pecivaUDostavi;
         }
-    }
 
-    @Override
-    public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return false;
-    }
+        @Override
+        public int getRowCount() {
+            if (pecivaUDostavi != null) {
+                return pecivaUDostavi.size();
+            }
 
-    @Override
-    public Object getValueAt(int rowIndex, int columnIndex) {
-    	if(pecivaUDostavi != null && pecivaUDostavi.get(rowIndex).getDostava()==dostava) {
+            return 0;
+        }
+
+        @Override
+        public int getColumnCount() {
+            return 3;
+        }
+
+        @Override
+        public String getColumnName(int columnIndex) {
             switch (columnIndex) {
-               
                 case 0:
-                    return pecivaUDostavi.get(rowIndex).getPecivo().getNaziv();
+                    return "Pecivo";
                 case 1:
-                    return pecivaUDostavi.get(rowIndex).getPecivo().getSifra();
+                    return "Šifra";
                 case 2:
-                    double kolicinaDostavljenogPeciva = pecivaUDostavi.get(rowIndex).getKolicinaPreuzetogPeciva() - pecivaUDostavi.get(rowIndex).getKolicinaVracenogPeciva();
-                    return kolicinaDostavljenogPeciva * pecivaUDostavi.get(rowIndex).getPecivo().getCijena();
+                    return "Količina dostavljenog peciva";
                 default:
                     return null;
             }
         }
 
-        return null;
-    }
+        @Override
+        public Class<?> getColumnClass(int columnIndex) {
+            switch (columnIndex) {
+                case 0:
+                    return String.class;
+                case 1:
+                    return String.class;
+                case 2:
+                    return JSpinner.class;
+                default:
+                    return null;
+            }
+        }
+
+        @Override
+        public boolean isCellEditable(int rowIndex, int columnIndex) {
+            return columnIndex == 2;
+        }
+
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            if (pecivaUDostavi != null && pecivaUDostavi.get(rowIndex).getDostava() == dostava) {
+                switch (columnIndex) {
+                    case 0:
+                        return pecivaUDostavi.get(rowIndex).getPecivo().getNaziv();
+                    case 1:
+                        return pecivaUDostavi.get(rowIndex).getPecivo().getSifra();
+                    case 2:
+                        return pecivaUDostavi.get(rowIndex).getKolicinaPreuzetogPeciva();
+                    default:
+                        return null;
+                }
+            }
+
+            return null;
+        }
 
     /*@Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
@@ -520,6 +485,31 @@ public class PecivaDostaveTableModel extends DefaultTableModel {
     public void removeTableModelListener(TableModelListener l) {
 
     }
-*/
+    */
+    }
 }
+
+class SpinnerEditor extends AbstractCellEditor implements TableCellEditor {
+    final JSpinner spinner = new JSpinner();
+
+    public SpinnerEditor() {
+        spinner.setModel(new SpinnerNumberModel());
+    }
+
+    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected,
+                                                 int row, int column) {
+        spinner.setValue(value);
+        return spinner;
+    }
+
+    public boolean isCellEditable(EventObject evt) {
+        if (evt instanceof MouseEvent) {
+            return ((MouseEvent) evt).getClickCount() >= 2;
+        }
+        return true;
+    }
+
+    public Object getCellEditorValue() {
+        return spinner.getValue();
+    }
 }
