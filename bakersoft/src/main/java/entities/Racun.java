@@ -18,9 +18,9 @@ public class Racun {
     private Date pocetak;
     @Temporal(TemporalType.DATE)
     private Date kraj;
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, optional = true)
     private Klijent klijent;
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, optional = true)
     private Korisnik obracunao;
 
     public boolean isObrisano() {

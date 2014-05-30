@@ -13,9 +13,9 @@ public class PecivoUDostavi {
     private boolean obrisano = false;
     private double kolicinaPreuzetogPeciva;
     private double kolicinaVracenogPeciva;
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, optional = true)
     private Pecivo pecivo;
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, optional = true)
     private Dostava dostava;
 
     public boolean isObrisano() {

@@ -10,7 +10,7 @@ public class ProdajnoMjesto {
     private boolean obrisano = false;
     private String mjesto;
     private String adresa;
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, optional = true)
     private Klijent klijent;
 
     public boolean isObrisano() {

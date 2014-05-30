@@ -14,9 +14,9 @@ public class Dostava {
     private boolean jeIsporuceno;
     @Temporal(TemporalType.DATE)
     private Date datum;
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, optional = true)
     private Klijent klijent;
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, optional = true)
     private Korisnik preuzeo;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "dostava")
     private Collection<PecivoUDostavi> peciva;

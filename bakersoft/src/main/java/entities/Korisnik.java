@@ -23,9 +23,9 @@ public class Korisnik {
     private Date datumRodjenja;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "obracunao")
     private Collection<Racun> obracunatiRacuni;
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, optional = true)
     private Status status;
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, optional = true)
     private Tip tip;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "preuzeo")
     private Collection<Dostava> dostave;

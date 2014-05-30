@@ -45,8 +45,8 @@ public class DostavljacJFrame extends JFrame {
 
     public void postaviPreuzimanjePecivaJPanel() {
         ukloniPostojecePanele();
-        dostavljacPreuzimanjePecivaJPanel.popuniSaSvimPodacimaIzBaze();
         contentPane.add(dostavljacPreuzimanjePecivaJPanel, BorderLayout.CENTER);
+        dostavljacPreuzimanjePecivaJPanel.popuniSaSvimPodacimaIzBaze(0);
         this.validate();
         this.repaint();
     }
