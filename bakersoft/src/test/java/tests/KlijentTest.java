@@ -8,19 +8,19 @@ import entities.Klijent;
 
 public class KlijentTest {
 	
-	//Kapiram da je reËeno da se ne testiraju getteri i setteri, ali ovi su bitni jer je validacija 
-	//sadrûana u njima, tj u ova dva xD ... samo Êemo testirat nepravilan unos
+	//Kapiram da je re√®eno da se ne testiraju getteri i setteri, ali ovi su bitni jer je validacija 
+	//sadr≈æana u njima, tj u ova dva xD ... samo √¶emo testirat nepravilan unos
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testSetIme() {
 		Klijent k = new Klijent();
-		k.setIme("");//prazan string pokuöavamo
+		k.setIme("");//prazan string poku≈°avamo
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testSetTelefon() {
 		Klijent k = new Klijent();
-		k.setTelefon("");//prazan string pokuöavamo
+		k.setTelefon("");//prazan string poku≈°avamo
 	}
 
 }
