@@ -24,8 +24,7 @@ public class InicijalizatorBazeZaTestiranje {
 
         Klijent klijent1 = new Klijent();
         Klijent klijent2 = new Klijent();
-        Klijent klijent3 = new Klijent();
-        Klijent klijent4 = new Klijent();
+
         Dostava dostava1 = new Dostava();
         Dostava dostava2 = new Dostava();
         Dostava dostava3 = new Dostava();
@@ -105,15 +104,7 @@ public class InicijalizatorBazeZaTestiranje {
         klijent2.setDostave(new ArrayList<Dostava>());
 
         
-        klijent3.setIme("Mercator");
-        klijent3.setTelefon("066/345-789");
-        klijent3.setProdajnaMjesta(new ArrayList<ProdajnoMjesto>());
-        klijent3.setDostave(new ArrayList<Dostava>());
         
-        klijent4.setIme("Konzum");
-        klijent4.setTelefon("062/345-776");
-        klijent4.setProdajnaMjesta(new ArrayList<ProdajnoMjesto>());
-        klijent4.setDostave(new ArrayList<Dostava>());
         
         
         // Racuni
@@ -241,8 +232,7 @@ public class InicijalizatorBazeZaTestiranje {
 
         baza.spasiUBazu(klijent1);
         baza.spasiUBazu(klijent2);
-        baza.spasiUBazu(klijent3);
-        baza.spasiUBazu(klijent4);
+
         
         baza.spasiUBazu(racun1);
 
