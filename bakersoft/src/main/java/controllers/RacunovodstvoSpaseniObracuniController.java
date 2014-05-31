@@ -1,4 +1,4 @@
-package controllers;
+﻿package controllers;
 
 import entities.Klijent;
 import entities.Racun;
@@ -53,6 +53,16 @@ public class RacunovodstvoSpaseniObracuniController {
 	                racunovodstvoSpaseniObracuniJPanel.popuniObracuniJTableSaPodacimaOKlijentu(klijent);
 	                JOptionPane.showMessageDialog(racunovodstvoSpaseniObracuniJPanel.getParent(), "Uspješno ste izbrisali obračun");
                 }
+            }
+        };
+    }
+    
+    public ActionListener getPDFJButtonActionListener() {
+        return new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+            	
+	             JOptionPane.showMessageDialog(racunovodstvoSpaseniObracuniJPanel.getParent(), "Nije implementirano. :(");
+                
             }
         };
     }

@@ -1,5 +1,6 @@
-package controllers;
+﻿package controllers;
 
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -28,22 +29,18 @@ public class RacunovodstvoEvidencijaPecivaController
 	public ActionListener getEvidencijaPecivaDodajPecivoJButtonActionListener(){
 		return new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-	            JOptionPane.showMessageDialog(null, racunovodstvoEvidencijaPecivaJPanel.getPregledPecivaJTable().getSelectedRow());
-
-				racunovodstvoEvidencijaPecivaJPanel.dodajPecivo();
+				try {
+					racunovodstvoEvidencijaPecivaJPanel.dodajPecivo();
+	                JOptionPane.showMessageDialog(racunovodstvoEvidencijaPecivaJPanel.getParent(), "Pecivo je uspješno dodano.");
+					racunovodstvoEvidencijaPecivaJPanel.osvjeziPanel();
+				} catch (Exception e) {
+	                JOptionPane.showMessageDialog(racunovodstvoEvidencijaPecivaJPanel.getParent(), e.getMessage());
+				}
 				
 			}
 		};
 	}
 	
-	public ActionListener getEvidencijaPecivaAzurirajJButtonActionListener(){
-		return new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				racunovodstvoEvidencijaPecivaJPanel.azurirajPecivo();
-				
-			}
-		};
-	}
 	
 	public ActionListener getEvidencijaPecivaUkloniPecivoJButtonActionListener(){
 		return new ActionListener(){
@@ -54,7 +51,7 @@ public class RacunovodstvoEvidencijaPecivaController
 				  Pecivo pecivo = baza.dajPoId(Pecivo.class, idSelektiranogPeciva);
 				  pecivo.setObrisano(true);
 				  baza.spasiUBazu(pecivo);
-				  racunovodstvoEvidencijaPecivaJPanel.azurirajPecivo();
+				  //racunovodstvoEvidencijaPecivaJPanel.azurirajPecivo();
 			}
 		};
 	}
