@@ -1,4 +1,4 @@
-﻿package views;
+package views;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -12,6 +12,7 @@ import entities.Dostava;
 import entities.Klijent;
 import entities.Korisnik;
 import entities.Pecivo;
+import entities.Racun;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,6 +20,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 
 public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
     private JTable pregledPecivaJTable;
@@ -48,19 +50,18 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
 
         pregledPecivaJTable = new JTable();
         pregledPecivaJTable.setModel(new DefaultTableModel(
-                new Object[][]{
-                },
-                new String[]{
-                        "Šifra", "Naziv", "Cijena", "Težina", "U prodaji"
-                }
+        	new Object[][] {
+        	},
+        	new String[] {
+        		"\u0160ifra", "Naziv", "Cijena", "Te\u017Eina", "U prodaji"
+        	}
         ) {
-            Class[] columnTypes = new Class[]{
-                    Object.class, Object.class, Object.class, Object.class, Boolean.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return columnTypes[columnIndex];
-            }
+        	Class[] columnTypes = new Class[] {
+        		Object.class, Object.class, Object.class, Object.class, Boolean.class
+        	};
+        	public Class getColumnClass(int columnIndex) {
+        		return columnTypes[columnIndex];
+        	}
         });
         pregledPecivaJScrollPane.setViewportView(pregledPecivaJTable);
 
@@ -86,7 +87,7 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
         gbc_ukloniPecivoJButton.gridy = 0;
         dugmadJPanel.add(ukloniPecivoJButton, gbc_ukloniPecivoJButton);
 
-        azurirajJButton = new JButton("Ažuriraj");
+        azurirajJButton = new JButton("A\u017Euriraj");
         GridBagConstraints gbc_azurirajJButton = new GridBagConstraints();
         gbc_azurirajJButton.fill = GridBagConstraints.HORIZONTAL;
         gbc_azurirajJButton.gridx = 1;
@@ -101,7 +102,7 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
         add(dodajPecivoJButton, gbc_dodajPecivoJButton);
         
       
-        
+        popuni();
         dodajListeners();
 
     }
@@ -140,9 +141,18 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
     	
     	PecivoTableModel(){}
     	
-    	PecivoTableModel(List<Pecivo> trenutnaPeciva) {
-    	       listaPeciva = trenutnaPeciva;
-    	    }
+    	PecivoTableModel(List<Pecivo> peciva) {
+            
+                listaPeciva = peciva;
+                List<Pecivo> obrisanaPeciva = new ArrayList<Pecivo>();
+                for (Pecivo p : this.listaPeciva) {
+                	if (p.isObrisano()) {
+                        obrisanaPeciva.add(p);
+                    }
+                }
+                listaPeciva.removeAll(obrisanaPeciva);
+            }
+        
     	
     	public List<Pecivo> getListaPeciva()
     	{
@@ -167,13 +177,13 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
     	    public String getColumnName(int columnIndex) {
     	        switch (columnIndex) {
     	            case 0:
-    	                return "Šifra";
+    	                return "�ifra";
     	            case 1:
     	                return "Naziv";
     	            case 2:
     	                return "Cijena";
     	            case 3:
-    	                return "Težina";
+    	                return "Te�ina";
     	            case 4:
     	            	return "U prodaji";
     	            default:
@@ -218,7 +228,7 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
     	        }
     	        return null;
     	    }
-    	     	    	
+    	     	
     	    
     	    /*@Override
     	    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
@@ -243,15 +253,32 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
     		List<Pecivo> svaPeciva = baza.dajSve(Pecivo.class);
     	
     	}	
-    
-    	public void popuniSaPodacima()
+    	 
+    	public void popuni()
     	{
     		Baza baza = Baza.getBaza();
     		List<Pecivo> svaPeciva = baza.dajSve(Pecivo.class);
     		PecivoTableModel pecivoTableModel = new PecivoTableModel(svaPeciva);
     		pregledPecivaJTable.setModel(pecivoTableModel);
-    		    			
-    	}    
+    	}
+    	public void dodajPecivo()
+    	{
+            JOptionPane.showMessageDialog(null, "Unesite podatke o novom pecivu u prazan red u tabeli");
+    		Baza baza = Baza.getBaza();
+    		List<Pecivo> svaPeciva = baza.dajSve(Pecivo.class);
+    		PecivoTableModel pecivoTableModel = new PecivoTableModel(svaPeciva);
+    		pregledPecivaJTable.setModel(pecivoTableModel);
+//izuzetak  pecivoTableModel.addRow(new Object[]{"","","","",false});
+    	}  
+    	
+    	public void azurirajPecivo()
+    	{
+    		Baza baza = Baza.getBaza();
+    		List<Pecivo> svaPeciva = baza.dajSve(Pecivo.class);
+    		
+    	}
+    	
+    
 }
 
 	

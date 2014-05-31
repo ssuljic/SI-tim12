@@ -1,12 +1,18 @@
-﻿package controllers;
+package controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import utilities.Baza;
+import utilities.JComboBoxItem;
 import views.RacunovodstvoEvidencijaPecivaJPanel;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+
+import entities.Klijent;
+import entities.Pecivo;
+import entities.Racun;
 
 
 
@@ -22,8 +28,9 @@ public class RacunovodstvoEvidencijaPecivaController
 	public ActionListener getEvidencijaPecivaDodajPecivoJButtonActionListener(){
 		return new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				
-				racunovodstvoEvidencijaPecivaJPanel.popuniSaPodacima();
+	            JOptionPane.showMessageDialog(null, racunovodstvoEvidencijaPecivaJPanel.getPregledPecivaJTable().getSelectedRow());
+
+				racunovodstvoEvidencijaPecivaJPanel.dodajPecivo();
 				
 			}
 		};
@@ -32,7 +39,8 @@ public class RacunovodstvoEvidencijaPecivaController
 	public ActionListener getEvidencijaPecivaAzurirajJButtonActionListener(){
 		return new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				racunovodstvoEvidencijaPecivaJPanel.popuniSaPodacima();
+				racunovodstvoEvidencijaPecivaJPanel.azurirajPecivo();
+				
 			}
 		};
 	}
@@ -40,7 +48,13 @@ public class RacunovodstvoEvidencijaPecivaController
 	public ActionListener getEvidencijaPecivaUkloniPecivoJButtonActionListener(){
 		return new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				racunovodstvoEvidencijaPecivaJPanel.popuniSaPodacima();
+				  int idSelektiranogPeciva;
+				  idSelektiranogPeciva = racunovodstvoEvidencijaPecivaJPanel.getPregledPecivaJTable().getSelectedRow();
+				  Baza baza = Baza.getBaza();
+				  Pecivo pecivo = baza.dajPoId(Pecivo.class, idSelektiranogPeciva);
+				  pecivo.setObrisano(true);
+				  baza.spasiUBazu(pecivo);
+				  racunovodstvoEvidencijaPecivaJPanel.azurirajPecivo();
 			}
 		};
 	}
