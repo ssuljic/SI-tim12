@@ -2,7 +2,7 @@ package tests;
 
 import static org.junit.Assert.*;
 import entities.Klijent;
-
+import entities.Pecivo;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -37,7 +37,33 @@ public class DostavljacPreuzimanjePecivaJPanelTest {
             }
         }
         
+
         assertTrue(obrisaniKlijenti.isEmpty());
 	}
 
+	@Test
+	// da li su uklonjenna obrisana peciva
+	public void UkloniObrisanaPecivaIzTest()
+	{
+		Baza baza = Baza.getBaza();
+		List<Pecivo> svaPeciva=baza.dajSve(Pecivo.class);
+		List<Pecivo> obrisanaPeciva = new ArrayList<Pecivo>();
+        for (Pecivo p : svaPeciva) {
+            if (p.isObrisano()) {
+                obrisanaPeciva.add(p);
+            }
+        }
+        svaPeciva.removeAll(obrisanaPeciva);
+        obrisanaPeciva.clear();
+        for(Pecivo p:svaPeciva)
+        {
+        	if(p.isObrisano())
+        	{
+        		obrisanaPeciva.add(p);
+        	}
+        }
+        assertTrue(obrisanaPeciva.isEmpty());
+	}
+	
+	
 }
