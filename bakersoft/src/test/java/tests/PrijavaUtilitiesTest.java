@@ -5,7 +5,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class PrijavaUtilitiesTest {
-    @BeforeClass
+    /*@BeforeClass
     public void setupBeforeAllTests() {
 
     }
@@ -18,5 +18,5 @@ public class PrijavaUtilitiesTest {
     @Test
     public void someTest() {
 
-    }
+    }*/
 }

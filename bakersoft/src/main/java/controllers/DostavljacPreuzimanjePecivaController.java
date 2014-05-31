@@ -3,8 +3,11 @@ package controllers;
 import entities.PecivoUDostavi;
 import views.DostavljacPreuzimanjePecivaJPanel;
 
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JOptionPane;
 
 public class DostavljacPreuzimanjePecivaController {
 
@@ -32,7 +35,12 @@ public class DostavljacPreuzimanjePecivaController {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dostavljacPreuzimanjePecivaJPanel.popuniPecivaUDostaviTabeluSaSelektiranimPecivomIUnesenomKolicinom();
+            	try {
+					dostavljacPreuzimanjePecivaJPanel.validirajPodatke2();
+					dostavljacPreuzimanjePecivaJPanel.popuniPecivaUDostaviTabeluSaSelektiranimPecivomIUnesenomKolicinom();
+				} catch (Exception e1) {
+				    JOptionPane.showMessageDialog(dostavljacPreuzimanjePecivaJPanel.getParent(), e1.getMessage());
+				}
             }
         };
     }
@@ -41,7 +49,15 @@ public class DostavljacPreuzimanjePecivaController {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dostavljacPreuzimanjePecivaJPanel.napraviDostavu();
+            	try {
+					dostavljacPreuzimanjePecivaJPanel.validirajPodatke();
+					dostavljacPreuzimanjePecivaJPanel.napraviDostavu();
+					JOptionPane.showMessageDialog(dostavljacPreuzimanjePecivaJPanel.getParent(), "Dostava je preuzeta, a potvrditi je možete u sekciji Potvrda dostave!");
+					dostavljacPreuzimanjePecivaJPanel.osvjeziJPanel2();
+				} catch (IllegalArgumentException e1) {
+				    JOptionPane.showMessageDialog(dostavljacPreuzimanjePecivaJPanel.getParent(), e1.getMessage());
+				}
+                
             }
         };
     }

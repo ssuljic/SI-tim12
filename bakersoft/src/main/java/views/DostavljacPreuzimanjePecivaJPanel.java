@@ -10,19 +10,20 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+
 import java.awt.*;
 import java.util.*;
 import java.util.List;
 
 public class DostavljacPreuzimanjePecivaJPanel extends JPanel {
     private JTextField nazivDostaveJTextField;
-    private JTable pecivaJTable;
+	private JTable pecivaJTable;
     private JButton ukloniPecivoJButton;
     private JButton dodajPecivoJButton;
     private JButton preuzmiDostavuJButton;
     private JScrollPane pecivaUDostaviJScrollPane;
-    private JTable pecivaUDostaviJTable;
-    private JSpinner kolicinaJSpinner;
+	private JTable pecivaUDostaviJTable;
+	private JSpinner kolicinaJSpinner;
     private JLabel kolicinaJLabel;
     private JComboBox dostavaZaJComboBox;
     private JLabel dostavaZaJLabel;
@@ -169,7 +170,31 @@ public class DostavljacPreuzimanjePecivaJPanel extends JPanel {
 
         dodajListeners();
     }
+    
+    public JTable getPecivaUDostaviJTable() {
+		return pecivaUDostaviJTable;
+	}
 
+	public void setPecivaUDostaviJTable(JTable pecivaUDostaviJTable) {
+		this.pecivaUDostaviJTable = pecivaUDostaviJTable;
+	}
+
+    public JTextField getNazivDostaveJTextField() {
+		return nazivDostaveJTextField;
+	}
+
+	public void setNazivDostaveJTextField(JTextField nazivDostaveJTextField) {
+		this.nazivDostaveJTextField = nazivDostaveJTextField;
+	}
+
+	public JSpinner getKolicinaJSpinner() {
+		return kolicinaJSpinner;
+	}
+
+	public void setKolicinaJSpinner(JSpinner kolicinaJSpinner) {
+		this.kolicinaJSpinner = kolicinaJSpinner;
+	}
+    
     public JTable getPecivaJTable() {
         return pecivaJTable;
     }
@@ -185,6 +210,14 @@ public class DostavljacPreuzimanjePecivaJPanel extends JPanel {
     public JButton getPreuzmiDostavuJButton() {
         return preuzmiDostavuJButton;
     }
+    
+    public JScrollPane getPecivaUDostaviJScrollPane() {
+		return pecivaUDostaviJScrollPane;
+	}
+
+	public void setPecivaUDostaviJScrollPane(JScrollPane pecivaUDostaviJScrollPane) {
+		this.pecivaUDostaviJScrollPane = pecivaUDostaviJScrollPane;
+	}
 
     public void dodajListeners() {
         DostavljacPreuzimanjePecivaController dostavljacPreuzimanjePecivaJPanel = new DostavljacPreuzimanjePecivaController(this);
@@ -272,6 +305,26 @@ public class DostavljacPreuzimanjePecivaJPanel extends JPanel {
         this.validate();
         this.repaint();
     }
+    
+    public void osvjeziJPanel2() {
+        getNazivDostaveJTextField().setText("");
+        getKolicinaJSpinner().setValue(0);
+        //osvjeziPecivaUDostaviTabelu();
+        JTable tabela = null;
+		((DefaultTableModel) tabela.getModel()).setRowCount(0);
+		
+		
+		
+		
+		
+		
+		
+		
+        getPecivaUDostaviJScrollPane().setViewportView(tabela);
+       // ((DefaultTableModel)getPecivaUDostaviJScrollPane().getModel()).setRowCount(0);
+
+        
+    }
 
     public PecivoUDostavi dajSelektiranoPecivoUDostaviIzPecivaDodanihUDostavu() {
         List<PecivoUDostavi> pecivaUDostaviIzTabele = ((PreuzimanjeDostavePecivaUDostaviTableModel)pecivaUDostaviJTable.getModel()).getPecivaUDostavi();
@@ -332,7 +385,10 @@ public class DostavljacPreuzimanjePecivaJPanel extends JPanel {
         dostava.setJeIsporuceno(false);
         dostava.setObrisano(false);
         List<PecivoUDostavi> pecivaUDostavi = ((PreuzimanjeDostavePecivaUDostaviTableModel)pecivaUDostaviJTable.getModel()).getPecivaUDostavi();
+       
+        
         dostava.setPeciva(pecivaUDostavi);
+        
 
         dostava.setNaziv(nazivDostaveJTextField.getText());
         Korisnik dostavljac = ((DostavljacJFrame)SwingUtilities.getWindowAncestor(this)).getKorisnik();
@@ -350,6 +406,32 @@ public class DostavljacPreuzimanjePecivaJPanel extends JPanel {
         }
 
         dostava.setDatum(new Date());
+        
+        /*Iterator<PecivoUDostavi> p = pecivaUDostavi.iterator();
+        while(p.hasNext()){
+        	if(((PecivoUDostavi)p).getPecivo().getPecivaUDostavi() == null){
+                ((PecivoUDostavi)p).getPecivo().setPecivaUDostavi(new ArrayList<PecivoUDostavi>());
+            }
+
+            ((PecivoUDostavi) p).getPecivo().getPecivaUDostavi().add((PecivoUDostavi) p);
+            ((PecivoUDostavi) p).setDostava(dostava);
+            baza.spasiUBazu(p);
+            baza.azuriraj(((PecivoUDostavi) p).getPecivo());
+            p.next();
+        }
+        */
+
+
+        for(int i=0; i<pecivaUDostavi.size(); i++){
+        	if(pecivaUDostavi.get(i).getPecivo().getPecivaUDostavi() == null){
+        		pecivaUDostavi.get(i).getPecivo().setPecivaUDostavi(new ArrayList<PecivoUDostavi>());
+        	}
+        	pecivaUDostavi.get(i).getPecivo().getPecivaUDostavi().add(pecivaUDostavi.get(i));
+        	pecivaUDostavi.get(i).setDostava(dostava);
+        	baza.spasiUBazu(pecivaUDostavi.get(i));
+        	baza.azuriraj(pecivaUDostavi.get(i).getPecivo());
+        }
+        /*
         for(PecivoUDostavi p : pecivaUDostavi) {
             if(p.getPecivo().getPecivaUDostavi() == null){
                 p.getPecivo().setPecivaUDostavi(new ArrayList<PecivoUDostavi>());
@@ -359,7 +441,7 @@ public class DostavljacPreuzimanjePecivaJPanel extends JPanel {
             p.setDostava(dostava);
             baza.spasiUBazu(p);
             baza.azuriraj(p.getPecivo());
-        }
+        }*/
 
         dostava.setKlijent(narucilac);
         baza.spasiUBazu(dostava);
@@ -368,6 +450,21 @@ public class DostavljacPreuzimanjePecivaJPanel extends JPanel {
         baza.azuriraj(narucilac);
         return dostava;
     }
+
+	public void validirajPodatke() {
+		if(getNazivDostaveJTextField().getText().isEmpty())
+			throw new IllegalArgumentException("Polje naziv dostave ne može biti prazno.");
+		
+        List<PecivoUDostavi> pecivaUDostavi = ((PreuzimanjeDostavePecivaUDostaviTableModel)pecivaUDostaviJTable.getModel()).getPecivaUDostavi();
+        if(pecivaUDostavi == null)
+			throw new IllegalArgumentException("Morate dodati barem jednu stavku.");
+
+	}
+	
+	public void validirajPodatke2() {
+		if((Integer)getKolicinaJSpinner().getValue() == 0)
+			throw new IllegalArgumentException("Kolièina ne može biti 0.");
+	}
 }
 
 class PreuzimanjeDostavePecivaJTable extends DefaultTableModel {
