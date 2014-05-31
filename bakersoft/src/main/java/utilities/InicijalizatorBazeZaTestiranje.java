@@ -30,6 +30,7 @@ public class InicijalizatorBazeZaTestiranje {
         Dostava dostava3 = new Dostava();
         Dostava dostava4 = new Dostava();
         Racun racun1 = new Racun();
+        Racun racun2 = new Racun();
         Pecivo pecivo1 = new Pecivo();
         Pecivo pecivo2 = new Pecivo();
         Pecivo pecivo3 = new Pecivo();
@@ -102,6 +103,9 @@ public class InicijalizatorBazeZaTestiranje {
         klijent2.setTelefon("062/225-883");
         klijent2.setProdajnaMjesta(new ArrayList<ProdajnoMjesto>());
         klijent2.setDostave(new ArrayList<Dostava>());
+        
+        klijent2.setRacuni(new ArrayList<Racun>());
+        klijent2.getRacuni().add(racun2);
 
         
         
@@ -117,6 +121,14 @@ public class InicijalizatorBazeZaTestiranje {
         racun1.setJePlacen(true);
         racun1.setIznos(1845);
 
+        racun2.setDatum(new Date());
+        racun2.setKlijent(klijent2);
+        racun2.setObracunao(korisnik1);
+        racun2.setPocetak(new Date(1992, 8, 10));
+        racun2.setKraj(new Date(1992, 8, 12));
+        racun2.setBroj(12345);
+        racun2.setJePlacen(true);
+        racun2.setIznos(18451);
         
        
         // Peciva
@@ -235,6 +247,7 @@ public class InicijalizatorBazeZaTestiranje {
 
         
         baza.spasiUBazu(racun1);
+        baza.spasiUBazu(racun2);
 
         baza.spasiUBazu(pecivo1);
         baza.spasiUBazu(pecivo2);
