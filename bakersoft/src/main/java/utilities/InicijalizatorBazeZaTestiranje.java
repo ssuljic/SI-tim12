@@ -15,17 +15,28 @@ public class InicijalizatorBazeZaTestiranje {
 
         Tip tipKorisnika1 = new Tip();
         Tip tipKorisnika2 = new Tip();
+
         Status statusKorisnika1 = new Status();
         Status statusKorisnika2 = new Status();
+
         Korisnik korisnik1 = new Korisnik();
         Korisnik korisnik2 = new Korisnik();
+
         Klijent klijent1 = new Klijent();
         Klijent klijent2 = new Klijent();
+        Klijent klijent3 = new Klijent();
+        Klijent klijent4 = new Klijent();
         Dostava dostava1 = new Dostava();
         Dostava dostava2 = new Dostava();
+        Dostava dostava3 = new Dostava();
+        Dostava dostava4 = new Dostava();
         Racun racun1 = new Racun();
         Pecivo pecivo1 = new Pecivo();
         Pecivo pecivo2 = new Pecivo();
+        Pecivo pecivo3 = new Pecivo();
+        Pecivo pecivo4 = new Pecivo();
+        Pecivo pecivo5 = new Pecivo();
+        
         ProdajnoMjesto prodajnoMjesto1 = new ProdajnoMjesto();
         ProdajnoMjesto prodajnoMjesto2 = new ProdajnoMjesto();
         ProdajnoMjesto prodajnoMjesto3 = new ProdajnoMjesto();
@@ -73,7 +84,9 @@ public class InicijalizatorBazeZaTestiranje {
         korisnik2.setStatus(statusKorisnika1);
         korisnik2.setDostave(new ArrayList<Dostava>());
         korisnik2.setObracunatiRacuni(new ArrayList<Racun>());
+        
 
+        
         // Klijenti
         klijent1.setIme("Mesnica Kengur");
         klijent1.setTelefon("062/274-040");
@@ -91,6 +104,18 @@ public class InicijalizatorBazeZaTestiranje {
         klijent2.setProdajnaMjesta(new ArrayList<ProdajnoMjesto>());
         klijent2.setDostave(new ArrayList<Dostava>());
 
+        
+        klijent3.setIme("Mercator");
+        klijent3.setTelefon("066/345-789");
+        klijent3.setProdajnaMjesta(new ArrayList<ProdajnoMjesto>());
+        klijent3.setDostave(new ArrayList<Dostava>());
+        
+        klijent4.setIme("Konzum");
+        klijent4.setTelefon("062/345-776");
+        klijent4.setProdajnaMjesta(new ArrayList<ProdajnoMjesto>());
+        klijent4.setDostave(new ArrayList<Dostava>());
+        
+        
         // Racuni
         racun1.setDatum(new Date());
         racun1.setKlijent(klijent1);
@@ -101,6 +126,8 @@ public class InicijalizatorBazeZaTestiranje {
         racun1.setJePlacen(true);
         racun1.setIznos(1845);
 
+        
+       
         // Peciva
         pecivo1.setNaziv("Kifla");
         pecivo1.setCijena(0.20);
@@ -119,6 +146,27 @@ public class InicijalizatorBazeZaTestiranje {
         pecivo2.setPecivaUDostavi(new ArrayList<PecivoUDostavi>());
         pecivo2.getPecivaUDostavi().add(pecivoUDostavi22);
 
+        pecivo3.setNaziv("Hljeb");
+        pecivo3.setCijena(1.00);
+        pecivo3.setJeUProdaji(true);
+        pecivo3.setSifra("hljeb-123");
+        pecivo3.setTezina(0.4);
+        pecivo3.setPecivaUDostavi(new ArrayList<PecivoUDostavi>());
+        
+        pecivo4.setNaziv("Lisnato");
+        pecivo4.setCijena(1.20);
+        pecivo4.setJeUProdaji(true);
+        pecivo4.setSifra("lisnato-20");
+        pecivo4.setTezina(0.2);
+        pecivo4.setPecivaUDostavi(new ArrayList<PecivoUDostavi>());
+        
+        pecivo5.setNaziv("Kolac");
+        pecivo5.setCijena(2.00);
+        pecivo5.setJeUProdaji(true);
+        pecivo5.setSifra("kolac-102");
+        pecivo5.setTezina(0.4);
+        pecivo5.setPecivaUDostavi(new ArrayList<PecivoUDostavi>());
+        
         // Peciva u dostavi
         pecivoUDostavi1.setDostava(dostava1);
         pecivoUDostavi1.setPecivo(pecivo1);
@@ -150,6 +198,11 @@ public class InicijalizatorBazeZaTestiranje {
 
         dostava2.setDatum(new Date());
 
+        
+        dostava3.setDatum(new Date());
+        
+        dostava4.setDatum(new Date());
+        
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         try {
             dostava2.setDatum(simpleDateFormat.parse("19/10/2013"));
@@ -188,12 +241,17 @@ public class InicijalizatorBazeZaTestiranje {
 
         baza.spasiUBazu(klijent1);
         baza.spasiUBazu(klijent2);
-
+        baza.spasiUBazu(klijent3);
+        baza.spasiUBazu(klijent4);
+        
         baza.spasiUBazu(racun1);
 
         baza.spasiUBazu(pecivo1);
         baza.spasiUBazu(pecivo2);
-
+        baza.spasiUBazu(pecivo3);
+        baza.spasiUBazu(pecivo4);
+        baza.spasiUBazu(pecivo5);
+        
         baza.spasiUBazu(pecivoUDostavi1);
         baza.spasiUBazu(pecivoUDostavi2);
         baza.spasiUBazu(pecivoUDostavi11);
