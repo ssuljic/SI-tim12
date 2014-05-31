@@ -87,12 +87,12 @@ public class DostavljacPreuzimanjePecivaJPanel extends JPanel {
                 new Object[][]{
                 },
                 new String[]{
-                        "Pecivo", "\u0160ifra"
+                        "Pecivo", "Šifra"
                 }
         ));
         dostavaJScrollPane.setViewportView(pecivaJTable);
 
-        kolicinaJLabel = new JLabel("Koli\u010Dina:");
+        kolicinaJLabel = new JLabel("Kolièina:");
         kolicinaJLabel.setHorizontalAlignment(SwingConstants.TRAILING);
         GridBagConstraints gbc_kolicinaJLabel = new GridBagConstraints();
         gbc_kolicinaJLabel.anchor = GridBagConstraints.EAST;
@@ -123,7 +123,7 @@ public class DostavljacPreuzimanjePecivaJPanel extends JPanel {
                 new Object[][] {
                 },
                 new String[] {
-                        "Pecivo", "\u0160ifra", "Koli\u010Dina"
+                        "Pecivo", "Šifra", "Kolièina"
                 }
         ));
         pecivaUDostaviJScrollPane.setViewportView(pecivaUDostaviJTable);
