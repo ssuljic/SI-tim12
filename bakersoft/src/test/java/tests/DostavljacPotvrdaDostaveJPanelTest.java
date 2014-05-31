@@ -45,23 +45,16 @@ public class DostavljacPotvrdaDostaveJPanelTest {
 		DostavljacPotvrdaDostaveJPanel dpd = new DostavljacPotvrdaDostaveJPanel();
 		Baza baza = Baza.getBaza();
 		List<PecivoUDostavi> pecivaUDostavi = baza.dajSve(PecivoUDostavi.class);
+        List<PecivoUDostavi> obrisanaPecivaUDostavi = new ArrayList<PecivoUDostavi>();
 		for (PecivoUDostavi pud : pecivaUDostavi) {
 	        if (pud.isObrisano()) {
-	        	pecivaUDostavi.add(pud);
+	        	obrisanaPecivaUDostavi.add(pud);
 	        }
 	    }
-		pecivaUDostavi.removeAll(pecivaUDostavi);
+		pecivaUDostavi.removeAll(obrisanaPecivaUDostavi);
 		assertTrue(pecivaUDostavi.isEmpty());
 	}
 	
-	@Test(expected = ClassCastException.class)
-	 public void TestPrazneDajSelektiranuDostavu() {
-		DostavljacPotvrdaDostaveJPanel dpd = new DostavljacPotvrdaDostaveJPanel();
-		ArrayList<Dostava> _dostave = new ArrayList<Dostava>(0);
-		_dostave.clear();
-			dpd.dajSelektiranuDostavu();
-		
-	}
 	
 	@Test(expected = NullPointerException.class)
 	 public void TestIndexaPopuniSaPodacima() {

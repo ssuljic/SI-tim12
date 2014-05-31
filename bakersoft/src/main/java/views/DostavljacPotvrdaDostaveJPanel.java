@@ -273,8 +273,6 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
                 return ((PotvrdaDostaveDostaveTableModel) dostaveJTable.getModel()).getDostave().get(dostaveJTable.getSelectedRow());
             }
         }
-        else throw new ClassCastException("Da bi selektirali mora biti dostava!");
-
         return null;
     }
 

@@ -4,8 +4,10 @@ import entities.Dostava;
 import utilities.Baza;
 import views.DostavljacPotvrdaDostaveJPanel;
 
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -43,16 +45,21 @@ public class DostavljacPotvrdaDostaveController {
             }
         };
     }
+  
 
     public ActionListener getDostavljacPotvrdaDostaveDostavaIzvrsenaActionListener() {
         return new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent actionEvent) {
+          
                 Baza baza = Baza.getBaza();
                 Dostava dostava = dostavljacPotvrdaDostaveJPanel.dajSelektiranuDostavu();
                 dostava.setJeIsporuceno(true);
                 baza.azuriraj(dostava);
                 dostavljacPotvrdaDostaveJPanel.popuniSaSvimPodacimaIzBaze(0);
+				
+            JOptionPane.showMessageDialog(dostavljacPotvrdaDostaveJPanel.getParent(), "Uspješno ste potvrdili dostavu.");
+   
             }
         };
     }
