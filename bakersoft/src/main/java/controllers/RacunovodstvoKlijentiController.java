@@ -4,18 +4,14 @@ import entities.Klijent;
 import entities.ProdajnoMjesto;
 import utilities.Baza;
 import utilities.JComboBoxItem;
-import views.RacunovodstvoJFrame;
 import views.RacunovodstvoKlijentiJPanel;
 
 import javax.swing.*;
 
-import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,7 +80,7 @@ public class RacunovodstvoKlijentiController {
         return new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
             	try {
-					if(brojKlikova2 == 0 && racunovodstvoKlijentiJPanel.getNazivFirmeJTextField().getText()!="" && racunovodstvoKlijentiJPanel.getTelefonJTextField().getText()!=""){
+					if(brojKlikova2 == 0 && !racunovodstvoKlijentiJPanel.getNazivFirmeJTextField().getText().isEmpty() && !racunovodstvoKlijentiJPanel.getTelefonJTextField().getText().isEmpty()){
 						racunovodstvoKlijentiJPanel.ocistiDonjiDioPanela();
 						racunovodstvoKlijentiJPanel.ocistiGornjiDioPanela();
 					    racunovodstvoKlijentiJPanel.sakrijDugmad();
@@ -155,16 +151,16 @@ public class RacunovodstvoKlijentiController {
         return new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
             	try {
-					if(brojKlikova == 0 && racunovodstvoKlijentiJPanel.getProdajnoMjestoNazivJTextField().getText()!="" && racunovodstvoKlijentiJPanel.getProdajnoMjestoAdresaJTextField().getText()!=""){
+					if(brojKlikova == 0 && !racunovodstvoKlijentiJPanel.getProdajnoMjestoNazivJTextField().getText().isEmpty() && !racunovodstvoKlijentiJPanel.getProdajnoMjestoAdresaJTextField().getText().isEmpty()){
 						racunovodstvoKlijentiJPanel.ocistiDonjiDioPanela();
 						brojKlikova=1;
 					    JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Sada možete unijeti podatke za novo prodajno mjesto odabranog klijenta");
 					}
-					else if((racunovodstvoKlijentiJPanel.getProdajnoMjestoNazivJTextField().getText()=="" || racunovodstvoKlijentiJPanel.getProdajnoMjestoAdresaJTextField().getText()=="") && brojKlikova==1){
+					else if((racunovodstvoKlijentiJPanel.getProdajnoMjestoNazivJTextField().getText().isEmpty() || racunovodstvoKlijentiJPanel.getProdajnoMjestoAdresaJTextField().getText().isEmpty()) && brojKlikova==1){
 						brojKlikova=0;
 					    JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Morate unijeti neke podatke kako bi mogli dodati mjesto: ");
 					}
-					else if(racunovodstvoKlijentiJPanel.getProdajnoMjestoNazivJTextField().getText()!="" && racunovodstvoKlijentiJPanel.getProdajnoMjestoAdresaJTextField().getText()!="" && brojKlikova==1){
+					else if(!racunovodstvoKlijentiJPanel.getProdajnoMjestoNazivJTextField().getText().isEmpty() && !racunovodstvoKlijentiJPanel.getProdajnoMjestoAdresaJTextField().getText().isEmpty() && brojKlikova==1){
 						long idSelektiranogKlijenta = ((JComboBoxItem) racunovodstvoKlijentiJPanel.getTraziJComboBox().getSelectedItem()).getId();
 					    Baza baza = Baza.getBaza();
 					    List<Klijent> sviKlijenti = baza.dajSveNeobrisano(Klijent.class);

@@ -541,6 +541,28 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         statusJComboBox.removeAllItems();
         privilegijeJComboBox.removeAllItems();
     }
+    
+    public void ocistiPanel2() {
+        imeJTextField.setText("");
+        prezimeJTextField.setText("");
+        korisnickoImeJTextField.setText("");
+        lozinkaJTextField.setText("");
+        emailJTextField.setText("");
+        telefonJTextField.setText("");
+        mobitelJTextField.setText("");
+        adresaJTextField.setText("");
+        datumRodjenjaJSpinner.setValue(new Date());
+    }
+    
+    public void sakrijDugmad() {
+    	getObrisiJButton().setVisible(false);
+        getAzurirajJButton().setVisible(false);
+    }
+    
+    public void prikaziDugmad() {
+    	getObrisiJButton().setVisible(true);
+    	getAzurirajJButton().setVisible(true);
+    }
 
     public Korisnik dajPodatkeONovomKorisniku() {
         Korisnik korisnik = new Korisnik();
