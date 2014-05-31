@@ -1,4 +1,4 @@
-package exceptions;
+﻿package exceptions;
 
 import org.hibernate.criterion.NullExpression;
 

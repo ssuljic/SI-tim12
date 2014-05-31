@@ -1,4 +1,4 @@
-package views;
+﻿package views;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -51,7 +51,7 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
                 new Object[][]{
                 },
                 new String[]{
-                        "\u0160ifra", "Naziv", "Cijena", "Te\u017Eina", "U prodaji"
+                        "Šifra", "Naziv", "Cijena", "Težina", "U prodaji"
                 }
         ) {
             Class[] columnTypes = new Class[]{
@@ -86,7 +86,7 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
         gbc_ukloniPecivoJButton.gridy = 0;
         dugmadJPanel.add(ukloniPecivoJButton, gbc_ukloniPecivoJButton);
 
-        azurirajJButton = new JButton("A\u017Euriraj");
+        azurirajJButton = new JButton("Ažuriraj");
         GridBagConstraints gbc_azurirajJButton = new GridBagConstraints();
         gbc_azurirajJButton.fill = GridBagConstraints.HORIZONTAL;
         gbc_azurirajJButton.gridx = 1;
@@ -167,13 +167,13 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
     	    public String getColumnName(int columnIndex) {
     	        switch (columnIndex) {
     	            case 0:
-    	                return "�ifra";
+    	                return "Šifra";
     	            case 1:
     	                return "Naziv";
     	            case 2:
     	                return "Cijena";
     	            case 3:
-    	                return "Te�ina";
+    	                return "Težina";
     	            case 4:
     	            	return "U prodaji";
     	            default:

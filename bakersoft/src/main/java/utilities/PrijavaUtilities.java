@@ -1,4 +1,4 @@
-package utilities;
+﻿package utilities;
 
 import entities.Korisnik;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -16,8 +16,8 @@ public class PrijavaUtilities {
 
     /**
      * Za prijavu vrijede sljedeci podaci:
-     * RACUNOVODJA: fata fatinaLozinka
-     * DOSTAVLJAC: mujo mujinaLozinka
+     * RACUNOVODJA: fata f
+     * DOSTAVLJAC: mujo m
      */
 
     public boolean jeKorisnikValidan(String korisnickoIme, String lozinka) {
