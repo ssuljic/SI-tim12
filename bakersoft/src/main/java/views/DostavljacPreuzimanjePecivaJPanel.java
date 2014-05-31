@@ -1,5 +1,7 @@
 package views;
 
+import javax.swing.JOptionPane; 
+
 import controllers.DostavljacPreuzimanjePecivaController;
 import entities.*;
 import utilities.Baza;
@@ -10,6 +12,7 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+
 import java.awt.*;
 import java.util.*;
 import java.util.List;
@@ -26,7 +29,7 @@ public class DostavljacPreuzimanjePecivaJPanel extends JPanel {
     private JLabel kolicinaJLabel;
     private JComboBox dostavaZaJComboBox;
     private JLabel dostavaZaJLabel;
-
+    private JPanel dugmadJPanel;
     /**
      * Create the panel.
      */
@@ -269,10 +272,13 @@ public class DostavljacPreuzimanjePecivaJPanel extends JPanel {
     }
 
     public void osvjeziJPanel() {
+    	nazivDostaveJTextField.setText("");
+    	kolicinaJSpinner.setValue(0);
+    	
         this.validate();
         this.repaint();
     }
-
+    
     public PecivoUDostavi dajSelektiranoPecivoUDostaviIzPecivaDodanihUDostavu() {
         List<PecivoUDostavi> pecivaUDostaviIzTabele = ((PreuzimanjeDostavePecivaUDostaviTableModel)pecivaUDostaviJTable.getModel()).getPecivaUDostavi();
         if(pecivaUDostaviIzTabele != null) {
@@ -361,12 +367,19 @@ public class DostavljacPreuzimanjePecivaJPanel extends JPanel {
             baza.azuriraj(p.getPecivo());
         }
 
+       
         dostava.setKlijent(narucilac);
         baza.spasiUBazu(dostava);
         baza.azuriraj(dostavljac);
         narucilac.getDostave().add(dostava);
         baza.azuriraj(narucilac);
+        JOptionPane.showMessageDialog(dugmadJPanel.getParent() ,"Uspjesno ste izvrsili dostavu!" , "dostava", JOptionPane.INFORMATION_MESSAGE);
         return dostava;
+        
+        
+      
+        
+		
     }
 }
 
