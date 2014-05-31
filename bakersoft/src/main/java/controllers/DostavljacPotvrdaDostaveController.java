@@ -51,16 +51,18 @@ public class DostavljacPotvrdaDostaveController {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-          
+          try{
                 Baza baza = Baza.getBaza();
                 Dostava dostava = dostavljacPotvrdaDostaveJPanel.dajSelektiranuDostavu();
                 dostava.setJeIsporuceno(true);
                 baza.azuriraj(dostava);
                 dostavljacPotvrdaDostaveJPanel.popuniSaSvimPodacimaIzBaze(0);
-				
-            JOptionPane.showMessageDialog(dostavljacPotvrdaDostaveJPanel.getParent(), "Uspje�no ste potvrdili dostavu.");
+                JOptionPane.showMessageDialog(dostavljacPotvrdaDostaveJPanel.getParent(), "Uspješno ste potvrdili dostavu.");
+          }catch  (NullPointerException e) {
+            JOptionPane.showMessageDialog(dostavljacPotvrdaDostaveJPanel.getParent(), "Sve dostave su već potvrđene.");
    
             }
+           }
         };
     }
 }
