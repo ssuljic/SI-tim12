@@ -475,7 +475,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         GuiUtilities.selektirajStavkuComboBoxaKojaImaId(selektovaniKorisnik.getTip().getId(), privilegijeJComboBox);
     }
 
-    private Korisnik pupuniTraziJComboBoxSa(List<Korisnik> sviKorisnici, long idSelektovanogKorisnika) {
+    public Korisnik pupuniTraziJComboBoxSa(List<Korisnik> sviKorisnici, long idSelektovanogKorisnika) {
         Korisnik selektovaniKorisnik = null;
         JComboBox comboBoxKorisnici = getTraziJComboBox();
         // Izbjegavanje okidanja eventa SELECTED prilikom dinamickog dodavanja itemova
