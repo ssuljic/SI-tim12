@@ -25,7 +25,6 @@ public class RacunovodstvoSpaseniObracuniJPanel extends JPanel {
     private JTable obracuniJTable;
     private JComboBox obracunZaJComboBox;
     private JButton obrisiObracunJButton;
-    private JButton napraviNoviObracunJButton;
     private JButton kreirajPdfJButton;
 
     /**
@@ -141,22 +140,13 @@ public class RacunovodstvoSpaseniObracuniJPanel extends JPanel {
         gbc_obrisiObracunJButton.gridy = 0;
         dugmadJPanel.add(obrisiObracunJButton, gbc_obrisiObracunJButton);
 
-        napraviNoviObracunJButton = new JButton("Napravi novi obra\u010Dun");
-        GridBagConstraints gbc_napraviNoviObracunJButton = new GridBagConstraints();
-        gbc_napraviNoviObracunJButton.insets = new Insets(0, 0, 5, 0);
-        gbc_napraviNoviObracunJButton.anchor = GridBagConstraints.SOUTH;
-        gbc_napraviNoviObracunJButton.fill = GridBagConstraints.HORIZONTAL;
-        gbc_napraviNoviObracunJButton.gridx = 1;
-        gbc_napraviNoviObracunJButton.gridy = 0;
-        dugmadJPanel.add(napraviNoviObracunJButton, gbc_napraviNoviObracunJButton);
-
         kreirajPdfJButton = new JButton("Kreiraj PDF");
         GridBagConstraints gbc_kreirajPdfJButton = new GridBagConstraints();
+        gbc_kreirajPdfJButton.insets = new Insets(0, 0, 5, 0);
+        gbc_kreirajPdfJButton.anchor = GridBagConstraints.SOUTH;
         gbc_kreirajPdfJButton.fill = GridBagConstraints.HORIZONTAL;
-        gbc_kreirajPdfJButton.gridwidth = 2;
-        gbc_kreirajPdfJButton.insets = new Insets(0, 0, 0, 5);
-        gbc_kreirajPdfJButton.gridx = 0;
-        gbc_kreirajPdfJButton.gridy = 1;
+        gbc_kreirajPdfJButton.gridx = 1;
+        gbc_kreirajPdfJButton.gridy = 0;
         dugmadJPanel.add(kreirajPdfJButton, gbc_kreirajPdfJButton);
         
         dodajListeners();
@@ -363,10 +353,6 @@ public class RacunovodstvoSpaseniObracuniJPanel extends JPanel {
 
     public JButton getObrisiObracunJButton() {
         return obrisiObracunJButton;
-    }
-
-    public JButton getNapraviNoviObracunJButton() {
-        return napraviNoviObracunJButton;
     }
 
     public JButton getKreirajPdfJButton() {

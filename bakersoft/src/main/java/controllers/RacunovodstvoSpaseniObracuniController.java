@@ -41,14 +41,18 @@ public class RacunovodstvoSpaseniObracuniController {
                     idSelektiranogKorisnika = ((JComboBoxItem) racunovodstvoSpaseniObracuniJPanel.getObracunZaJComboBox().getSelectedItem()).getId();
                 }
                 rbSelektiranogRacuna = (int) racunovodstvoSpaseniObracuniJPanel.getObracuniJTable().getSelectedRow();
-                
-                Baza baza = Baza.getBaza();
-                Klijent klijent = baza.dajPoId(Klijent.class, idSelektiranogKorisnika);
-                ((Racun)klijent.getRacuni().toArray()[rbSelektiranogRacuna]).setObrisano(true);
-                
-                baza.spasiUBazu(klijent);
-                racunovodstvoSpaseniObracuniJPanel.popuniObracuniJTableSaPodacimaOKlijentu(klijent);
-                JOptionPane.showMessageDialog(racunovodstvoSpaseniObracuniJPanel.getParent(), "Uspješno ste izbrisali obračun");
+                if(rbSelektiranogRacuna == -1) {
+                	JOptionPane.showMessageDialog(racunovodstvoSpaseniObracuniJPanel.getParent(), "Niste izabrali obračun");
+                }
+                else {
+	                Baza baza = Baza.getBaza();
+	                Klijent klijent = baza.dajPoId(Klijent.class, idSelektiranogKorisnika);
+	                ((Racun)klijent.getRacuni().toArray()[rbSelektiranogRacuna]).setObrisano(true);
+	                
+	                baza.spasiUBazu(klijent);
+	                racunovodstvoSpaseniObracuniJPanel.popuniObracuniJTableSaPodacimaOKlijentu(klijent);
+	                JOptionPane.showMessageDialog(racunovodstvoSpaseniObracuniJPanel.getParent(), "Uspješno ste izbrisali obračun");
+                }
             }
         };
     }
