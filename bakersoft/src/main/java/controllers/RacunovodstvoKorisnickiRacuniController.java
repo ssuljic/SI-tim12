@@ -1,4 +1,4 @@
-package controllers;
+Ôªøpackage controllers;
 
 import entities.Korisnik;
 import utilities.Baza;
@@ -56,7 +56,7 @@ public class RacunovodstvoKorisnickiRacuniController {
                 if (idSelektiranogKorisnika > 0) {
                     Korisnik korisnik = baza.dajPoId(Korisnik.class, idSelektiranogKorisnika);
                     korisnik.setObrisano(true);
-				    JOptionPane.showMessageDialog(racunovodstvoKorisnickiRacuniJPanel.getParent(), "Korisnik "+korisnik.getIme()+" je uspjeöno obrisan.");
+				    JOptionPane.showMessageDialog(racunovodstvoKorisnickiRacuniJPanel.getParent(), "Korisnik "+korisnik.getIme()+" je uspje≈°no obrisan.");
                 }
 
                 // Uzmi id prvog korisnika kojem je zastavica "obrisan" false
@@ -90,7 +90,7 @@ public class RacunovodstvoKorisnickiRacuniController {
                 		racunovodstvoKorisnickiRacuniJPanel.ocistiPanel2();
 						brojKlikova2=1;
 						racunovodstvoKorisnickiRacuniJPanel.sakrijDugmad();
-					    JOptionPane.showMessageDialog(racunovodstvoKorisnickiRacuniJPanel.getParent(), "Sada moûete unijeti podatke za novog korisnika");
+					    JOptionPane.showMessageDialog(racunovodstvoKorisnickiRacuniJPanel.getParent(), "Sada mo≈æete unijeti podatke za novog korisnika");
                 	}
                 	else{
                 		Korisnik noviKorisnik = racunovodstvoKorisnickiRacuniJPanel.dajPodatkeONovomKorisniku();
@@ -98,7 +98,7 @@ public class RacunovodstvoKorisnickiRacuniController {
     					baza.spasiUBazu(noviKorisnik);
 						racunovodstvoKorisnickiRacuniJPanel.prikaziDugmad();
     					JOptionPane.showMessageDialog(racunovodstvoKorisnickiRacuniJPanel.getParent(),
-    					        "Novi korisnik je uspjeöno dodan.");
+    					        "Novi korisnik je uspje≈°no dodan.");
 						brojKlikova2=0;
 						
 						long idSelektiranogKorisnika = ((JComboBoxItem) racunovodstvoKorisnickiRacuniJPanel.getTraziJComboBox().getSelectedItem()).getId();
@@ -133,10 +133,10 @@ public class RacunovodstvoKorisnickiRacuniController {
 					    noviKorisnik.setId(idSelektiranogKorisnika);
 					    Baza baza = Baza.getBaza();
 					    baza.azuriraj(noviKorisnik);
-						JOptionPane.showMessageDialog(racunovodstvoKorisnickiRacuniJPanel.getParent(), "Aûuriranje korisnika je uspjeöno.");
+						JOptionPane.showMessageDialog(racunovodstvoKorisnickiRacuniJPanel.getParent(), "A≈æuriranje korisnika je uspje≈°no.");
 					} else {
 					    JOptionPane.showMessageDialog(racunovodstvoKorisnickiRacuniJPanel.getParent(),
-					            "Ne moûe se aûurirati korisnik. Nema selektiranih korisnika.");
+					            "Ne mo≈æe se a≈æurirati korisnik. Nema selektiranih korisnika.");
 					}
 				} catch (IllegalArgumentException e) {
 				    JOptionPane.showMessageDialog(racunovodstvoKorisnickiRacuniJPanel.getParent(), e.getMessage());

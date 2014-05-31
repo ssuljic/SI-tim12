@@ -1,4 +1,4 @@
-package entities;
+Ôªøpackage entities;
 
 import javax.persistence.*;
 
@@ -35,7 +35,7 @@ public class ProdajnoMjesto {
 
     public void setMjesto(String mjesto2) {
     	if(mjesto2.isEmpty()) {
-    		throw new IllegalArgumentException("Polje Naziv prodajnog mjesta ne moûe biti prazno.");
+    		throw new IllegalArgumentException("Polje Naziv prodajnog mjesta ne mo≈æe biti prazno.");
     	}
         this.mjesto = mjesto2;
     }
@@ -46,7 +46,7 @@ public class ProdajnoMjesto {
 
     public void setAdresa(String adresa2) {
     	if(adresa2.isEmpty()) {
-    		throw new IllegalArgumentException("Polje Naziv prodajnog mjesta ne moûe biti prazno.");
+    		throw new IllegalArgumentException("Polje Naziv prodajnog mjesta ne mo≈æe biti prazno.");
     	}
         this.adresa = adresa2;
     }

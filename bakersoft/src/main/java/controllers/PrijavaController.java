@@ -1,4 +1,4 @@
-package controllers;
+﻿package controllers;
 
 import entities.Korisnik;
 import entities.Tip;
@@ -30,7 +30,7 @@ public class PrijavaController implements ActionListener {
         String lozinka = String.valueOf(prijavaJFrame.getPrijavaJPanel().getLozinkaJPasswordField().getPassword());
 
         if (!prijavaUtilities.jeKorisnikValidan(korisnickoIme, lozinka)) {
-            JOptionPane.showMessageDialog(prijavaJFrame, "Korisnicko ime ili lozinka pogresno unesen.");
+            JOptionPane.showMessageDialog(prijavaJFrame, "Korisničko ime ili lozinka pogrešno uneseni.");
             return;
         }
 
