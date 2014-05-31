@@ -12,6 +12,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
+
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -258,6 +259,7 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
         if (indeksDostaveSaId >= 0) {
             GuiUtilities.oznaciNtiRedUJTable(dostaveJTable, indeksDostaveSaId);
         }
+        else throw new NullPointerException("Nije dobar index dostave!");
 
         popuniPecivaUDostaviTabeluSaPecivimaUDostaviSelektiraneDostave();
 
@@ -271,6 +273,7 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
                 return ((PotvrdaDostaveDostaveTableModel) dostaveJTable.getModel()).getDostave().get(dostaveJTable.getSelectedRow());
             }
         }
+        else throw new ClassCastException("Da bi selektirali mora biti dostava!");
 
         return null;
     }
