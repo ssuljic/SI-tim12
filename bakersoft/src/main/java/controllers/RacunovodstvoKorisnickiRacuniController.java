@@ -81,9 +81,36 @@ public class RacunovodstvoKorisnickiRacuniController {
             }
         };
     }
+    public boolean validacija()
+	{
+    	 if(!racunovodstvoKorisnickiRacuniJPanel.getEmailJTextField().getText().matches("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"))
+ 		{
 
+ 			JOptionPane.showMessageDialog(racunovodstvoKorisnickiRacuniJPanel.getParent(),
+ 			        "Neispravan format e-mail adrese!.");
+ 			return false;
+ 		}
+    	 else if(!racunovodstvoKorisnickiRacuniJPanel.getTelefonJTextField().getText().matches("\\d{3}/\\d{3}-\\d{3}")){
+			JOptionPane.showMessageDialog(racunovodstvoKorisnickiRacuniJPanel.getParent(),
+			        "Neispravan format telefona!.");
+			return false;
+		}
+		
+		else if(!racunovodstvoKorisnickiRacuniJPanel.getMobitelJTextField().getText().matches("\\d{3}/\\d{3}-\\d{3}"))
+		{
+			
+			JOptionPane.showMessageDialog(racunovodstvoKorisnickiRacuniJPanel.getParent(),
+			        "Neispravan format mobitela!.");
+			return false;
+		}
+		
+		
+		
+		return true;
+	}
     public ActionListener getKorisnickiRacuniDodajJButtonActionListener() {
         return new ActionListener() {
+        	
             public void actionPerformed(ActionEvent actionEvent) {
                 try {
                 	if(brojKlikova2 == 0 && !racunovodstvoKorisnickiRacuniJPanel.getImeJTextField().getText().isEmpty() && !racunovodstvoKorisnickiRacuniJPanel.getKorisnickoImeJTextField().getText().isEmpty()){
@@ -93,6 +120,9 @@ public class RacunovodstvoKorisnickiRacuniController {
 					    JOptionPane.showMessageDialog(racunovodstvoKorisnickiRacuniJPanel.getParent(), "Sada možete unijeti podatke za novog korisnika");
                 	}
                 	else{
+                		if(validacija()!=false)
+                		{
+
                 		Korisnik noviKorisnik = racunovodstvoKorisnickiRacuniJPanel.dajPodatkeONovomKorisniku();
     					Baza baza = Baza.getBaza();
     					baza.spasiUBazu(noviKorisnik);
@@ -100,7 +130,7 @@ public class RacunovodstvoKorisnickiRacuniController {
     					JOptionPane.showMessageDialog(racunovodstvoKorisnickiRacuniJPanel.getParent(),
     					        "Novi korisnik je uspješno dodan.");
 						brojKlikova2=0;
-						
+                		
 						long idSelektiranogKorisnika = ((JComboBoxItem) racunovodstvoKorisnickiRacuniJPanel.getTraziJComboBox().getSelectedItem()).getId();
 	                    List<Korisnik> sviKorisnici = baza.dajSve(Korisnik.class);
 	                    List<Korisnik> obrisaniKorisnici = new ArrayList<Korisnik>();
@@ -111,6 +141,7 @@ public class RacunovodstvoKorisnickiRacuniController {
 	                    }
 	                    sviKorisnici.removeAll(obrisaniKorisnici);
 	                    racunovodstvoKorisnickiRacuniJPanel.popuniSaPodacima(sviKorisnici, idSelektiranogKorisnika);
+                		}
                 	}
 					
 				} catch (IllegalArgumentException e) {
