@@ -3,6 +3,7 @@
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -32,6 +33,8 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
     public JTextField getSifratextField() {
 		return SifratextField;
 	}
+    
+
 
 	public void setSifratextField(JTextField sifratextField) {
 		SifratextField = sifratextField;
@@ -309,7 +312,9 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
     	        return null;
     	    }
     	     	
-    	    
+    	    public boolean isCellEditable(int row, int column){  
+    	          return false;  
+    	      }
     	    /*@Override
     	    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 
@@ -340,7 +345,9 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
     		List<Pecivo> svaPeciva = baza.dajSve(Pecivo.class);
     		PecivoTableModel pecivoTableModel = new PecivoTableModel(svaPeciva);
     		pregledPecivaJTable.setModel(pecivoTableModel);
+
     	}
+    	
     	public void dodajPecivo()
     	{
     		Baza baza = Baza.getBaza();
