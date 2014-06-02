@@ -26,8 +26,8 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
 
 	private JTextField nazivFirmeJTextField;
     private JTextField telefonJTextField;
-    private JTextField prodajnoMjestoNazivJTextField;
-    private JTextField prodajnoMjestoAdresaJTextField;
+    public JTextField prodajnoMjestoNazivJTextField;
+    public JTextField prodajnoMjestoAdresaJTextField;
     private JComboBox traziJComboBox;
     private JButton obrisiKlijentaJButton;
     private JButton dodajKlijentaJButton;
