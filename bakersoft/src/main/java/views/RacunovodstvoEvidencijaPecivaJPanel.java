@@ -1,8 +1,9 @@
-package views;
+﻿package views;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -24,9 +25,48 @@ import java.util.Vector;
 
 public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
     private JTable pregledPecivaJTable;
-    private JButton ukloniPecivoJButton;
     private JButton dodajPecivoJButton;
-    private JButton azurirajJButton;    
+    private JLabel lblNewLabel;
+    private JTextField SifratextField;
+    private JTextField NazivtextField;
+    private JLabel lblNewLabel_2;
+    public JTextField getSifratextField() {
+		return SifratextField;
+	}
+    
+
+
+	public void setSifratextField(JTextField sifratextField) {
+		SifratextField = sifratextField;
+	}
+
+	public JTextField getNazivtextField() {
+		return NazivtextField;
+	}
+
+	public void setNazivtextField(JTextField nazivtextField) {
+		NazivtextField = nazivtextField;
+	}
+
+	public JTextField getCijenatextField() {
+		return CijenatextField;
+	}
+
+	public void setCijenatextField(JTextField cijenatextField) {
+		CijenatextField = cijenatextField;
+	}
+
+	public JTextField getTezinatextField() {
+		return TezinatextField;
+	}
+
+	public void setTezinatextField(JTextField tezinatextField) {
+		TezinatextField = tezinatextField;
+	}
+	private JLabel lblNewLabel_3;
+    private JTextField CijenatextField;
+    private JLabel lblNewLabel_4;
+    private JTextField TezinatextField;
     
     /**
      * Create the panel.
@@ -53,7 +93,7 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
         	new Object[][] {
         	},
         	new String[] {
-        		"\u0160ifra", "Naziv", "Cijena", "Te\u017Eina", "U prodaji"
+        		"Šifra", "Naziv", "Cijena", "Težina", "U prodaji"
         	}
         ) {
         	Class[] columnTypes = new Class[] {
@@ -73,26 +113,78 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
         gbc_dugmadJPanel.gridy = 1;
         add(dugmadJPanel, gbc_dugmadJPanel);
         GridBagLayout gbl_dugmadJPanel = new GridBagLayout();
-        gbl_dugmadJPanel.columnWidths = new int[]{0, 0, 0};
-        gbl_dugmadJPanel.rowHeights = new int[]{0, 0};
+        gbl_dugmadJPanel.columnWidths = new int[] {10, 280, 0};
+        gbl_dugmadJPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
         gbl_dugmadJPanel.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
-        gbl_dugmadJPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+        gbl_dugmadJPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         dugmadJPanel.setLayout(gbl_dugmadJPanel);
-
-        ukloniPecivoJButton = new JButton("Ukloni pecivo");
-        GridBagConstraints gbc_ukloniPecivoJButton = new GridBagConstraints();
-        gbc_ukloniPecivoJButton.fill = GridBagConstraints.HORIZONTAL;
-        gbc_ukloniPecivoJButton.insets = new Insets(0, 0, 0, 5);
-        gbc_ukloniPecivoJButton.gridx = 0;
-        gbc_ukloniPecivoJButton.gridy = 0;
-        dugmadJPanel.add(ukloniPecivoJButton, gbc_ukloniPecivoJButton);
-
-        azurirajJButton = new JButton("A\u017Euriraj");
-        GridBagConstraints gbc_azurirajJButton = new GridBagConstraints();
-        gbc_azurirajJButton.fill = GridBagConstraints.HORIZONTAL;
-        gbc_azurirajJButton.gridx = 1;
-        gbc_azurirajJButton.gridy = 0;
-        dugmadJPanel.add(azurirajJButton, gbc_azurirajJButton);
+        
+        lblNewLabel = new JLabel("Šifra");
+        GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+        gbc_lblNewLabel.anchor = GridBagConstraints.EAST;
+        gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
+        gbc_lblNewLabel.gridx = 0;
+        gbc_lblNewLabel.gridy = 1;
+        dugmadJPanel.add(lblNewLabel, gbc_lblNewLabel);
+        
+        SifratextField = new JTextField();
+        GridBagConstraints gbc_SifratextField = new GridBagConstraints();
+        gbc_SifratextField.fill = GridBagConstraints.HORIZONTAL;
+        gbc_SifratextField.insets = new Insets(0, 0, 5, 0);
+        gbc_SifratextField.gridx = 1;
+        gbc_SifratextField.gridy = 1;
+        dugmadJPanel.add(SifratextField, gbc_SifratextField);
+        SifratextField.setColumns(10);
+        
+        lblNewLabel_2 = new JLabel("Naziv");
+        GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
+        gbc_lblNewLabel_2.anchor = GridBagConstraints.EAST;
+        gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
+        gbc_lblNewLabel_2.gridx = 0;
+        gbc_lblNewLabel_2.gridy = 2;
+        dugmadJPanel.add(lblNewLabel_2, gbc_lblNewLabel_2);
+        
+        NazivtextField = new JTextField();
+        GridBagConstraints gbc_NazivtextField = new GridBagConstraints();
+        gbc_NazivtextField.insets = new Insets(0, 0, 5, 0);
+        gbc_NazivtextField.fill = GridBagConstraints.HORIZONTAL;
+        gbc_NazivtextField.gridx = 1;
+        gbc_NazivtextField.gridy = 2;
+        dugmadJPanel.add(NazivtextField, gbc_NazivtextField);
+        NazivtextField.setColumns(10);
+        
+        lblNewLabel_3 = new JLabel("Cijena");
+        GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
+        gbc_lblNewLabel_3.anchor = GridBagConstraints.EAST;
+        gbc_lblNewLabel_3.insets = new Insets(0, 0, 5, 5);
+        gbc_lblNewLabel_3.gridx = 0;
+        gbc_lblNewLabel_3.gridy = 3;
+        dugmadJPanel.add(lblNewLabel_3, gbc_lblNewLabel_3);
+        
+        CijenatextField = new JTextField();
+        GridBagConstraints gbc_CijenatextField = new GridBagConstraints();
+        gbc_CijenatextField.insets = new Insets(0, 0, 5, 0);
+        gbc_CijenatextField.fill = GridBagConstraints.HORIZONTAL;
+        gbc_CijenatextField.gridx = 1;
+        gbc_CijenatextField.gridy = 3;
+        dugmadJPanel.add(CijenatextField, gbc_CijenatextField);
+        CijenatextField.setColumns(10);
+        
+        lblNewLabel_4 = new JLabel("Težina");
+        GridBagConstraints gbc_lblNewLabel_4 = new GridBagConstraints();
+        gbc_lblNewLabel_4.anchor = GridBagConstraints.EAST;
+        gbc_lblNewLabel_4.insets = new Insets(0, 0, 0, 5);
+        gbc_lblNewLabel_4.gridx = 0;
+        gbc_lblNewLabel_4.gridy = 4;
+        dugmadJPanel.add(lblNewLabel_4, gbc_lblNewLabel_4);
+        
+        TezinatextField = new JTextField();
+        GridBagConstraints gbc_TezinatextField = new GridBagConstraints();
+        gbc_TezinatextField.fill = GridBagConstraints.HORIZONTAL;
+        gbc_TezinatextField.gridx = 1;
+        gbc_TezinatextField.gridy = 4;
+        dugmadJPanel.add(TezinatextField, gbc_TezinatextField);
+        TezinatextField.setColumns(10);
 
         dodajPecivoJButton = new JButton("Dodaj pecivo");
         GridBagConstraints gbc_dodajPecivoJButton = new GridBagConstraints();
@@ -112,16 +204,9 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
     }
 
 
-    public JButton getUkloniPecivoJButton() {
-        return ukloniPecivoJButton;
-    }
 
     public JButton getDodajPecivoJButton() {
         return dodajPecivoJButton;
-    }
-
-    public JButton getAzurirajJButton() {
-        return azurirajJButton;
     }
     
 
@@ -129,9 +214,7 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
     {
     	RacunovodstvoEvidencijaPecivaController racunovodstvoEvidencijaPecivaController = new RacunovodstvoEvidencijaPecivaController(this);
     	
-    	dodajPecivoJButton.addActionListener(racunovodstvoEvidencijaPecivaController.getEvidencijaPecivaDodajPecivoJButtonActionListener()); 
-    	azurirajJButton.addActionListener(racunovodstvoEvidencijaPecivaController.getEvidencijaPecivaAzurirajJButtonActionListener());
-    	ukloniPecivoJButton.addActionListener(racunovodstvoEvidencijaPecivaController.getEvidencijaPecivaUkloniPecivoJButtonActionListener());
+    	dodajPecivoJButton.addActionListener(racunovodstvoEvidencijaPecivaController.getEvidencijaPecivaDodajPecivoJButtonActionListener());
     }
     
     class PecivoTableModel extends DefaultTableModel
@@ -177,13 +260,13 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
     	    public String getColumnName(int columnIndex) {
     	        switch (columnIndex) {
     	            case 0:
-    	                return "�ifra";
+    	                return "Šifra";
     	            case 1:
     	                return "Naziv";
     	            case 2:
     	                return "Cijena";
     	            case 3:
-    	                return "Te�ina";
+    	                return "Težina";
     	            case 4:
     	            	return "U prodaji";
     	            default:
@@ -229,7 +312,9 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
     	        return null;
     	    }
     	     	
-    	    
+    	    public boolean isCellEditable(int row, int column){  
+    	          return false;  
+    	      }
     	    /*@Override
     	    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 
@@ -260,23 +345,53 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
     		List<Pecivo> svaPeciva = baza.dajSve(Pecivo.class);
     		PecivoTableModel pecivoTableModel = new PecivoTableModel(svaPeciva);
     		pregledPecivaJTable.setModel(pecivoTableModel);
+
     	}
+    	
     	public void dodajPecivo()
     	{
-            JOptionPane.showMessageDialog(null, "Unesite podatke o novom pecivu u prazan red u tabeli");
     		Baza baza = Baza.getBaza();
+    		Pecivo p = new Pecivo();
+    		p.setNaziv(getNazivtextField().getText());
+    		p.setSifra(getSifratextField().getText());
+    		p.setTezina(Long.parseLong(getTezinatextField().getText()));
+    		p.setCijena(Double.parseDouble(getCijenatextField().getText()));
+    		p.setObrisano(false);
+    		p.setJeUProdaji(true);
+    		
+        	if(getNazivtextField().getText().isEmpty()) {
+        		throw new IllegalArgumentException("Polje Naziv ne može biti prazno.");
+        	}
+        	if(getSifratextField().getText().isEmpty()) {
+        		throw new IllegalArgumentException("Polje Šifra ne može biti prazno.");
+        	}
+        	if(getTezinatextField().getText().isEmpty()) {
+        		throw new IllegalArgumentException("Polje Težina ne može biti prazno.");
+        	}
+        	if(getCijenatextField().getText().isEmpty()) {
+        		throw new IllegalArgumentException("Polje Cijena ne može biti prazno.");
+        	}
+    		
+    		baza.spasiUBazu(p);
+    		
     		List<Pecivo> svaPeciva = baza.dajSve(Pecivo.class);
     		PecivoTableModel pecivoTableModel = new PecivoTableModel(svaPeciva);
     		pregledPecivaJTable.setModel(pecivoTableModel);
-//izuzetak  pecivoTableModel.addRow(new Object[]{"","","","",false});
-    	}  
+    	}
+
+		public void osvjeziPanel() {
+			getNazivtextField().setText("");
+			getSifratextField().setText("");
+			getTezinatextField().setText("");
+			getCijenatextField().setText("");
+		}  
     	
-    	public void azurirajPecivo()
+    	/*public void azurirajPecivo()
     	{
     		Baza baza = Baza.getBaza();
     		List<Pecivo> svaPeciva = baza.dajSve(Pecivo.class);
     		
-    	}
+    	}*/
     	
     
 }

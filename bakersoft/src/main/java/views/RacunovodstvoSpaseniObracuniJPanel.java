@@ -1,4 +1,4 @@
-package views;
+﻿package views;
 
 import controllers.RacunovodstvoSpaseniObracuniController;
 
@@ -31,7 +31,7 @@ public class RacunovodstvoSpaseniObracuniJPanel extends JPanel {
      * Create the panel.
      */
     public RacunovodstvoSpaseniObracuniJPanel() {
-        setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Spa\u0161eni obra\u010Duni:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+        setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Spašeni obračuni:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[]{0, 0};
         gridBagLayout.rowHeights = new int[]{0, 0, 0, 0};
@@ -53,7 +53,7 @@ public class RacunovodstvoSpaseniObracuniJPanel extends JPanel {
         gbl_obracunZaJPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
         obracunZaJPanel.setLayout(gbl_obracunZaJPanel);
 
-        JLabel obracunZaJLabel = new JLabel("Obra\u010Dun za:");
+        JLabel obracunZaJLabel = new JLabel("Obračun za:");
         obracunZaJLabel.setHorizontalAlignment(SwingConstants.TRAILING);
         GridBagConstraints gbc_obracunZaJLabel = new GridBagConstraints();
         gbc_obracunZaJLabel.fill = GridBagConstraints.BOTH;
@@ -84,7 +84,7 @@ public class RacunovodstvoSpaseniObracuniJPanel extends JPanel {
         gbl_podaciOObracunimaJPanel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
         podaciOObracunimaJPanel.setLayout(gbl_podaciOObracunimaJPanel);
 
-        JLabel obracuniJLabel = new JLabel("Obra\u010Duni:");
+        JLabel obracuniJLabel = new JLabel("Obračuni:");
         obracuniJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         GridBagConstraints gbc_obracuniJLabel = new GridBagConstraints();
         gbc_obracuniJLabel.anchor = GridBagConstraints.EAST;
@@ -105,7 +105,7 @@ public class RacunovodstvoSpaseniObracuniJPanel extends JPanel {
                 new Object[][]{
                 },
                 new String[]{
-                        "Datum", "Broj", "Iznos", "Pla\u0107en", "Obra\u010Dunao", "Po\u010Detak obra\u010Duna", "Kraj obra\u010Duna"
+                        "Datum", "Broj", "Iznos", "Plaćen", "Obračunao", "Početak obračuna", "Kraj obračuna"
                 }
         ) {
             Class[] columnTypes = new Class[]{
@@ -131,7 +131,7 @@ public class RacunovodstvoSpaseniObracuniJPanel extends JPanel {
         gbl_dugmadJPanel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
         dugmadJPanel.setLayout(gbl_dugmadJPanel);
 
-        obrisiObracunJButton = new JButton("Obri\u0161i obra\u010Dun");
+        obrisiObracunJButton = new JButton("Obriši obračun");
         GridBagConstraints gbc_obrisiObracunJButton = new GridBagConstraints();
         gbc_obrisiObracunJButton.anchor = GridBagConstraints.SOUTH;
         gbc_obrisiObracunJButton.fill = GridBagConstraints.HORIZONTAL;
@@ -158,6 +158,7 @@ public class RacunovodstvoSpaseniObracuniJPanel extends JPanel {
 
         obracunZaJComboBox.addItemListener(racunovodstvoSpaseniObracuniController.getSpaseniObracuniObracunZaJComboBoxItemListener());
         obrisiObracunJButton.addActionListener(racunovodstvoSpaseniObracuniController.getSpaseniObracuniObrisiJButtonActionListener());
+        kreirajPdfJButton.addActionListener(racunovodstvoSpaseniObracuniController.getPDFJButtonActionListener());
     }
     
     class ObracuniTableModel extends DefaultTableModel {

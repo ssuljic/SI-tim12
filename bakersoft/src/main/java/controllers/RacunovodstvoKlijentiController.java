@@ -8,6 +8,7 @@ import views.RacunovodstvoKlijentiJPanel;
 
 import javax.swing.*;
 
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -122,7 +123,7 @@ public class RacunovodstvoKlijentiController {
             	
             	String redniBrojPolje = racunovodstvoKlijentiJPanel.getLblBroj().getText();
             	int id; 
-            	if(redniBrojPolje == "Kliknite dugme Sljedeći"){
+            	if(redniBrojPolje.equals("Kliknite dugme Sljedeći") ){
             		id=1;
             	}
             	else{
@@ -163,6 +164,10 @@ public class RacunovodstvoKlijentiController {
 					else if(!racunovodstvoKlijentiJPanel.getProdajnoMjestoNazivJTextField().getText().isEmpty() && !racunovodstvoKlijentiJPanel.getProdajnoMjestoAdresaJTextField().getText().isEmpty() && brojKlikova==1){
 						long idSelektiranogKlijenta = ((JComboBoxItem) racunovodstvoKlijentiJPanel.getTraziJComboBox().getSelectedItem()).getId();
 					    Baza baza = Baza.getBaza();
+					    
+					    if(racunovodstvoKlijentiJPanel.getProdajnoMjestoNazivJTextField().getText().matches("\\s+") || racunovodstvoKlijentiJPanel.getProdajnoMjestoAdresaJTextField().getText().matches("\\s+"))
+						    throw new IllegalArgumentException("Morate popuniti polja da bi unos bio validan.");
+					    	
 					    List<Klijent> sviKlijenti = baza.dajSveNeobrisano(Klijent.class);
 						Klijent selektovaniKlijent = racunovodstvoKlijentiJPanel.popuniTraziJComboBoxSa(sviKlijenti,idSelektiranogKlijenta);
 						
@@ -197,30 +202,44 @@ public class RacunovodstvoKlijentiController {
         return new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
 
-				long idSelektiranogKlijenta = ((JComboBoxItem) racunovodstvoKlijentiJPanel.getTraziJComboBox().getSelectedItem()).getId();
-				Baza baza = Baza.getBaza();
-				List<Klijent> sviKlijenti = baza.dajSveNeobrisano(Klijent.class);
-				Klijent selektovaniKlijent = racunovodstvoKlijentiJPanel.popuniTraziJComboBoxSa(sviKlijenti,idSelektiranogKlijenta);
+				try {
+					if(racunovodstvoKlijentiJPanel.getLblBroj().getText().equals("Kliknite dugme Sljedeći") && racunovodstvoKlijentiJPanel.prodajnoMjestoNazivJTextField.getText().isEmpty() && racunovodstvoKlijentiJPanel.prodajnoMjestoAdresaJTextField.getText().isEmpty())
+					    throw new IllegalArgumentException("Morate kliknuti dugme sljedeći kao što piše iznad.");
 
-				int indexUlisti = Integer.parseInt(racunovodstvoKlijentiJPanel.getLblBroj().getText()) -1;
-				
-				List<ProdajnoMjesto> svaProdajnaMjesta = baza.dajSveNeobrisano(ProdajnoMjesto.class);
-				List<ProdajnoMjesto> klijentovaProdajnaMjesta = new ArrayList<ProdajnoMjesto>();
-				for (ProdajnoMjesto pm : svaProdajnaMjesta) {
-					if (pm.getKlijent().getId() == selektovaniKlijent.getId())
-						klijentovaProdajnaMjesta.add(pm);
+					long idSelektiranogKlijenta = ((JComboBoxItem) racunovodstvoKlijentiJPanel.getTraziJComboBox().getSelectedItem()).getId();
+					Baza baza = Baza.getBaza();
+					List<Klijent> sviKlijenti = baza.dajSveNeobrisano(Klijent.class);
+					Klijent selektovaniKlijent = racunovodstvoKlijentiJPanel.popuniTraziJComboBoxSa(sviKlijenti,idSelektiranogKlijenta);
+
+					int indexUlisti = Integer.parseInt(racunovodstvoKlijentiJPanel.getLblBroj().getText()) -1;
+					
+					List<ProdajnoMjesto> svaProdajnaMjesta = baza.dajSveNeobrisano(ProdajnoMjesto.class);
+					List<ProdajnoMjesto> klijentovaProdajnaMjesta = new ArrayList<ProdajnoMjesto>();
+					for (ProdajnoMjesto pm : svaProdajnaMjesta) {
+						if (pm.getKlijent().getId() == selektovaniKlijent.getId())
+							klijentovaProdajnaMjesta.add(pm);
+					}
+					
+					if(indexUlisti==klijentovaProdajnaMjesta.size())
+						indexUlisti=0;
+					
+					if(klijentovaProdajnaMjesta.size()==1)
+					    throw new IllegalArgumentException("Svaki klijent mora imati barem jedno prodajno mjesto, tako da ne možete obrisati njegovo zadnje.");
+
+					klijentovaProdajnaMjesta.get(indexUlisti).setObrisano(true);
+					baza.azuriraj(klijentovaProdajnaMjesta.get(indexUlisti));
+
+					racunovodstvoKlijentiJPanel.getLblBroj().setText("Kliknite dugme Sljedeći");
+					racunovodstvoKlijentiJPanel.ocistiDonjiDioPanela();            	
+
+					JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Uspješno ste izbrisali prodajno mjesto.");
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), e.getMessage());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-				
-				if(indexUlisti==klijentovaProdajnaMjesta.size())
-					indexUlisti=0;
-				
-				klijentovaProdajnaMjesta.get(indexUlisti).setObrisano(true);
-                baza.azuriraj(klijentovaProdajnaMjesta.get(indexUlisti));
-
-                racunovodstvoKlijentiJPanel.getLblBroj().setText("Kliknite dugme Sljedeći");
-                racunovodstvoKlijentiJPanel.ocistiDonjiDioPanela();            	
-
-                JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Uspješno ste izbrisali prodajno mjesto.");
                 
             }
         };

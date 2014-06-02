@@ -464,6 +464,8 @@ public class DostavljacPreuzimanjePecivaJPanel extends JPanel {
 	public void validirajPodatke2() {
 		if((Integer)getKolicinaJSpinner().getValue() == 0)
 			throw new IllegalArgumentException("Količina ne može biti 0.");
+		if((Integer)getKolicinaJSpinner().getValue() < 0)
+			throw new IllegalArgumentException("Količina ne može biti negativne vrijednosti.");
 	}
 }
 

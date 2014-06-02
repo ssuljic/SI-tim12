@@ -44,8 +44,17 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
     private JLabel privilegijeJLabel;
     private JButton azurirajJButton;
     private JSpinner datumRodjenjaJSpinner;
+    public static Korisnik prijavljeni;
 
-    /**
+    public static Korisnik getPrijavljeni() {
+		return prijavljeni;
+	}
+
+	public static void setPrijavljeni(Korisnik prijavljeni) {
+		RacunovodstvoKorisnickiRacuniJPanel.prijavljeni = prijavljeni;
+	}
+
+	/**
      * Create the panel.
      */
     public RacunovodstvoKorisnickiRacuniJPanel() {
@@ -584,7 +593,9 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         return korisnik;
     }
 
-    public void popuniSaSvimPodacimaIzBaze() {
+    public void popuniSaSvimPodacimaIzBaze(Korisnik trenutni) {
+    	
+    	prijavljeni = trenutni;
         Baza baza = Baza.getBaza();
         java.util.List<Korisnik> sviKorisnici = baza.dajSve(Korisnik.class);
         java.util.List<Korisnik> obrisaniKorisnici = new ArrayList<Korisnik>();
