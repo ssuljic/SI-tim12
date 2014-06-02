@@ -12,6 +12,7 @@ import utilities.JComboBoxItem;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+
 import java.awt.*;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
@@ -451,7 +452,33 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         getDodajJButton().addActionListener(racunovodstvoKorisnickiRacuniController.getKorisnickiRacuniDodajJButtonActionListener());
         getAzurirajJButton().addActionListener(racunovodstvoKorisnickiRacuniController.getKorisnickiRacuniPrepraviJButtonActionListener());
     }
+    public boolean validacija()
+	{
+    	 if(!getEmailJTextField().getText().matches("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"))
+ 		{
 
+ 			JOptionPane.showMessageDialog(getParent(),
+ 			        "Neispravan format e-mail adrese, treba biti u formatu user@host.domena !");
+ 			return false;
+ 		}
+    	 else if(!getTelefonJTextField().getText().matches("\\d{3}/\\d{3}-\\d{3}")){
+			JOptionPane.showMessageDialog(getParent(),
+			        "Neispravan format telefona, ocekuje se XXX/XXX-XXX!.");
+			return false;
+		}
+		
+		else if(!getMobitelJTextField().getText().matches("\\d{3}/\\d{3}-\\d{3}"))
+		{
+			
+			JOptionPane.showMessageDialog(getParent(),
+			        "Neispravan format mobitela, ocekuje se XXX/XXX-XXX!.");
+			return false;
+		}
+		
+		
+		
+		return true;
+	}
     public void popuniSaPodacima(List<Korisnik> sviKorisnici, long idSelektovanogKorisnika) {
         // TODO: Vjerovatno bi se još malo moglo refaktorisati ...
         if (sviKorisnici == null || sviKorisnici.size() <= 0) {
