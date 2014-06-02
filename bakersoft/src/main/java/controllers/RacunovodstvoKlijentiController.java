@@ -164,6 +164,10 @@ public class RacunovodstvoKlijentiController {
 					else if(!racunovodstvoKlijentiJPanel.getProdajnoMjestoNazivJTextField().getText().isEmpty() && !racunovodstvoKlijentiJPanel.getProdajnoMjestoAdresaJTextField().getText().isEmpty() && brojKlikova==1){
 						long idSelektiranogKlijenta = ((JComboBoxItem) racunovodstvoKlijentiJPanel.getTraziJComboBox().getSelectedItem()).getId();
 					    Baza baza = Baza.getBaza();
+					    
+					    if(racunovodstvoKlijentiJPanel.getProdajnoMjestoNazivJTextField().getText().matches("\\s+") || racunovodstvoKlijentiJPanel.getProdajnoMjestoAdresaJTextField().getText().matches("\\s+"))
+						    throw new IllegalArgumentException("Morate popuniti polja da bi unos bio validan.");
+					    	
 					    List<Klijent> sviKlijenti = baza.dajSveNeobrisano(Klijent.class);
 						Klijent selektovaniKlijent = racunovodstvoKlijentiJPanel.popuniTraziJComboBoxSa(sviKlijenti,idSelektiranogKlijenta);
 						
