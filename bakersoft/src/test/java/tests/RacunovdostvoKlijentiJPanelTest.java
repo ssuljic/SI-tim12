@@ -14,7 +14,7 @@ import views.RacunovodstvoKlijentiJPanel;
 
 public class RacunovdostvoKlijentiJPanelTest {
 
-	@Test//Provjerava da li metoda Ã¨ita sve sa forme iz kontrola i vraÃ¦a upravo tog klijenta kreiranog
+	@Test//Provjerava da li metoda èita sve sa forme iz kontrola i vraæa upravo tog klijenta kreiranog
 	public void testDajPodatkeONovomKlijentu() {
 		RacunovodstvoKlijentiJPanel rp = new RacunovodstvoKlijentiJPanel();
 		
@@ -42,7 +42,7 @@ public class RacunovdostvoKlijentiJPanelTest {
 	}
 	
 
-	@Test//Da li metoda Ã¨isti gornja dva textfielda
+	@Test//Da li metoda èisti gornja dva textfielda
 	public void testOcistiGornjiDioPanela() {
 		RacunovodstvoKlijentiJPanel rp = new RacunovodstvoKlijentiJPanel();
         rp.getNazivFirmeJTextField().setText("hopa");
@@ -53,7 +53,7 @@ public class RacunovdostvoKlijentiJPanelTest {
 	}
 
 
-	@Test//Provjerava da li metoda stvarno oÃ¨isti ova dva textfielda
+	@Test//Provjerava da li metoda stvarno oèisti ova dva textfielda
 	public void testOcistiDonjiDioPanela() {
 		RacunovodstvoKlijentiJPanel rp = new RacunovodstvoKlijentiJPanel();
 		
