@@ -52,7 +52,7 @@ public class RacunovodstvoJFrame extends JFrame {
 
     public void postaviKorisnickiRacuniJPanel() {
         ukloniPostojecePanele();
-        racunovodstvoKorisnickiRacuniJPanel.popuniSaSvimPodacimaIzBaze();
+        racunovodstvoKorisnickiRacuniJPanel.popuniSaSvimPodacimaIzBaze(getKorisnik());
         contentPane.add(racunovodstvoKorisnickiRacuniJPanel, BorderLayout.CENTER);
         osvjeziFormu();
     }
