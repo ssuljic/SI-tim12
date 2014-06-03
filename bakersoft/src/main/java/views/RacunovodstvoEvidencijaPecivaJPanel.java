@@ -371,6 +371,10 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
         	if(getCijenatextField().getText().isEmpty()) {
         		throw new IllegalArgumentException("Polje Cijena ne može biti prazno.");
         	}
+    		if(getTezinatextField().getText().equals("0")) {
+        		throw new IllegalArgumentException("Polje Težina ne može imati vrijednost 0.");
+        	}
+    			
     		
     		baza.spasiUBazu(p);
     		
