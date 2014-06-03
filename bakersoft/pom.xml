@@ -29,6 +29,14 @@
             <artifactId>junit</artifactId>
             <version>4.11</version>
         </dependency>
+        
+        <!--iText-->
+        <dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>5.0.6</version>
+		</dependency>
+        
     </dependencies>
     
     <properties>

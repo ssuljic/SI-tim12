@@ -13,6 +13,8 @@ public class InicijalizatorBazeZaTestiranje {
     public void popuniBazuPodacima() {
         Baza baza = Baza.getBaza();
 
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        
         Tip tipKorisnika1 = new Tip();
         Tip tipKorisnika2 = new Tip();
 
@@ -115,8 +117,16 @@ public class InicijalizatorBazeZaTestiranje {
         racun1.setDatum(new Date());
         racun1.setKlijent(klijent1);
         racun1.setObracunao(korisnik2);
-        racun1.setPocetak(new Date(1992, 8, 10));
-        racun1.setKraj(new Date(1992, 8, 12));
+        try {
+        	racun1.setPocetak(simpleDateFormat.parse("19/10/2013"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+        	racun1.setKraj(simpleDateFormat.parse("19/11/2013"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         racun1.setBroj(1234);
         racun1.setJePlacen(true);
         racun1.setIznos(1845);
@@ -124,8 +134,16 @@ public class InicijalizatorBazeZaTestiranje {
         racun2.setDatum(new Date());
         racun2.setKlijent(klijent2);
         racun2.setObracunao(korisnik1);
-        racun2.setPocetak(new Date(1992, 8, 10));
-        racun2.setKraj(new Date(1992, 8, 12));
+        try {
+        	racun2.setPocetak(simpleDateFormat.parse("19/10/2013"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+        	racun2.setKraj(simpleDateFormat.parse("19/11/2013"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         racun2.setBroj(12345);
         racun2.setJePlacen(true);
         racun2.setIznos(18451);
@@ -206,7 +224,6 @@ public class InicijalizatorBazeZaTestiranje {
         
         dostava4.setDatum(new Date());
         
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         try {
             dostava2.setDatum(simpleDateFormat.parse("19/10/2013"));
         } catch (ParseException e) {
