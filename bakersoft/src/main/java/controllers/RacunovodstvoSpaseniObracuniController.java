@@ -138,7 +138,7 @@ public class RacunovodstvoSpaseniObracuniController {
 	                    document.add(potpisTable);
 	                    
 	                    document.close();
-	                    JOptionPane.showMessageDialog(racunovodstvoSpaseniObracuniJPanel.getParent(), "Račun je spašen u privremeni direktorij " + System.getProperty("java.io.tmpdir") + "/Racun" + r.getId() + ".pdf.\nUkoliko ga želite zadržati snimite ga u neki drugi direktorij.");
+	                    JOptionPane.showMessageDialog(racunovodstvoSpaseniObracuniJPanel.getParent(), "Račun je spašen u privremeni direktorij " + System.getProperty("java.io.tmpdir") + "/Racun" + r.getId() + ".pdf.\nUkoliko ga želite zadržati snimite ga u neki drugi direktorij.\nNakon što klikente OK otvorit će vam se dokument.");
 	                    
 	                    File pdfFile = new File(System.getProperty("java.io.tmpdir") + "/Racun" + r.getId() + ".pdf");
 	            		if (pdfFile.exists()) {
