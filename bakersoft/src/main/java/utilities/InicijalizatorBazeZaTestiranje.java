@@ -56,8 +56,8 @@ public class InicijalizatorBazeZaTestiranje {
         // Korisnici
         korisnik1.setIme("Mujo");
         korisnik1.setPrezime("Mujkic");
-        korisnik1.setBrojMobitela("061-222-333");
-        korisnik1.setBrojTelefona("033-234-345");
+        korisnik1.setBrojMobitela("061\222-333");
+        korisnik1.setBrojTelefona("033\234-345");
         korisnik1.setDatumRodjenja(new Date(1987, 9, 12));
         korisnik1.setKorisnickoIme("mujo");
         korisnik1.setLozinka("m");
@@ -73,8 +73,8 @@ public class InicijalizatorBazeZaTestiranje {
 
         korisnik2.setIme("Fata");
         korisnik2.setPrezime("Fatimovic");
-        korisnik2.setBrojMobitela("061-456-958");
-        korisnik2.setBrojTelefona("033-234-345");
+        korisnik2.setBrojMobitela("061/456-958");
+        korisnik2.setBrojTelefona("033/234-345");
         korisnik2.setDatumRodjenja(new Date(1989, 6, 25));
         korisnik2.setKorisnickoIme("fata");
         korisnik2.setLozinka("f");
