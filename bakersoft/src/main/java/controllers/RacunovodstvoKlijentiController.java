@@ -44,35 +44,45 @@ public class RacunovodstvoKlijentiController {
     public ActionListener getKlijentiObrisiJButtonActionListener() {
         return new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
-                long idSelektiranogKlijenta = 0;
-                if (racunovodstvoKlijentiJPanel.getTraziJComboBox().getItemCount() > 0) {
-                    idSelektiranogKlijenta = ((JComboBoxItem) racunovodstvoKlijentiJPanel.getTraziJComboBox().getSelectedItem()).getId();
-                }
+                try {
+					long idSelektiranogKlijenta = 0;
+					if (racunovodstvoKlijentiJPanel.getTraziJComboBox().getItemCount() > 0) {
+					    idSelektiranogKlijenta = ((JComboBoxItem) racunovodstvoKlijentiJPanel.getTraziJComboBox().getSelectedItem()).getId();
+					}
 
-                Baza baza = Baza.getBaza();
-                
-                List<ProdajnoMjesto> svaProdajnaMjesta = baza.dajSveNeobrisano(ProdajnoMjesto.class);
-                for(ProdajnoMjesto pm : svaProdajnaMjesta){
-                	if(pm.getKlijent().getId() == idSelektiranogKlijenta){
-                		pm.setObrisano(true);
-                		baza.azuriraj(pm);
-                	}
-                }
-                List<Klijent> sviKlijenti = baza.dajSveNeobrisano(Klijent.class);
-                int index = (int)(idSelektiranogKlijenta-1);
-                if (idSelektiranogKlijenta > 0) {
-                	sviKlijenti.get(index).setObrisano(true);
-                    baza.azuriraj(sviKlijenti.get(index));
-                }
-                
-                List<Klijent> sviKlijenti2 = baza.dajSveNeobrisano(Klijent.class);
-                long idPrvogKlijenta = 0;
-                if (sviKlijenti2.size() > 0) {
-                    idPrvogKlijenta = sviKlijenti2.get(0).getId();
-                }
-                
-                racunovodstvoKlijentiJPanel.popuniSaPodacima(sviKlijenti2, idPrvogKlijenta); 
-                JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Uspješno ste izbrisali klijenta!");
+					Baza baza = Baza.getBaza();
+					
+					List<ProdajnoMjesto> svaProdajnaMjesta = baza.dajSveNeobrisano(ProdajnoMjesto.class);
+					
+					if(svaProdajnaMjesta.size() == 1)
+					    throw new IllegalArgumentException("Ne možete obrisati posljednjeg i jedinog klijenta.");
+
+					
+					for(ProdajnoMjesto pm : svaProdajnaMjesta){
+						if(pm.getKlijent().getId() == idSelektiranogKlijenta){
+							pm.setObrisano(true);
+							baza.azuriraj(pm);
+						}
+					}
+					List<Klijent> sviKlijenti = baza.dajSveNeobrisano(Klijent.class);
+					int index = (int)(idSelektiranogKlijenta-1);
+					if (idSelektiranogKlijenta > 0) {
+						sviKlijenti.get(index).setObrisano(true);
+					    baza.azuriraj(sviKlijenti.get(index));
+					}
+					
+					List<Klijent> sviKlijenti2 = baza.dajSveNeobrisano(Klijent.class);
+					long idPrvogKlijenta = 0;
+					if (sviKlijenti2.size() > 0) {
+					    idPrvogKlijenta = sviKlijenti2.get(0).getId();
+					}
+					
+					racunovodstvoKlijentiJPanel.popuniSaPodacima(sviKlijenti2, idPrvogKlijenta); 
+					JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Uspješno ste izbrisali klijenta!");
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+				    JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), e.getMessage());
+				}
             }
         };
     }

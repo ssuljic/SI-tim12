@@ -127,7 +127,7 @@ public class InicijalizatorBazeZaTestiranje {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        racun1.setBroj(1234);
+        racun1.setBroj(1);
         racun1.setJePlacen(true);
         racun1.setIznos(1845);
 
@@ -144,7 +144,7 @@ public class InicijalizatorBazeZaTestiranje {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        racun2.setBroj(12345);
+        racun2.setBroj(2);
         racun2.setJePlacen(true);
         racun2.setIznos(18451);
         

@@ -13,12 +13,14 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class RacunovodstvoObracunavanjeController {
     private RacunovodstvoObracunavanjeJPanel racunovodstvoObracunavanjeJPanel;
@@ -66,7 +68,10 @@ public class RacunovodstvoObracunavanjeController {
                 if (idSelektiranogKlijenta > 0) {
                     Baza baza = Baza.getBaza();
                     Klijent klijent = baza.dajPoId(Klijent.class, idSelektiranogKlijenta);
-
+                    
+                    List<Racun> sviRacuni = baza.dajSve(Racun.class);
+                    noviRacun.setBroj(sviRacuni.size()+1);
+                    
                     // Postavi na racun trenutni datum
                     noviRacun.setDatum(new Date());
 
