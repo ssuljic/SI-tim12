@@ -154,12 +154,7 @@ public class RacunovodstvoKorisnickiRacuniController {
 					if (idSelektiranogKorisnika > 0) {
 					    noviKorisnik.setId(idSelektiranogKorisnika);
 					    Baza baza = Baza.getBaza();
-					    List<Korisnik> svi = baza.dajSveNeobrisano(Korisnik.class);
-	                    for(Korisnik k : svi) {
-	                        if(k.getKorisnickoIme().equals(noviKorisnik.getKorisnickoIme())) {
-							    throw new IllegalArgumentException("Korisnik sa ovim korisničkim imenom već postoji u bazi, molimo promjenite.");
-	                        }
-	                    }
+
 					    baza.azuriraj(noviKorisnik);
 						JOptionPane.showMessageDialog(racunovodstvoKorisnickiRacuniJPanel.getParent(), "Ažuriranje korisnika je uspješno.");
 					} else {
