@@ -98,13 +98,21 @@ public class RacunovodstvoObracunavanjeController {
                     // Uzeti "pocetak obracuna" i "kraj obracuna" datume, te ih unijeti na racun
                     noviRacun.setPocetak((Date) racunovodstvoObracunavanjeJPanel.getPocetniRokIsplateJSpinner().getValue());
                     noviRacun.setKraj((Date) racunovodstvoObracunavanjeJPanel.getKrajnjiRokIsplateJSpinner().getValue());
-
+                    Date d1=(Date) racunovodstvoObracunavanjeJPanel.getPocetniRokIsplateJSpinner().getValue();
+                    Date d2=(Date) racunovodstvoObracunavanjeJPanel.getKrajnjiRokIsplateJSpinner().getValue();
+                    if(d1.before(d2))
+                    {
                     // Spasiti racun, azurirati klijenta i korisnika koji je obracunao
                     baza.spasiUBazu(noviRacun);
                     baza.azuriraj(klijent);
                     baza.azuriraj(obracunavaoc);
                     JOptionPane.showMessageDialog(racunovodstvoObracunavanjeJPanel.getParent(), "Uspješno ste napravili obračun. Napravljeni obračun možete vidjeti na formi za spašene obračune.");
-                }
+                    }
+                    else
+                    {
+                    	JOptionPane.showMessageDialog(racunovodstvoObracunavanjeJPanel.getParent(), "Neispravan format datuma.");
+                    }
+                    }
             }
         };
     }
