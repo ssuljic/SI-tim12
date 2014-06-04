@@ -3,6 +3,8 @@
 import entities.Korisnik;
 import utilities.Baza;
 import utilities.JComboBoxItem;
+import views.DostavljacJFrame;
+import views.RacunovodstvoJFrame;
 import views.RacunovodstvoKorisnickiRacuniJPanel;
 
 import javax.swing.*;
@@ -57,12 +59,12 @@ public class RacunovodstvoKorisnickiRacuniController {
 					Baza baza = Baza.getBaza();
 					if (idSelektiranogKorisnika > 0) {
 					    Korisnik korisnik = baza.dajPoId(Korisnik.class, idSelektiranogKorisnika);
-					    Korisnik poredbeni = new Korisnik();
-					    poredbeni = racunovodstvoKorisnickiRacuniJPanel.getPrijavljeni();
-					    if(poredbeni.getId() == korisnik.getId())
+					    Korisnik prijavljeniKorisnik = ((RacunovodstvoJFrame)SwingUtilities.getWindowAncestor(racunovodstvoKorisnickiRacuniJPanel)).getKorisnik();
+					    if(prijavljeniKorisnik.getId() == korisnik.getId()) {
 						    throw new IllegalArgumentException("Korisnik kojeg pokušavate obrisati je trenutno prijavljen na sistem, tako da niste u mogućnosti to uraditi.");
-
+					    }
 					    korisnik.setObrisano(true);
+					    Baza.getBaza().azuriraj(korisnik);
 					    JOptionPane.showMessageDialog(racunovodstvoKorisnickiRacuniJPanel.getParent(), "Korisnik "+korisnik.getIme()+" je uspješno obrisan.");
 					}
 
@@ -87,7 +89,7 @@ public class RacunovodstvoKorisnickiRacuniController {
 					}
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
-				    JOptionPane.showMessageDialog(racunovodstvoKorisnickiRacuniJPanel.getParent(), e.getMessage());
+				    JOptionPane.showMessageDialog(racunovodstvoKorisnickiRacuniJPanel.getParent(), "Korisnik kojeg pokušavate obrisati je trenutno prijavljen na sistem, tako da niste u mogućnosti to uraditi.");
 				}
             }
         };
