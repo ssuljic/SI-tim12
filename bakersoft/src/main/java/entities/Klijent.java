@@ -1,4 +1,4 @@
-Ôªøpackage entities;
+package entities;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -43,7 +43,7 @@ public class Klijent {
 
     public void setIme(String ime2) {
     	if(ime2.isEmpty()) {
-    		throw new IllegalArgumentException("Polje Ime ne mo≈æe biti prazno.");
+    		throw new IllegalArgumentException("Polje Ime ne moûe biti prazno.");
     	}
     	else
         this.ime = ime2;
@@ -63,7 +63,7 @@ public class Klijent {
 
     public void setTelefon(String telefon2) {
     	if(telefon2.isEmpty()) {
-    		throw new IllegalArgumentException("Polje Telefon ne mo≈æe biti prazno.");
+    		throw new IllegalArgumentException("Polje Telefon ne moûe biti prazno.");
     	}
     	else if(!telefon2.matches("^\\d{3}/\\d{3}-\\d{3}$")) {
     		throw new IllegalArgumentException("Telefon nije u pravilnom formatu, pravilan format je xxx/xxx-xxx.");

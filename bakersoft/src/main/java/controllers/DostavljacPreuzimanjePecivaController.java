@@ -1,4 +1,4 @@
-﻿package controllers;
+package controllers;
 
 import entities.PecivoUDostavi;
 import views.DostavljacPreuzimanjePecivaJPanel;
@@ -52,7 +52,7 @@ public class DostavljacPreuzimanjePecivaController {
             	try {
 					dostavljacPreuzimanjePecivaJPanel.validirajPodatke();
 					dostavljacPreuzimanjePecivaJPanel.napraviDostavu();
-					JOptionPane.showMessageDialog(dostavljacPreuzimanjePecivaJPanel.getParent(), "Dostava je preuzeta, a potvrditi je možete u sekciji Potvrda dostave!");
+					JOptionPane.showMessageDialog(dostavljacPreuzimanjePecivaJPanel.getParent(), "Dostava je preuzeta, a potvrditi je mo�ete u sekciji Potvrda dostave!");
 					dostavljacPreuzimanjePecivaJPanel.osvjeziJPanel2();
 				} catch (IllegalArgumentException e1) {
 				    JOptionPane.showMessageDialog(dostavljacPreuzimanjePecivaJPanel.getParent(), e1.getMessage());

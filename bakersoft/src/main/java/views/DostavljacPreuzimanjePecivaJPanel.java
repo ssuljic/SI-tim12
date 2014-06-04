@@ -1,4 +1,4 @@
-Ôªøpackage views;
+package views;
 
 import controllers.DostavljacPreuzimanjePecivaController;
 import entities.*;
@@ -87,12 +87,12 @@ public class DostavljacPreuzimanjePecivaJPanel extends JPanel {
                 new Object[][]{
                 },
                 new String[]{
-                        "Pecivo", "≈†ifra"
+                        "Pecivo", "äifra"
                 }
         ));
         dostavaJScrollPane.setViewportView(pecivaJTable);
 
-        kolicinaJLabel = new JLabel("Koliƒçina:");
+        kolicinaJLabel = new JLabel("Kolicina:");
         kolicinaJLabel.setHorizontalAlignment(SwingConstants.TRAILING);
         GridBagConstraints gbc_kolicinaJLabel = new GridBagConstraints();
         gbc_kolicinaJLabel.anchor = GridBagConstraints.EAST;
@@ -123,7 +123,7 @@ public class DostavljacPreuzimanjePecivaJPanel extends JPanel {
                 new Object[][] {
                 },
                 new String[] {
-                        "Pecivo", "≈†ifra", "Koliƒçina"
+                        "Pecivo", "äifra", "Kolicina"
                 }
         ));
         pecivaUDostaviJScrollPane.setViewportView(pecivaUDostaviJTable);
@@ -453,7 +453,7 @@ public class DostavljacPreuzimanjePecivaJPanel extends JPanel {
 
 	public void validirajPodatke() {
 		if(getNazivDostaveJTextField().getText().isEmpty())
-			throw new IllegalArgumentException("Polje naziv dostave ne mo≈æe biti prazno.");
+			throw new IllegalArgumentException("Polje naziv dostave ne moûe biti prazno.");
 		
         List<PecivoUDostavi> pecivaUDostavi = ((PreuzimanjeDostavePecivaUDostaviTableModel)pecivaUDostaviJTable.getModel()).getPecivaUDostavi();
         if(pecivaUDostavi == null)
@@ -463,9 +463,9 @@ public class DostavljacPreuzimanjePecivaJPanel extends JPanel {
 	
 	public void validirajPodatke2() {
 		if((Integer)getKolicinaJSpinner().getValue() == 0)
-			throw new IllegalArgumentException("Koliƒçina ne mo≈æe biti 0.");
+			throw new IllegalArgumentException("Kolicina ne moûe biti 0.");
 		if((Integer)getKolicinaJSpinner().getValue() < 0)
-			throw new IllegalArgumentException("Koliƒçina ne mo≈æe biti negativne vrijednosti.");
+			throw new IllegalArgumentException("Kolicina ne moûe biti negativne vrijednosti.");
 	}
 }
 
@@ -508,7 +508,7 @@ class PreuzimanjeDostavePecivaJTable extends DefaultTableModel {
             case 0:
                 return "Peciva";
             case 1:
-                return "≈†ifra";
+                return "äifra";
             default:
                 return null;
         }
@@ -602,9 +602,9 @@ class PreuzimanjeDostavePecivaUDostaviTableModel extends DefaultTableModel {
             case 0:
                 return "Pecivo";
             case 1:
-                return "≈†ifra";
+                return "äifra";
             case 2:
-                return "Koliƒçina";
+                return "Kolicina";
             default:
                 return null;
         }

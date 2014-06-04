@@ -1,4 +1,4 @@
-﻿package views;
+package views;
 
 import controllers.RacunovodstvoIzbornikController;
 import entities.Korisnik;
