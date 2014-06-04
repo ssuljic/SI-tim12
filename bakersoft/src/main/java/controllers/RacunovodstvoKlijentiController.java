@@ -161,6 +161,9 @@ public class RacunovodstvoKlijentiController {
     public ActionListener getDodajProdajnoMjestoJButtonActionListener() {
         return new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
+            	 boolean imadostava=false;
+            	
+            	
             	try {
 					if(brojKlikova == 0 && !racunovodstvoKlijentiJPanel.getProdajnoMjestoNazivJTextField().getText().isEmpty() && !racunovodstvoKlijentiJPanel.getProdajnoMjestoAdresaJTextField().getText().isEmpty()){
 						racunovodstvoKlijentiJPanel.ocistiDonjiDioPanela();
@@ -174,10 +177,6 @@ public class RacunovodstvoKlijentiController {
 					else if(!racunovodstvoKlijentiJPanel.getProdajnoMjestoNazivJTextField().getText().isEmpty() && !racunovodstvoKlijentiJPanel.getProdajnoMjestoAdresaJTextField().getText().isEmpty() && brojKlikova==1){
 						long idSelektiranogKlijenta = ((JComboBoxItem) racunovodstvoKlijentiJPanel.getTraziJComboBox().getSelectedItem()).getId();
 					    Baza baza = Baza.getBaza();
-					    
-					    if(racunovodstvoKlijentiJPanel.getProdajnoMjestoNazivJTextField().getText().matches("\\s+") || racunovodstvoKlijentiJPanel.getProdajnoMjestoAdresaJTextField().getText().matches("\\s+"))
-						    throw new IllegalArgumentException("Morate popuniti polja da bi unos bio validan.");
-					    	
 					    List<Klijent> sviKlijenti = baza.dajSveNeobrisano(Klijent.class);
 						Klijent selektovaniKlijent = racunovodstvoKlijentiJPanel.popuniTraziJComboBoxSa(sviKlijenti,idSelektiranogKlijenta);
 						
@@ -185,26 +184,42 @@ public class RacunovodstvoKlijentiController {
 						
 						List<ProdajnoMjesto> svaProdajnaMjesta = baza.dajSveNeobrisano(ProdajnoMjesto.class);
 						List<ProdajnoMjesto> klijentovaProdajnaMjesta = new ArrayList<ProdajnoMjesto>();
-					    for(ProdajnoMjesto pm : svaProdajnaMjesta){
+					   
+						for(ProdajnoMjesto pm : svaProdajnaMjesta){
 					    	if(pm.getKlijent().getId() == selektovaniKlijent.getId())
 					    		klijentovaProdajnaMjesta.add(pm);
 					    }
-						
-						ProdajnoMjesto pm = new ProdajnoMjesto();
-						pm.setMjesto(racunovodstvoKlijentiJPanel.getProdajnoMjestoNazivJTextField().getText());
-						pm.setAdresa(racunovodstvoKlijentiJPanel.getProdajnoMjestoAdresaJTextField().getText());
-						pm.setKlijent(selektovaniKlijent);
+					    
+						 for(ProdajnoMjesto promje : svaProdajnaMjesta) {
+						    	if(promje.getMjesto().equals(racunovodstvoKlijentiJPanel.getProdajnoMjestoNazivJTextField().getText()) || promje.getAdresa().equals(racunovodstvoKlijentiJPanel.getProdajnoMjestoAdresaJTextField().getText())) {
+						    		imadostava = true;
+						    		break;
+						    	}
+						 }
+						    		
+						    		if(!imadostava) {
+						    	
+						    			ProdajnoMjesto pm = new ProdajnoMjesto();
+										pm.setMjesto(racunovodstvoKlijentiJPanel.getProdajnoMjestoNazivJTextField().getText());
+										pm.setAdresa(racunovodstvoKlijentiJPanel.getProdajnoMjestoAdresaJTextField().getText());
+										pm.setKlijent(selektovaniKlijent);
 						baza.spasiUBazu(pm);
 						brojKlikova = 0;
 						racunovodstvoKlijentiJPanel.getLblBroj().setText("" + id + "");
 						JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(),"Uspješno ste dodali prodajno mjesto: "
 										+ pm.getMjesto() + " sa adresom: "
-										+ pm.getAdresa());
-					}
-				} catch (IllegalArgumentException e) {
+										+ pm.getAdresa()); 
+					
+						    		}
+						    		else{
+							    		JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(),"Prodajno mjesto već postoji!");
+						    			}
+					 
+					}} catch (IllegalArgumentException e) {
 				    JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), e.getMessage());
 				} 
-            }
+            	
+            	}
         };
     }
     
