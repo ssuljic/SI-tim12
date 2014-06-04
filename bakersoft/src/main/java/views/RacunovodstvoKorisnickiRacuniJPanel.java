@@ -13,6 +13,11 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
+import com.google.common.base.Charsets;
+import com.google.common.hash.HashCode;
+import com.google.common.hash.HashFunction;
+import com.google.common.hash.Hashing;
+
 import java.awt.*;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
@@ -605,7 +610,9 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         korisnik.setIme(getImeJTextField().getText());
         korisnik.setPrezime(getPrezimeJTextField().getText());
         korisnik.setKorisnickoIme(getKorisnickoImeJTextField().getText());
-        korisnik.setLozinka(getLozinkaJTextField().getText());
+        HashFunction hashFunkcija = Hashing.md5();
+        HashCode hashKodLozinke = hashFunkcija.newHasher().putString(getLozinkaJTextField().getText(), Charsets.UTF_8).hash();
+        korisnik.setLozinka(new String(hashKodLozinke.asBytes()));
         korisnik.setEmail(getEmailJTextField().getText());
         korisnik.setBrojTelefona(telefonJTextField.getText());
         korisnik.setBrojMobitela(mobitelJTextField.getText());

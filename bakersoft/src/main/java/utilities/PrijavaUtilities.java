@@ -5,6 +5,11 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
 
+import com.google.common.base.Charsets;
+import com.google.common.hash.HashCode;
+import com.google.common.hash.HashFunction;
+import com.google.common.hash.Hashing;
+
 public class PrijavaUtilities {
     private Baza baza;
     private List<Korisnik> korisnici;
@@ -21,10 +26,12 @@ public class PrijavaUtilities {
      */
 
     public boolean jeKorisnikValidan(String korisnickoIme, String lozinka) {
+    	HashFunction hashFunkcija = Hashing.md5();
+        HashCode hashKodLozinke = hashFunkcija.newHasher().putString(lozinka, Charsets.UTF_8).hash();
         if (korisnici.size() > 0) {
             for (Korisnik korisnik : korisnici) {
                 if (korisnik.getKorisnickoIme().equals(korisnickoIme) &&
-                        korisnik.getLozinka().equals(lozinka)) {
+                        korisnik.getLozinka().equals(new String(hashKodLozinke.asBytes()))) {
                     return true;
                 }
             }
@@ -34,10 +41,12 @@ public class PrijavaUtilities {
     }
 
     public Korisnik prijavi(String korisnickoIme, String lozinka) {
+    	HashFunction hashFunkcija = Hashing.md5();
+        HashCode hashKodLozinke = hashFunkcija.newHasher().putString(lozinka, Charsets.UTF_8).hash();
         if (korisnici.size() > 0) {
             for (Korisnik korisnik : korisnici) {
                 if (korisnik.getKorisnickoIme().equals(korisnickoIme) &&
-                        korisnik.getLozinka().equals(lozinka)) {
+                        korisnik.getLozinka().equals(new String(hashKodLozinke.asBytes()))) {
                     return korisnik;
                 }
             }

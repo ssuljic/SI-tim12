@@ -1,16 +1,22 @@
 ﻿package controllers;
 
-import entities.Korisnik;
-import entities.Tip;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JOptionPane;
+
+import com.google.common.base.Charsets;
+import com.google.common.hash.HashCode;
+import com.google.common.hash.HashFunction;
+import com.google.common.hash.Hashing;
+
 import utilities.PrijavaUtilities;
 import views.DostavljacJFrame;
 import views.PrijavaJFrame;
 import views.RacunovodstvoJFrame;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import entities.Korisnik;
+import entities.Tip;
 
 public class PrijavaController implements ActionListener {
     private PrijavaJFrame prijavaJFrame;
