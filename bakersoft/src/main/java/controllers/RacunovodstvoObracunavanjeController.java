@@ -80,44 +80,49 @@ public class RacunovodstvoObracunavanjeController {
                     // Za prodji kroz svaku stavku dostave i sracunaj ju u konacni iznos racuna
                     double iznosRacuna = 0.0;
                     iznosRacuna = Double.valueOf(racunovodstvoObracunavanjeJPanel.getZaradaIspisJLabel().getText());
-                    noviRacun.setIznos(iznosRacuna);
-
-                    // Postaviti da je racun nije placen
-                    noviRacun.setJePlacen(false);
-
-                    // Postaviti klijenta kojem se izdaje racun na racun i obratno, postaviti racun na klijnta
-                    noviRacun.setKlijent(klijent);
-                    if (klijent.getRacuni() == null) {
-                        klijent.setRacuni(new ArrayList<Racun>());
+                    if(iznosRacuna>0.0) {
+	                    noviRacun.setIznos(iznosRacuna);
+	
+	                    // Postaviti da je racun nije placen
+	                    noviRacun.setJePlacen(false);
+	
+	                    // Postaviti klijenta kojem se izdaje racun na racun i obratno, postaviti racun na klijnta
+	                    noviRacun.setKlijent(klijent);
+	                    if (klijent.getRacuni() == null) {
+	                        klijent.setRacuni(new ArrayList<Racun>());
+	                    }
+	                    klijent.getRacuni().add(noviRacun);
+	
+	                    // Postaviti korisnika koji je obracunao racun na racun i obratno, postaviti racun na korisnika
+	                    Korisnik obracunavaoc = ((RacunovodstvoJFrame) SwingUtilities.getWindowAncestor(racunovodstvoObracunavanjeJPanel)).getKorisnik();
+	                    if (obracunavaoc.getObracunatiRacuni() == null) {
+	                        obracunavaoc.setObracunatiRacuni(new ArrayList<Racun>());
+	                    }
+	                    obracunavaoc.getObracunatiRacuni().add(noviRacun);
+	                    noviRacun.setObracunao(obracunavaoc);
+	
+	                    // Uzeti "pocetak obracuna" i "kraj obracuna" datume, te ih unijeti na racun
+	                    noviRacun.setPocetak((Date) racunovodstvoObracunavanjeJPanel.getPocetniRokIsplateJSpinner().getValue());
+	                    noviRacun.setKraj((Date) racunovodstvoObracunavanjeJPanel.getKrajnjiRokIsplateJSpinner().getValue());
+	                    Date d1=(Date) racunovodstvoObracunavanjeJPanel.getPocetniRokIsplateJSpinner().getValue();
+	                    Date d2=(Date) racunovodstvoObracunavanjeJPanel.getKrajnjiRokIsplateJSpinner().getValue();
+	                    if(d1.before(d2))
+	                    {
+	                    // Spasiti racun, azurirati klijenta i korisnika koji je obracunao
+	                    baza.spasiUBazu(noviRacun);
+	                    baza.azuriraj(klijent);
+	                    baza.azuriraj(obracunavaoc);
+	                    JOptionPane.showMessageDialog(racunovodstvoObracunavanjeJPanel.getParent(), "Uspješno ste napravili obracun. Napravljeni obracun možete vidjeti na formi za spašene obracune.");
+	                    }
+                    } else {
+                    	JOptionPane.showMessageDialog(racunovodstvoObracunavanjeJPanel.getParent(), "Neispravno napravljen obračun.");
                     }
-                    klijent.getRacuni().add(noviRacun);
-
-                    // Postaviti korisnika koji je obracunao racun na racun i obratno, postaviti racun na korisnika
-                    Korisnik obracunavaoc = ((RacunovodstvoJFrame) SwingUtilities.getWindowAncestor(racunovodstvoObracunavanjeJPanel)).getKorisnik();
-                    if (obracunavaoc.getObracunatiRacuni() == null) {
-                        obracunavaoc.setObracunatiRacuni(new ArrayList<Racun>());
-                    }
-                    obracunavaoc.getObracunatiRacuni().add(noviRacun);
-                    noviRacun.setObracunao(obracunavaoc);
-
-                    // Uzeti "pocetak obracuna" i "kraj obracuna" datume, te ih unijeti na racun
-                    noviRacun.setPocetak((Date) racunovodstvoObracunavanjeJPanel.getPocetniRokIsplateJSpinner().getValue());
-                    noviRacun.setKraj((Date) racunovodstvoObracunavanjeJPanel.getKrajnjiRokIsplateJSpinner().getValue());
-                    Date d1=(Date) racunovodstvoObracunavanjeJPanel.getPocetniRokIsplateJSpinner().getValue();
-                    Date d2=(Date) racunovodstvoObracunavanjeJPanel.getKrajnjiRokIsplateJSpinner().getValue();
-                    if(d1.before(d2))
-                    {
-                    // Spasiti racun, azurirati klijenta i korisnika koji je obracunao
-                    baza.spasiUBazu(noviRacun);
-                    baza.azuriraj(klijent);
-                    baza.azuriraj(obracunavaoc);
-                    JOptionPane.showMessageDialog(racunovodstvoObracunavanjeJPanel.getParent(), "Uspješno ste napravili obračun. Napravljeni obračun možete vidjeti na formi za spašene obračune.");
                     }
                     else
                     {
                     	JOptionPane.showMessageDialog(racunovodstvoObracunavanjeJPanel.getParent(), "Neispravan format datuma.");
                     }
-                    }
+                    
             }
         };
     }
