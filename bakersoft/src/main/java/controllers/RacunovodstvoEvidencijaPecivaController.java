@@ -1,4 +1,4 @@
-package controllers;
+﻿package controllers;
 
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
@@ -31,7 +31,7 @@ public class RacunovodstvoEvidencijaPecivaController
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					racunovodstvoEvidencijaPecivaJPanel.dodajPecivo();
-	                JOptionPane.showMessageDialog(racunovodstvoEvidencijaPecivaJPanel.getParent(), "Pecivo je uspje�no dodano.");
+	                JOptionPane.showMessageDialog(racunovodstvoEvidencijaPecivaJPanel.getParent(), "Pecivo je uspješno dodano.");
 					racunovodstvoEvidencijaPecivaJPanel.osvjeziPanel();
 				} catch (Exception e) {
 	                JOptionPane.showMessageDialog(racunovodstvoEvidencijaPecivaJPanel.getParent(), e.getMessage());

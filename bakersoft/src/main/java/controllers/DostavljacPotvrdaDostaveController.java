@@ -1,4 +1,4 @@
-package controllers;
+﻿package controllers;
 
 import entities.Dostava;
 import utilities.Baza;
@@ -57,9 +57,9 @@ public class DostavljacPotvrdaDostaveController {
                 dostava.setJeIsporuceno(true);
                 baza.azuriraj(dostava);
                 dostavljacPotvrdaDostaveJPanel.popuniSaSvimPodacimaIzBaze(0);
-                JOptionPane.showMessageDialog(dostavljacPotvrdaDostaveJPanel.getParent(), "Uspje�no ste potvrdili dostavu.");
+                JOptionPane.showMessageDialog(dostavljacPotvrdaDostaveJPanel.getParent(), "Uspješno ste potvrdili dostavu.");
           }catch  (NullPointerException e) {
-            JOptionPane.showMessageDialog(dostavljacPotvrdaDostaveJPanel.getParent(), "Sve dostave su vec potvrdene.");
+            JOptionPane.showMessageDialog(dostavljacPotvrdaDostaveJPanel.getParent(), "Sve dostave su već potvrđene.");
    
             }
            }

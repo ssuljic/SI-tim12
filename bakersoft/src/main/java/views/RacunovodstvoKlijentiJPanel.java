@@ -1,4 +1,4 @@
-package views;
+﻿package views;
 
 import entities.Dostava;
 import entities.Klijent;
@@ -165,7 +165,7 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
         gbc_lblBroj.gridy = 0;
         prodajnoMjestoJPanel.add(lblBroj, gbc_lblBroj);
         
-        btnSljedece = new JButton("Sljedeci");
+        btnSljedece = new JButton("Sljedeći");
         GridBagConstraints gbc_btnSljedece = new GridBagConstraints();
         gbc_btnSljedece.fill = GridBagConstraints.HORIZONTAL;
         gbc_btnSljedece.anchor = GridBagConstraints.EAST;
@@ -212,7 +212,7 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
         gbc_prodajnoMjestoAdresaJTextField.gridy = 2;
         prodajnoMjestoJPanel.add(prodajnoMjestoAdresaJTextField, gbc_prodajnoMjestoAdresaJTextField);
 
-        obrisiProdajnoMjestoJButton = new JButton("Obri�i prodajno mjesto");
+        obrisiProdajnoMjestoJButton = new JButton("Obriši prodajno mjesto");
         GridBagConstraints gbc_obrisiProdajnoMjestoJButton = new GridBagConstraints();
         gbc_obrisiProdajnoMjestoJButton.fill = GridBagConstraints.HORIZONTAL;
         gbc_obrisiProdajnoMjestoJButton.insets = new Insets(0, 0, 0, 5);
@@ -244,7 +244,7 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
         gbl_dugmadJPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
         dugmadJPanel.setLayout(gbl_dugmadJPanel);
 
-        obrisiKlijentaJButton = new JButton("Obri�i klijenta");
+        obrisiKlijentaJButton = new JButton("Obriši klijenta");
         GridBagConstraints gbc_obrisiKlijentaJButton = new GridBagConstraints();
         gbc_obrisiKlijentaJButton.anchor = GridBagConstraints.SOUTH;
         gbc_obrisiKlijentaJButton.fill = GridBagConstraints.HORIZONTAL;

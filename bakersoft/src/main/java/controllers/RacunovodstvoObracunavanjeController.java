@@ -1,4 +1,4 @@
-package controllers;
+﻿package controllers;
 
 import entities.Klijent;
 import entities.Korisnik;
@@ -111,7 +111,7 @@ public class RacunovodstvoObracunavanjeController {
                     baza.spasiUBazu(noviRacun);
                     baza.azuriraj(klijent);
                     baza.azuriraj(obracunavaoc);
-                    JOptionPane.showMessageDialog(racunovodstvoObracunavanjeJPanel.getParent(), "Uspje�no ste napravili obracun. Napravljeni obracun mo�ete vidjeti na formi za spa�ene obracune.");
+                    JOptionPane.showMessageDialog(racunovodstvoObracunavanjeJPanel.getParent(), "Uspješno ste napravili obračun. Napravljeni obračun možete vidjeti na formi za spašene obračune.");
                     }
                     else
                     {

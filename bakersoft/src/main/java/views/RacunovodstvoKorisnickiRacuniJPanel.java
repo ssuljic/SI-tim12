@@ -1,4 +1,4 @@
-package views;
+﻿package views;
 
 import controllers.RacunovodstvoKorisnickiRacuniController;
 import entities.Korisnik;
@@ -59,7 +59,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
      * Create the panel.
      */
     public RacunovodstvoKorisnickiRacuniJPanel() {
-        setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Korisnici racuni:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Korisniči računi:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[]{0, 0};
         gridBagLayout.rowHeights = new int[]{0, 0, 0, 0};
@@ -148,7 +148,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         gbc_prezimeJTextField.gridy = 1;
         podaciOKorisnikuJPanel.add(prezimeJTextField, gbc_prezimeJTextField);
 
-        korisnickoImeJLabel = new JLabel("Korisnicko ime:");
+        korisnickoImeJLabel = new JLabel("Korisničko ime:");
         korisnickoImeJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         GridBagConstraints gbc_korisnickoImeJLabel = new GridBagConstraints();
         gbc_korisnickoImeJLabel.insets = new Insets(0, 0, 5, 5);
@@ -252,7 +252,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         podaciOKorisnikuJPanel.add(adresaJTextField, gbc_adresaJTextField);
         adresaJTextField.setColumns(10);
 
-        datumRodjenjaJLabel = new JLabel("Datum rodenja:");
+        datumRodjenjaJLabel = new JLabel("Datum rođenja:");
         GridBagConstraints gbc_datumRodjenjaJLabel = new GridBagConstraints();
         gbc_datumRodjenjaJLabel.insets = new Insets(0, 0, 5, 5);
         gbc_datumRodjenjaJLabel.gridx = 0;
@@ -313,7 +313,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         gbl_dugmadJPanel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
         dugmadJPanel.setLayout(gbl_dugmadJPanel);
 
-        obrisiJButton = new JButton("Obri�i");
+        obrisiJButton = new JButton("Obriši");
         GridBagConstraints gbc_obrisiJButton = new GridBagConstraints();
         gbc_obrisiJButton.anchor = GridBagConstraints.SOUTH;
         gbc_obrisiJButton.fill = GridBagConstraints.HORIZONTAL;
@@ -322,7 +322,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         gbc_obrisiJButton.gridy = 0;
         dugmadJPanel.add(obrisiJButton, gbc_obrisiJButton);
 
-        azurirajJButton = new JButton("A�uriraj");
+        azurirajJButton = new JButton("Ažuriraj");
         GridBagConstraints gbc_azurirajJButton = new GridBagConstraints();
         gbc_azurirajJButton.fill = GridBagConstraints.HORIZONTAL;
         gbc_azurirajJButton.insets = new Insets(0, 0, 5, 0);
@@ -480,7 +480,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
 		return true;
 	}
     public void popuniSaPodacima(List<Korisnik> sviKorisnici, long idSelektovanogKorisnika) {
-        // TODO: Vjerovatno bi se jo� malo moglo refaktorisati ...
+        // TODO: Vjerovatno bi se još malo moglo refaktorisati ...
         if (sviKorisnici == null || sviKorisnici.size() <= 0) {
             ocistiPanel();
             return;

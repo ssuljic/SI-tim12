@@ -1,4 +1,4 @@
-package views;
+﻿package views;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -20,16 +20,16 @@ public class RacunovodstvoIzbornikJPanel extends JPanel {
         setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Izbornik:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
         setLayout(new GridLayout(9, 1, 0, 0));
 
-        korisnickiRacuniJButton = new JButton("Korisnicki racuni");
+        korisnickiRacuniJButton = new JButton("Korisnički računi");
         add(korisnickiRacuniJButton);
 
         klijentiJButton = new JButton("Klijenti");
         add(klijentiJButton);
 
-        obracunavanjeJButton = new JButton("Obracunavanje");
+        obracunavanjeJButton = new JButton("Obračunavanje");
         add(obracunavanjeJButton);
 
-        spaseniObracuniJButton = new JButton("Spa�eni obracuni");
+        spaseniObracuniJButton = new JButton("Spašeni obračuni");
         add(spaseniObracuniJButton);
 
         evidencijaPecivaJButton = new JButton("Evidencija peciva");

@@ -1,4 +1,4 @@
-package views;
+﻿package views;
 
 import controllers.RacunovodstvoObracunavanjeController;
 import entities.Dostava;
@@ -38,7 +38,7 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
      * Create the panel.
      */
     public RacunovodstvoObracunavanjeJPanel() {
-        setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Obracunavanje:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+        setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Obračunavanje:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[]{0, 0};
         gridBagLayout.rowHeights = new int[]{0, 0, 0, 0};
@@ -60,7 +60,7 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
         gbl_obracunZaJPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
         obracunZaJPanel.setLayout(gbl_obracunZaJPanel);
 
-        JLabel obracunZaJLabel = new JLabel("Obracun za:");
+        JLabel obracunZaJLabel = new JLabel("Obračun za:");
         obracunZaJLabel.setHorizontalAlignment(SwingConstants.TRAILING);
         GridBagConstraints gbc_obracunZaJLabel = new GridBagConstraints();
         gbc_obracunZaJLabel.fill = GridBagConstraints.BOTH;
@@ -156,7 +156,7 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
                 new Object[][]{
                 },
                 new String[]{
-                        "Naziv dostave", "Isporucioc", "Datum dostave", "Dostava isporucena"
+                        "Naziv dostave", "Isporučioc", "Datum dostave", "Dostava isporučena"
                 }
         ) {
             Class[] columnTypes = new Class[]{
@@ -189,7 +189,7 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
                 new Object[][]{
                 },
                 new String[]{
-                        "�ifra", "Naziv", "Te�ina", "Cijena", "Kolicina", "Ukupna cijena"
+                        "Šifra", "Naziv", "Težina", "Cijena", "Količina", "Ukupna cijena"
                 }
         ));
         pecivaDostaveJScrollPane.setViewportView(pecivaDostaveJTable);
@@ -254,7 +254,7 @@ public class RacunovodstvoObracunavanjeJPanel extends JPanel {
         gbl_dugmadJPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
         dugmadJPanel.setLayout(gbl_dugmadJPanel);
 
-        napraviObracunJButton = new JButton("Napravi obracun");
+        napraviObracunJButton = new JButton("Napravi obračun");
         GridBagConstraints gbc_napraviObracunJButton = new GridBagConstraints();
         gbc_napraviObracunJButton.anchor = GridBagConstraints.SOUTH;
         gbc_napraviObracunJButton.fill = GridBagConstraints.HORIZONTAL;
@@ -584,11 +584,11 @@ class DostaveTableModel extends DefaultTableModel {
             case 0:
                 return "Naziv dostave";
             case 1:
-                return "Isporucioc";
+                return "Isporučioc";
             case 2:
                 return "Datum dostave";
             case 3:
-                return "Dostava isporucena";
+                return "Dostava isporučena";
             default:
                 return null;
         }
@@ -700,15 +700,15 @@ class PecivaDostaveTableModel extends DefaultTableModel {
     public String getColumnName(int columnIndex) {
         switch (columnIndex) {
             case 0:
-                return "�ifra";
+                return "Šifra";
             case 1:
                 return "Naziv";
             case 2:
-                return "Te�ina";
+                return "Težina";
             case 3:
                 return "Cijena";
             case 4:
-                return "Kolicina";
+                return "Količina";
             case 5:
                 return "Ukupna cijena";
             default:
