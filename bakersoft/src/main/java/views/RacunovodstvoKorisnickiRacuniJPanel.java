@@ -481,6 +481,10 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
 		}
 		
 		
+		else if (!validateDatumRodjenja((Date) datumRodjenjaJSpinner.getModel().getValue())) {
+ 				JOptionPane.showMessageDialog(getParent(),"Datum rodjenja ne moze biti u buducnosti\n");
+ 			return false;
+		}
 		
 		return true;
 	}
@@ -645,4 +649,13 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         }
         popuniSaPodacima(sviKorisnici, idSelektiranogKorisnika);
     }
+    
+    public static boolean validateDatumRodjenja(Date datumrodjenja) {
+		Date today = new Date();
+		if (datumrodjenja.after(today))
+			return false;
+		return true;
+	}
 }
+
+
