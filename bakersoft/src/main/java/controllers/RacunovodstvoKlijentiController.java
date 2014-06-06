@@ -91,6 +91,7 @@ public class RacunovodstvoKlijentiController {
         return new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
             	try {
+            		boolean imaklijent=false;
 					if(brojKlikova2 == 0 && !racunovodstvoKlijentiJPanel.getNazivFirmeJTextField().getText().isEmpty() && !racunovodstvoKlijentiJPanel.getTelefonJTextField().getText().isEmpty()){
 						racunovodstvoKlijentiJPanel.ocistiDonjiDioPanela();
 						racunovodstvoKlijentiJPanel.ocistiGornjiDioPanela();
@@ -100,8 +101,18 @@ public class RacunovodstvoKlijentiController {
 
 					}
 					else{
+							Baza baza = Baza.getBaza();
+			            	List<Klijent> sviKlijenti= baza.dajSve(Klijent.class);
+
+						 for(Klijent k: sviKlijenti) {
+						    	if(k.getIme().equals(racunovodstvoKlijentiJPanel.getNazivFirmeJTextField().getText()) || k.getTelefon().equals(racunovodstvoKlijentiJPanel.getTelefonJTextField().getText())) {
+						    		imaklijent = true;
+						    		break;
+						    	}
+						 }
+						 if(!imaklijent) {
 						Klijent noviKlijent = racunovodstvoKlijentiJPanel.dajPodatkeONovomKlijentu();
-					    Baza baza = Baza.getBaza();
+					   // Baza baza = Baza.getBaza();
 					    baza.spasiUBazu(noviKlijent);
 					    
 					    List<Klijent> sviKlijenti2 = baza.dajSveNeobrisano(Klijent.class);
@@ -114,7 +125,10 @@ public class RacunovodstvoKlijentiController {
 					    brojKlikova2=0;
 					    racunovodstvoKlijentiJPanel.prikaziDugmad();
 					    JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Uspješno ste dodali klijenta: " + noviKlijent.getIme());
-
+						 }
+						 else{
+					    		JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(),"Postoji klijent sa tim podacima!");
+				    			}
 					}
 				} catch (IllegalArgumentException e) {					
 				    JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), e.getMessage());
