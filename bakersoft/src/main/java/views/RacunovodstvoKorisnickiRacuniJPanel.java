@@ -1,35 +1,50 @@
 ﻿package views;
 
-import controllers.RacunovodstvoKorisnickiRacuniController;
-import entities.Korisnik;
-import entities.Status;
-import entities.Tip;
-import exceptions.NePostojiUBaziStavkaSaDatomIdVrijednosti;
-import utilities.Baza;
-import utilities.GuiUtilities;
-import utilities.JComboBoxItem;
-
-import javax.swing.*;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.TitledBorder;
-
-import com.google.common.base.Charsets;
-import com.google.common.hash.HashCode;
-import com.google.common.hash.HashFunction;
-import com.google.common.hash.Hashing;
-
-import java.awt.*;
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.SpinnerDateModel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
+
+import utilities.Baza;
+import utilities.GuiUtilities;
+import utilities.JComboBoxItem;
+import utilities.Validator;
+
+import com.google.common.base.Charsets;
+import com.google.common.hash.HashCode;
+import com.google.common.hash.HashFunction;
+import com.google.common.hash.Hashing;
+
+import controllers.RacunovodstvoKorisnickiRacuniController;
+import entities.Korisnik;
+import entities.Status;
+import entities.Tip;
+import exceptions.NePostojiUBaziStavkaSaDatomIdVrijednosti;
+import exceptions.PodaciNisuValidniException;
+
 public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
     private JTextField imeJTextField;
     private JTextField prezimeJTextField;
     private JTextField korisnickoImeJTextField;
-    private JPasswordField lozinkaJTextField;
+    private JPasswordField lozinkaJPasswordField;
     private JComboBox traziJComboBox;
     private JComboBox privilegijeJComboBox;
     private JButton obrisiJButton;
@@ -52,6 +67,8 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
     private JSpinner datumRodjenjaJSpinner;
     public static Korisnik prijavljeni;
 
+    private final Validator validator = Validator.instancirajValidatora();
+    
     public static Korisnik getPrijavljeni() {
 		return prijavljeni;
 	}
@@ -180,14 +197,14 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         gbc_lozinkaJLabel.gridy = 3;
         podaciOKorisnikuJPanel.add(lozinkaJLabel, gbc_lozinkaJLabel);
 
-        lozinkaJTextField = new JPasswordField();
-        lozinkaJTextField.setColumns(10);
+        lozinkaJPasswordField = new JPasswordField();
+        lozinkaJPasswordField.setColumns(10);
         GridBagConstraints gbc_lozinkaJTextField = new GridBagConstraints();
         gbc_lozinkaJTextField.insets = new Insets(0, 0, 5, 0);
         gbc_lozinkaJTextField.fill = GridBagConstraints.HORIZONTAL;
         gbc_lozinkaJTextField.gridx = 1;
         gbc_lozinkaJTextField.gridy = 3;
-        podaciOKorisnikuJPanel.add(lozinkaJTextField, gbc_lozinkaJTextField);
+        podaciOKorisnikuJPanel.add(lozinkaJPasswordField, gbc_lozinkaJTextField);
 
         emailJLabel = new JLabel("E-mail:");
         GridBagConstraints gbc_emailJLabel = new GridBagConstraints();
@@ -365,7 +382,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
     }
 
     public JTextField getLozinkaJTextField() {
-        return lozinkaJTextField;
+        return lozinkaJPasswordField;
     }
 
     public JComboBox getPrivilegijeJComboBox() {
@@ -457,37 +474,6 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         getDodajJButton().addActionListener(racunovodstvoKorisnickiRacuniController.getKorisnickiRacuniDodajJButtonActionListener());
         getAzurirajJButton().addActionListener(racunovodstvoKorisnickiRacuniController.getKorisnickiRacuniPrepraviJButtonActionListener());
     }
-    public boolean validacija()
-	{
-    	 if(!getEmailJTextField().getText().matches("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"))
- 		{
-
- 			JOptionPane.showMessageDialog(getParent(),
- 			        "Neispravan format e-mail adrese, treba biti u formatu user@host.domena !");
- 			return false;
- 		}
-    	 else if(!getTelefonJTextField().getText().matches("\\d{3}/\\d{3}-\\d{3}")){
-			JOptionPane.showMessageDialog(getParent(),
-			        "Neispravan format telefona, ocekuje se XXX/XXX-XXX!.");
-			return false;
-		}
-		
-		else if(!getMobitelJTextField().getText().matches("\\d{3}/\\d{3}-\\d{3}"))
-		{
-			
-			JOptionPane.showMessageDialog(getParent(),
-			        "Neispravan format mobitela, ocekuje se XXX/XXX-XXX!.");
-			return false;
-		}
-		
-		
-		else if (!validateDatumRodjenja((Date) datumRodjenjaJSpinner.getModel().getValue())) {
- 				JOptionPane.showMessageDialog(getParent(),"Datum rodjenja ne moze biti u buducnosti\n");
- 			return false;
-		}
-		
-		return true;
-	}
     public void popuniSaPodacima(List<Korisnik> sviKorisnici, long idSelektovanogKorisnika) {
         // TODO: Vjerovatno bi se još malo moglo refaktorisati ...
         if (sviKorisnici == null || sviKorisnici.size() <= 0) {
@@ -500,7 +486,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         imeJTextField.setText(selektovaniKorisnik.getIme());
         prezimeJTextField.setText(selektovaniKorisnik.getPrezime());
         korisnickoImeJTextField.setText(selektovaniKorisnik.getKorisnickoIme());
-        lozinkaJTextField.setText(selektovaniKorisnik.getLozinka());
+        lozinkaJPasswordField.setText(selektovaniKorisnik.getLozinka());
         adresaJTextField.setText(selektovaniKorisnik.getAdresa());
         emailJTextField.setText(selektovaniKorisnik.getEmail());
         telefonJTextField.setText(selektovaniKorisnik.getBrojTelefona());
@@ -577,7 +563,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         imeJTextField.setText("");
         prezimeJTextField.setText("");
         korisnickoImeJTextField.setText("");
-        lozinkaJTextField.setText("");
+        lozinkaJPasswordField.setText("");
         emailJTextField.setText("");
         telefonJTextField.setText("");
         mobitelJTextField.setText("");
@@ -591,7 +577,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         imeJTextField.setText("");
         prezimeJTextField.setText("");
         korisnickoImeJTextField.setText("");
-        lozinkaJTextField.setText("");
+        lozinkaJPasswordField.setText("");
         emailJTextField.setText("");
         telefonJTextField.setText("");
         mobitelJTextField.setText("");
@@ -609,8 +595,10 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
     	getAzurirajJButton().setVisible(true);
     }
 
-    public Korisnik dajPodatkeONovomKorisniku() {
-        Korisnik korisnik = new Korisnik();
+    public Korisnik dajPodatkeONovomKorisniku() throws PodaciNisuValidniException {
+    	validirajPodatke();
+    	
+		Korisnik korisnik = new Korisnik();
         korisnik.setIme(getImeJTextField().getText());
         korisnik.setPrezime(getPrezimeJTextField().getText());
         korisnik.setKorisnickoIme(getKorisnickoImeJTextField().getText());
@@ -630,8 +618,47 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         korisnik.setTip(tip);
         return korisnik;
     }
+    
+    public void validirajPodatke() throws PodaciNisuValidniException {
+    	if(imeJTextField != null &&
+    			prezimeJTextField != null &&
+    			korisnickoImeJTextField != null &&
+    			lozinkaJLabel != null &&
+    			emailJTextField != null &&
+    			telefonJTextField != null &&
+    			mobitelJTextField != null &&
+    			adresaJTextField != null &&
+    			datumRodjenjaJSpinner != null &&
+    			statusJComboBox != null &&
+    			privilegijeJComboBox != null) {
+    		if(!validator.jeImeValidno(imeJTextField.getText())) {
+    			throw new PodaciNisuValidniException("Ime nije ispravno uneseno.(Mora biti statavljeno samo od malih, velikih slova i brojeva)");
+    		}
+    		if(!validator.jeImeValidno(prezimeJTextField.getText())){
+    			throw new PodaciNisuValidniException("Prezime nije ispravno uneseno.(Mora biti statavljeno samo od malih, velikih slova i brojeva)");
+    		}
+    		if(!validator.jeImeValidno(prezimeJTextField.getText())){
+    			throw new PodaciNisuValidniException("Korisni\u010dko ime nije ispravno uneseno. (Mora biti statavljeno samo od malih, velikih slova i brojeva)");
+    		}
+    		if(!validator.jePasswordValidan(new String(lozinkaJPasswordField.getPassword()))) {
+    			throw new PodaciNisuValidniException("Lozinka nije ispravno unesena. (Mora imati najmanje 6 znakova)");
+    		}
+    		if(!validator.jeEmailValidan(emailJTextField.getText())) {
+    			throw new PodaciNisuValidniException("Email nije ispravno unesen.");
+    		}
+    		if(!validator.jeTelefonValidan(telefonJTextField.getText())) {
+    			throw new PodaciNisuValidniException("Telefon nije ispravno unesen. (Dozvoljeno je samo unositi brojeve)");
+    		}
+    		if(!validator.jeTelefonValidan(mobitelJTextField.getText())) {
+    			throw new PodaciNisuValidniException("Mobitel nije ispravno unesen. (Dozvoljeno je samo unositi brojeve)");
+    		}
+    		if(!validator.jeDatumRodjenjaValidan((Date)datumRodjenjaJSpinner.getValue())) {
+    			throw new PodaciNisuValidniException("Datum nije ispravno unesen. (Dozvoljeno je samo unositi datum koji je prije trenutnog kalendarskog datuma i poslije 1930. godine)");
+    		}
+    	}
+    }
 
-    public void popuniSaSvimPodacimaIzBaze(Korisnik trenutni) {
+	public void popuniSaSvimPodacimaIzBaze(Korisnik trenutni) {
     	
     	prijavljeni = trenutni;
         Baza baza = Baza.getBaza();
