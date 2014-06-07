@@ -29,7 +29,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
     private JTextField imeJTextField;
     private JTextField prezimeJTextField;
     private JTextField korisnickoImeJTextField;
-    private JTextField lozinkaJTextField;
+    private JPasswordField lozinkaJTextField;
     private JComboBox traziJComboBox;
     private JComboBox privilegijeJComboBox;
     private JButton obrisiJButton;
@@ -180,7 +180,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         gbc_lozinkaJLabel.gridy = 3;
         podaciOKorisnikuJPanel.add(lozinkaJLabel, gbc_lozinkaJLabel);
 
-        lozinkaJTextField = new JTextField();
+        lozinkaJTextField = new JPasswordField();
         lozinkaJTextField.setColumns(10);
         GridBagConstraints gbc_lozinkaJTextField = new GridBagConstraints();
         gbc_lozinkaJTextField.insets = new Insets(0, 0, 5, 0);
