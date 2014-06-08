@@ -20,7 +20,7 @@ public class RacunovdostvoKlijentiJPanelTest {
 		
 		Klijent k = new Klijent();
         rp.getNazivFirmeJTextField().setText("hopa");
-        rp.getTelefonJTextField().setText("666-555");
+        rp.getTelefonJTextField().setText("062/666-555");
         
         ProdajnoMjesto p = new ProdajnoMjesto();
 		rp.getProdajnoMjestoNazivJTextField().setText("neki");
@@ -46,7 +46,7 @@ public class RacunovdostvoKlijentiJPanelTest {
 	public void testOcistiGornjiDioPanela() {
 		RacunovodstvoKlijentiJPanel rp = new RacunovodstvoKlijentiJPanel();
         rp.getNazivFirmeJTextField().setText("hopa");
-        rp.getTelefonJTextField().setText("666-555");
+        rp.getTelefonJTextField().setText("062/666-555");
         rp.ocistiGornjiDioPanela();
 		assertEquals(rp.getNazivFirmeJTextField().getText(),"");
 		assertEquals(rp.getTelefonJTextField().getText(),"");
@@ -113,38 +113,7 @@ RacunovodstvoKlijentiJPanel rp = new RacunovodstvoKlijentiJPanel();
 
 	}
 	
-	@Test(expected = exceptions.NePostojiUBaziStavkaSaDatomIdVrijednosti.class)
-	public void testPopuniSaPodacima() {
-		RacunovodstvoKlijentiJPanel rp = new RacunovodstvoKlijentiJPanel();
-		
-        Baza baza = Baza.getBaza();
-		Klijent k = new Klijent();
-        //rp.getNazivFirmeJTextField().setText("hopa");
-        rp.getTelefonJTextField().setText("666-555");
-        
-        k.setIme("hopa");
-        k.setTelefon(rp.getTelefonJTextField().getText());
-        
-        
-        ProdajnoMjesto p = new ProdajnoMjesto();
-		rp.getProdajnoMjestoNazivJTextField().setText("neki");
-		rp.getProdajnoMjestoAdresaJTextField().setText("neka");
-		
-		p.setMjesto(rp.getProdajnoMjestoNazivJTextField().getText());
-    	p.setAdresa(rp.getProdajnoMjestoAdresaJTextField().getText());
-    	p.setKlijent(k);
-		
-    	baza.spasiUBazu(k);
-    	
-    	List<Klijent> svi = new ArrayList<Klijent>();
-    	svi.add(k);
-    	long idSelektiranog = 1;
-    	
-    	rp.popuniSaPodacima(svi, idSelektiranog);
-    	
-    	assertEquals(rp.getNazivFirmeJTextField().getText(),"hopa");
-		
-	}
+
 	
 
 }

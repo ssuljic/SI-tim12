@@ -1,4 +1,4 @@
-Ôªøpackage controllers;
+package controllers;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -36,15 +36,16 @@ public class PrijavaController implements ActionListener {
         String lozinka = String.valueOf(prijavaJFrame.getPrijavaJPanel().getLozinkaJPasswordField().getPassword());
 
         if (!prijavaUtilities.jeKorisnikValidan(korisnickoIme, lozinka)) {
-            JOptionPane.showMessageDialog(prijavaJFrame, "Korisniƒçko ime ili lozinka pogre≈°no uneseni.");
+            JOptionPane.showMessageDialog(prijavaJFrame, "KorisniËko ime ili lozinka pogreöno uneseni.");
             return;
         }
-
+		
         Korisnik korisnik = prijavaUtilities.prijavi(korisnickoIme, lozinka);
+
         if (korisnik.getTip().getTip().equals(Tip.RACUNOVODJA)) {
             pokreniPanelZaRacunovodstvo(korisnik);
         } else if (korisnik.getTip().getTip().equals(Tip.DOSTAVLJAC)) {
-            pokreniPanelZaDostavljaca(korisnik);
+           pokreniPanelZaDostavljaca(korisnik);
         }
     }
 

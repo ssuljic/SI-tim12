@@ -1,4 +1,4 @@
-﻿package controllers;
+package controllers;
 
 import entities.Klijent;
 import entities.Racun;
@@ -58,7 +58,7 @@ public class RacunovodstvoSpaseniObracuniController {
                 }
                 rbSelektiranogRacuna = (int) racunovodstvoSpaseniObracuniJPanel.getObracuniJTable().getSelectedRow();
                 if(rbSelektiranogRacuna == -1) {
-                	JOptionPane.showMessageDialog(racunovodstvoSpaseniObracuniJPanel.getParent(), "Niste izabrali obračun");
+                	JOptionPane.showMessageDialog(racunovodstvoSpaseniObracuniJPanel.getParent(), "Niste izabrali obra�un");
                 }
                 else {
 	                Baza baza = Baza.getBaza();
@@ -67,7 +67,7 @@ public class RacunovodstvoSpaseniObracuniController {
 	                
 	                baza.spasiUBazu(klijent);
 	                racunovodstvoSpaseniObracuniJPanel.popuniObracuniJTableSaPodacimaOKlijentu(klijent);
-	                JOptionPane.showMessageDialog(racunovodstvoSpaseniObracuniJPanel.getParent(), "Uspješno ste izbrisali obračun");
+	                JOptionPane.showMessageDialog(racunovodstvoSpaseniObracuniJPanel.getParent(), "Uspje�no ste izbrisali obra�un");
                 }
             }
         };
@@ -83,7 +83,7 @@ public class RacunovodstvoSpaseniObracuniController {
                 }
                 rbSelektiranogRacuna = (int) racunovodstvoSpaseniObracuniJPanel.getObracuniJTable().getSelectedRow();
                 if(rbSelektiranogRacuna == -1) {
-                	JOptionPane.showMessageDialog(racunovodstvoSpaseniObracuniJPanel.getParent(), "Niste izabrali obračun");
+                	JOptionPane.showMessageDialog(racunovodstvoSpaseniObracuniJPanel.getParent(), "Niste izabrali obra�un");
                 }
                 else {
 	                Baza baza = Baza.getBaza();
@@ -138,7 +138,7 @@ public class RacunovodstvoSpaseniObracuniController {
 	                    document.add(potpisTable);
 	                    
 	                    document.close();
-	                    JOptionPane.showMessageDialog(racunovodstvoSpaseniObracuniJPanel.getParent(), "Račun je spašen u privremeni direktorij " + System.getProperty("java.io.tmpdir") + "/Racun" + r.getId() + ".pdf.\nUkoliko ga želite zadržati snimite ga u neki drugi direktorij.\nNakon što klikente OK otvorit će vam se dokument.");
+	                    JOptionPane.showMessageDialog(racunovodstvoSpaseniObracuniJPanel.getParent(), "Račun je spašen u privremeni direktorij " + System.getProperty("java.io.tmpdir") + "/Racun" + r.getId() + ".pdf.\nUkoliko ga �elite zadr�ati snimite ga u neki drugi direktorij.\nNakon �to klikente OK otvorit �e vam se dokument.");
 	                    
 	                    File pdfFile = new File(System.getProperty("java.io.tmpdir") + "/Racun" + r.getId() + ".pdf");
 	            		if (pdfFile.exists()) {

@@ -1,4 +1,4 @@
-﻿package utilities;
+package utilities;
 
 import entities.*;
 
@@ -7,6 +7,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import com.google.common.base.Charsets;
+import com.google.common.hash.HashCode;
+import com.google.common.hash.HashFunction;
+import com.google.common.hash.Hashing;
 
 // TODO: Obrisati ovu klasu kada se zavrsi sa developmentom i izbaciti njeno pozivanje u main-u
 public class InicijalizatorBazeZaTestiranje {
@@ -62,7 +67,9 @@ public class InicijalizatorBazeZaTestiranje {
         korisnik1.setBrojTelefona("033\234-345");
         korisnik1.setDatumRodjenja(new Date(1987, 9, 12));
         korisnik1.setKorisnickoIme("mujo");
-        korisnik1.setLozinka("o�WqP��&2E9�١P");
+        HashFunction hashFunkcija2 = Hashing.md5();
+        HashCode hashKodLozinke2 = hashFunkcija2.newHasher().putString("m", Charsets.UTF_8).hash();
+        korisnik1.setLozinka(new String(hashKodLozinke2.asBytes()));
         korisnik1.setEmail("mujo.mujkic@hotmail.com");
         korisnik1.setAdresa("Titova 11");
         korisnik1.setTip(tipKorisnika2);
@@ -79,7 +86,9 @@ public class InicijalizatorBazeZaTestiranje {
         korisnik2.setBrojTelefona("033/234-345");
         korisnik2.setDatumRodjenja(new Date(1989, 6, 25));
         korisnik2.setKorisnickoIme("fata");
-        korisnik2.setLozinka("��L�uO��eT��)��");
+        HashFunction hashFunkcija = Hashing.md5();
+        HashCode hashKodLozinke = hashFunkcija.newHasher().putString("f", Charsets.UTF_8).hash();
+        korisnik2.setLozinka(new String(hashKodLozinke.asBytes()));
         korisnik2.setEmail("fata.fatimovic@gmail.com");
         korisnik2.setAdresa("Marin Dvor 23");
         korisnik2.setTip(tipKorisnika1);

@@ -1,4 +1,4 @@
-ï»¿package controllers;
+package controllers;
 
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
@@ -51,14 +51,14 @@ public class RacunovodstvoEvidencijaPecivaController
 								.showMessageDialog(
 										racunovodstvoEvidencijaPecivaJPanel
 												.getParent(),
-										"Pecivo je uspjeÅ¡no dodano.");
+										"Pecivo je uspješno dodano.");
 						racunovodstvoEvidencijaPecivaJPanel.osvjeziPanel();
 					} else {
 						JOptionPane
 								.showMessageDialog(
 										racunovodstvoEvidencijaPecivaJPanel
 												.getParent(),
-										"Pecivo sa unesenom sifrom vec postoji!");
+										"Pecivo sa unesenom šifrom veæ postoji!");
 					}
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(

@@ -1,4 +1,4 @@
-Ôªøpackage controllers;
+package controllers;
 
 import entities.Klijent;
 import entities.Korisnik;
@@ -112,10 +112,10 @@ public class RacunovodstvoObracunavanjeController {
 	                    baza.spasiUBazu(noviRacun);
 	                    baza.azuriraj(klijent);
 	                    baza.azuriraj(obracunavaoc);
-	                    JOptionPane.showMessageDialog(racunovodstvoObracunavanjeJPanel.getParent(), "Uspje≈°no ste napravili obracun. Napravljeni obracun mo≈æete vidjeti na formi za spa≈°ene obracune.");
+	                    JOptionPane.showMessageDialog(racunovodstvoObracunavanjeJPanel.getParent(), "Uspjeöno ste napravili obraËun. Napravljeni obraËun moûete vidjeti na formi za spaöene obraËune.");
 	                    }
                     } else {
-                    	JOptionPane.showMessageDialog(racunovodstvoObracunavanjeJPanel.getParent(), "Neispravno napravljen obraƒçun.");
+                    	JOptionPane.showMessageDialog(racunovodstvoObracunavanjeJPanel.getParent(), "Neispravno napravljen obraËun.");
                     }
                     }
                     else

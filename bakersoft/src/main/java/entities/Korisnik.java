@@ -1,4 +1,4 @@
-Ôªøpackage entities;
+package entities;
 
 import javax.persistence.*;
 
@@ -53,7 +53,7 @@ public class Korisnik {
 
     public void setIme(String ime2) {
     	if(ime2.isEmpty()) {
-    		throw new IllegalArgumentException("Polje Ime ne mo≈æe biti prazno.");
+    		throw new IllegalArgumentException("Polje Ime ne moûe biti prazno.");
     	}
     	else
         this.ime = ime2;
@@ -65,7 +65,7 @@ public class Korisnik {
 
     public void setPrezime(String prezime2) {
     	if(prezime2.isEmpty()) {
-    		throw new IllegalArgumentException("Polje Prezime ne mo≈æe biti prazno.");
+    		throw new IllegalArgumentException("Polje Prezime ne moûe biti prazno.");
     	}
     	else
         this.prezime = prezime2;
@@ -77,7 +77,7 @@ public class Korisnik {
 
     public void setEmail(String email2) {
     	if(email2.isEmpty()) {
-    		throw new IllegalArgumentException("Polje Email ne mo≈æe biti prazno.");
+    		throw new IllegalArgumentException("Polje Email ne moûe biti prazno.");
     	}
     	else
         this.email = email2;
@@ -89,7 +89,7 @@ public class Korisnik {
 
     public void setKorisnickoIme(String korisnickoIme2) {
     	if(korisnickoIme2.isEmpty()) {
-    		throw new IllegalArgumentException("Polje Korisniƒçko ime ne mo≈æe biti prazno.");
+    		throw new IllegalArgumentException("Polje KorisniËko ime ne moûe biti prazno.");
     	}
         this.korisnickoIme = korisnickoIme2;
     }
@@ -100,7 +100,7 @@ public class Korisnik {
 
     public void setLozinka(String lozinka2) {
     	if(lozinka2.isEmpty()) {
-    		throw new IllegalArgumentException("Polje Lozinka ne mo≈æe biti prazno.");
+    		throw new IllegalArgumentException("Polje Lozinka ne moûe biti prazno.");
     	}
         this.lozinka = lozinka2;
     }
@@ -111,7 +111,7 @@ public class Korisnik {
 
     public void setAdresa(String adresa2) {
     	if(adresa2.isEmpty()) {
-    		throw new IllegalArgumentException("Polje Adresa ne mo≈æe biti prazno.");
+    		throw new IllegalArgumentException("Polje Adresa ne moûe biti prazno.");
     	}
         this.adresa = adresa2;
     }
@@ -122,7 +122,7 @@ public class Korisnik {
 
     public void setBrojMobitela(String brojMobitela2) {
     	if(brojMobitela2.isEmpty()) {
-    		throw new IllegalArgumentException("Polje Broj mobitela ne mo≈æe biti prazno.");
+    		throw new IllegalArgumentException("Polje Broj mobitela ne moûe biti prazno.");
     	}
         this.brojMobitela = brojMobitela2;
     }

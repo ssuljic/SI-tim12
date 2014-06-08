@@ -1,4 +1,4 @@
-Ôªøpackage views;
+package views;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -81,7 +81,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
      * Create the panel.
      */
     public RacunovodstvoKorisnickiRacuniJPanel() {
-        setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Korisniƒçi raƒçuni:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "KorisniËki raËuni:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[]{0, 0};
         gridBagLayout.rowHeights = new int[]{0, 0, 0, 0};
@@ -103,7 +103,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         gbl_traziJPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
         traziJPanel.setLayout(gbl_traziJPanel);
 
-        JLabel traziJLabel = new JLabel("Tra\u017Ei:");
+        JLabel traziJLabel = new JLabel("Traûi:");
         traziJLabel.setHorizontalAlignment(SwingConstants.TRAILING);
         GridBagConstraints gbc_traziJLabel = new GridBagConstraints();
         gbc_traziJLabel.fill = GridBagConstraints.BOTH;
@@ -170,7 +170,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         gbc_prezimeJTextField.gridy = 1;
         podaciOKorisnikuJPanel.add(prezimeJTextField, gbc_prezimeJTextField);
 
-        korisnickoImeJLabel = new JLabel("Korisniƒçko ime:");
+        korisnickoImeJLabel = new JLabel("KorisniËko ime:");
         korisnickoImeJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         GridBagConstraints gbc_korisnickoImeJLabel = new GridBagConstraints();
         gbc_korisnickoImeJLabel.insets = new Insets(0, 0, 5, 5);
@@ -274,7 +274,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         podaciOKorisnikuJPanel.add(adresaJTextField, gbc_adresaJTextField);
         adresaJTextField.setColumns(10);
 
-        datumRodjenjaJLabel = new JLabel("Datum roƒëenja:");
+        datumRodjenjaJLabel = new JLabel("Datum roenja:");
         GridBagConstraints gbc_datumRodjenjaJLabel = new GridBagConstraints();
         gbc_datumRodjenjaJLabel.insets = new Insets(0, 0, 5, 5);
         gbc_datumRodjenjaJLabel.gridx = 0;
@@ -335,7 +335,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         gbl_dugmadJPanel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
         dugmadJPanel.setLayout(gbl_dugmadJPanel);
 
-        obrisiJButton = new JButton("Obri≈°i");
+        obrisiJButton = new JButton("Obriöi");
         GridBagConstraints gbc_obrisiJButton = new GridBagConstraints();
         gbc_obrisiJButton.anchor = GridBagConstraints.SOUTH;
         gbc_obrisiJButton.fill = GridBagConstraints.HORIZONTAL;
@@ -344,7 +344,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         gbc_obrisiJButton.gridy = 0;
         dugmadJPanel.add(obrisiJButton, gbc_obrisiJButton);
 
-        azurirajJButton = new JButton("A≈æuriraj");
+        azurirajJButton = new JButton("Aûuriraj");
         GridBagConstraints gbc_azurirajJButton = new GridBagConstraints();
         gbc_azurirajJButton.fill = GridBagConstraints.HORIZONTAL;
         gbc_azurirajJButton.insets = new Insets(0, 0, 5, 0);

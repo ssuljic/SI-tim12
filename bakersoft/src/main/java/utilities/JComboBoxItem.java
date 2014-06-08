@@ -1,4 +1,4 @@
-﻿package utilities;
+package utilities;
 
 import java.io.Serializable;
 
