@@ -9,11 +9,13 @@ import javax.swing.table.TableModel;
 
 import controllers.RacunovodstvoEvidencijaPecivaController;
 import utilities.Baza;
+import utilities.Validator;
 import entities.Dostava;
 import entities.Klijent;
 import entities.Korisnik;
 import entities.Pecivo;
 import entities.Racun;
+import exceptions.PodaciNisuValidniException;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -27,46 +29,49 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
     private JTable pregledPecivaJTable;
     private JButton dodajPecivoJButton;
     private JLabel lblNewLabel;
-    private JTextField SifratextField;
-    private JTextField NazivtextField;
+    private JTextField sifraTextField;
+    private JTextField nazivTextField;
     private JLabel lblNewLabel_2;
+    
+    private static final Validator VALIDATOR = Validator.instancirajValidatora();
+    
     public JTextField getSifratextField() {
-		return SifratextField;
+		return sifraTextField;
 	}
     
 
 
 	public void setSifratextField(JTextField sifratextField) {
-		SifratextField = sifratextField;
+		sifraTextField = sifratextField;
 	}
 
 	public JTextField getNazivtextField() {
-		return NazivtextField;
+		return nazivTextField;
 	}
 
 	public void setNazivtextField(JTextField nazivtextField) {
-		NazivtextField = nazivtextField;
+		nazivTextField = nazivtextField;
 	}
 
 	public JTextField getCijenatextField() {
-		return CijenatextField;
+		return cijenaTextField;
 	}
 
 	public void setCijenatextField(JTextField cijenatextField) {
-		CijenatextField = cijenatextField;
+		cijenaTextField = cijenatextField;
 	}
 
 	public JTextField getTezinatextField() {
-		return TezinatextField;
+		return tezinaTextField;
 	}
 
 	public void setTezinatextField(JTextField tezinatextField) {
-		TezinatextField = tezinatextField;
+		tezinaTextField = tezinatextField;
 	}
 	private JLabel lblNewLabel_3;
-    private JTextField CijenatextField;
+    private JTextField cijenaTextField;
     private JLabel lblNewLabel_4;
-    private JTextField TezinatextField;
+    private JTextField tezinaTextField;
     
     /**
      * Create the panel.
@@ -127,14 +132,14 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
         gbc_lblNewLabel.gridy = 1;
         dugmadJPanel.add(lblNewLabel, gbc_lblNewLabel);
         
-        SifratextField = new JTextField();
+        sifraTextField = new JTextField();
         GridBagConstraints gbc_SifratextField = new GridBagConstraints();
         gbc_SifratextField.fill = GridBagConstraints.HORIZONTAL;
         gbc_SifratextField.insets = new Insets(0, 0, 5, 0);
         gbc_SifratextField.gridx = 1;
         gbc_SifratextField.gridy = 1;
-        dugmadJPanel.add(SifratextField, gbc_SifratextField);
-        SifratextField.setColumns(10);
+        dugmadJPanel.add(sifraTextField, gbc_SifratextField);
+        sifraTextField.setColumns(10);
         
         lblNewLabel_2 = new JLabel("Naziv");
         GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
@@ -144,14 +149,14 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
         gbc_lblNewLabel_2.gridy = 2;
         dugmadJPanel.add(lblNewLabel_2, gbc_lblNewLabel_2);
         
-        NazivtextField = new JTextField();
+        nazivTextField = new JTextField();
         GridBagConstraints gbc_NazivtextField = new GridBagConstraints();
         gbc_NazivtextField.insets = new Insets(0, 0, 5, 0);
         gbc_NazivtextField.fill = GridBagConstraints.HORIZONTAL;
         gbc_NazivtextField.gridx = 1;
         gbc_NazivtextField.gridy = 2;
-        dugmadJPanel.add(NazivtextField, gbc_NazivtextField);
-        NazivtextField.setColumns(10);
+        dugmadJPanel.add(nazivTextField, gbc_NazivtextField);
+        nazivTextField.setColumns(10);
         
         lblNewLabel_3 = new JLabel("Cijena");
         GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
@@ -161,14 +166,14 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
         gbc_lblNewLabel_3.gridy = 3;
         dugmadJPanel.add(lblNewLabel_3, gbc_lblNewLabel_3);
         
-        CijenatextField = new JTextField();
+        cijenaTextField = new JTextField();
         GridBagConstraints gbc_CijenatextField = new GridBagConstraints();
         gbc_CijenatextField.insets = new Insets(0, 0, 5, 0);
         gbc_CijenatextField.fill = GridBagConstraints.HORIZONTAL;
         gbc_CijenatextField.gridx = 1;
         gbc_CijenatextField.gridy = 3;
-        dugmadJPanel.add(CijenatextField, gbc_CijenatextField);
-        CijenatextField.setColumns(10);
+        dugmadJPanel.add(cijenaTextField, gbc_CijenatextField);
+        cijenaTextField.setColumns(10);
         
         lblNewLabel_4 = new JLabel("Te\u017eina");
         GridBagConstraints gbc_lblNewLabel_4 = new GridBagConstraints();
@@ -178,13 +183,13 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
         gbc_lblNewLabel_4.gridy = 4;
         dugmadJPanel.add(lblNewLabel_4, gbc_lblNewLabel_4);
         
-        TezinatextField = new JTextField();
+        tezinaTextField = new JTextField();
         GridBagConstraints gbc_TezinatextField = new GridBagConstraints();
         gbc_TezinatextField.fill = GridBagConstraints.HORIZONTAL;
         gbc_TezinatextField.gridx = 1;
         gbc_TezinatextField.gridy = 4;
-        dugmadJPanel.add(TezinatextField, gbc_TezinatextField);
-        TezinatextField.setColumns(10);
+        dugmadJPanel.add(tezinaTextField, gbc_TezinatextField);
+        tezinaTextField.setColumns(10);
 
         dodajPecivoJButton = new JButton("Dodaj pecivo");
         GridBagConstraints gbc_dodajPecivoJButton = new GridBagConstraints();
@@ -348,13 +353,14 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
 
     	}
     	
-    	public void dodajPecivo()
+    	public void dodajPecivo() throws PodaciNisuValidniException
     	{
+    		validirajPodatke();
     		Baza baza = Baza.getBaza();
     		Pecivo p = new Pecivo();
     		p.setNaziv(getNazivtextField().getText());
     		p.setSifra(getSifratextField().getText());
-    		p.setTezina(Long.parseLong(getTezinatextField().getText()));
+    		p.setTezina(Double.parseDouble(getTezinatextField().getText()));
     		p.setCijena(Double.parseDouble(getCijenatextField().getText()));
     		p.setObrisano(false);
     		p.setJeUProdaji(true);
@@ -382,6 +388,35 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
     		PecivoTableModel pecivoTableModel = new PecivoTableModel(svaPeciva);
     		pregledPecivaJTable.setModel(pecivoTableModel);
     	}
+
+		private void validirajPodatke() throws PodaciNisuValidniException {
+			String sifra = sifraTextField.getText();
+			String naziv = nazivTextField.getText();
+			String cijena = cijenaTextField.getText();
+			String tezina = tezinaTextField.getText();
+			if(sifra != null &&
+					naziv != null &&
+					cijena != null &&
+					tezina != null) {
+				if(!VALIDATOR.jeSifraValidna(sifra)) {
+					throw new PodaciNisuValidniException("\u0160ifra nije ispravno unesena. (Mora se satojati od velikih, malih slova, brojeva i minusa)");
+				}
+				
+				if(!VALIDATOR.jeNazivValidan(naziv)) {
+					throw new PodaciNisuValidniException("Naziv nije ispravno unesen. (Mora se satojati od velikih, malih slova i brojeva)");
+				}
+				
+				if(!VALIDATOR.jeBrojcanaVrijednost(cijena)) {
+					throw new PodaciNisuValidniException("Cijena nije ispravno unesena. (Mora se satojati od brojeva)");
+				}
+				
+				if(!VALIDATOR.jeRealnaBrojcanaVrijednost(tezina)) {
+					throw new PodaciNisuValidniException("Te\u017eina nije ispravno unesena. (Mora biti u formatu relanog broja)");
+				}
+			}
+		}
+
+
 
 		public void osvjeziPanel() {
 			getNazivtextField().setText("");

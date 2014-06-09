@@ -647,10 +647,10 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
 				if(!validator.jeEmailValidan(emailJTextField.getText())) {
 					throw new PodaciNisuValidniException("Email nije ispravno unesen.");
 				}
-				if(!validator.jeTelefonValidan(telefonJTextField.getText())) {
+				if(!validator.jeBrojcanaVrijednost(telefonJTextField.getText())) {
 					throw new PodaciNisuValidniException("Telefon nije ispravno unesen. (Dozvoljeno je samo unositi brojeve, bez ikakvih crtica i sli\u010dno)");
 				}
-				if(!validator.jeTelefonValidan(mobitelJTextField.getText())) {
+				if(!validator.jeBrojcanaVrijednost(mobitelJTextField.getText())) {
 					throw new PodaciNisuValidniException("Mobitel nije ispravno unesen. (Dozvoljeno je samo unositi brojeve, bez ikakvih crtica i sli\u010dno)");
 				}
 				if(!validator.jeDatumRodjenjaValidan((Date)datumRodjenjaJSpinner.getValue())) {

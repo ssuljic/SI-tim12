@@ -41,7 +41,7 @@ public class Validator {
 		return false;
 	}
 
-	public boolean jeTelefonValidan(String telefon) {
+	public boolean jeBrojcanaVrijednost(String telefon) {
 		if(telefon == null) {
 			return false;
 		}
@@ -69,6 +69,34 @@ public class Validator {
 			}
 		} catch (ParseException e) {
 			e.printStackTrace();
+		}
+		
+		return true;
+	}
+
+	public boolean jeNazivValidan(String nazivFirme) {
+		if(nazivFirme != null) {
+			return nazivFirme.matches("^[a-zA-Z1-9]+\\s?[a-zA-Z1-9]*$");
+		}
+		return false;
+	}
+
+	public boolean jeSifraValidna(String sifra) {
+		if(sifra != null) {
+			return sifra.matches("[a-zA-Z1-9-]+");
+		}
+		return false;
+	}
+
+	public boolean jeRealnaBrojcanaVrijednost(String tezina) {
+		if(tezina == null) {
+			return false;
+		}
+		
+		try{
+			Double.parseDouble(tezina);
+		} catch(NumberFormatException e) {
+			return false;
 		}
 		
 		return true;

@@ -9,13 +9,14 @@ import org.junit.Test;
 
 import entities.Klijent;
 import entities.ProdajnoMjesto;
+import exceptions.PodaciNisuValidniException;
 import utilities.Baza;
 import views.RacunovodstvoKlijentiJPanel;
 
 public class RacunovdostvoKlijentiJPanelTest {
 
-	@Test//Provjerava da li metoda èita sve sa forme iz kontrola i vraæa upravo tog klijenta kreiranog
-	public void testDajPodatkeONovomKlijentu() {
+	@Test//Provjerava da li metoda ï¿½ita sve sa forme iz kontrola i vraï¿½a upravo tog klijenta kreiranog
+	public void testDajPodatkeONovomKlijentu() throws PodaciNisuValidniException {
 		RacunovodstvoKlijentiJPanel rp = new RacunovodstvoKlijentiJPanel();
 		
 		Klijent k = new Klijent();
@@ -42,7 +43,7 @@ public class RacunovdostvoKlijentiJPanelTest {
 	}
 	
 
-	@Test//Da li metoda èisti gornja dva textfielda
+	@Test//Da li metoda ï¿½isti gornja dva textfielda
 	public void testOcistiGornjiDioPanela() {
 		RacunovodstvoKlijentiJPanel rp = new RacunovodstvoKlijentiJPanel();
         rp.getNazivFirmeJTextField().setText("hopa");
@@ -53,7 +54,7 @@ public class RacunovdostvoKlijentiJPanelTest {
 	}
 
 
-	@Test//Provjerava da li metoda stvarno oèisti ova dva textfielda
+	@Test//Provjerava da li metoda stvarno oï¿½isti ova dva textfielda
 	public void testOcistiDonjiDioPanela() {
 		RacunovodstvoKlijentiJPanel rp = new RacunovodstvoKlijentiJPanel();
 		

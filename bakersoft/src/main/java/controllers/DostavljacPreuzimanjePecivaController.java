@@ -1,6 +1,7 @@
 package controllers;
 
 import entities.PecivoUDostavi;
+import exceptions.PodaciNisuValidniException;
 import views.DostavljacPreuzimanjePecivaJPanel;
 
 import java.awt.HeadlessException;
@@ -54,7 +55,7 @@ public class DostavljacPreuzimanjePecivaController {
 					dostavljacPreuzimanjePecivaJPanel.napraviDostavu();
 					JOptionPane.showMessageDialog(dostavljacPreuzimanjePecivaJPanel.getParent(), "Dostava je preuzeta, a potvrditi je mo\u017eete u sekciji Potvrda dostave!");
 					dostavljacPreuzimanjePecivaJPanel.osvjeziJPanel2();
-				} catch (IllegalArgumentException e1) {
+				} catch (IllegalArgumentException | PodaciNisuValidniException e1) {
 				    JOptionPane.showMessageDialog(dostavljacPreuzimanjePecivaJPanel.getParent(), e1.getMessage());
 				}
                 

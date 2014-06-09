@@ -394,7 +394,7 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
         telefonJTextField.setText("");
     }
 
-    public Klijent dajPodatkeONovomKlijentu() {
+    public Klijent dajPodatkeONovomKlijentu() throws PodaciNisuValidniException {
     	validirajPodatke();
     	Klijent klijent = new Klijent();
         klijent.setIme(getNazivFirmeJTextField().getText());
@@ -420,8 +420,20 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
     			telefon != null &&
     			nazivProdajnogMjesta != null &&
     			adresaProdajnogMjesta != null) {
-    		if(!VALIDATOR.jeImeValidno(nazivFirme)) {
-    			throw new PodaciNisuValidniException("Naziv firme mora da se sastoji od znakova, brojeva i praznih prostora. (Ne smije po\u010dinjati sa praznim mjestom.");
+    		if(!VALIDATOR.jeNazivValidan(nazivFirme)) {
+    			throw new PodaciNisuValidniException("Naziv firme nije ispravno unesen. (Ne smije po\u010dinjati sa praznim mjestom i mora se satojati samo od slova, brojeva i praznih mjesta.)");
+    		}
+    		
+    		if(!VALIDATOR.jeBrojcanaVrijednost(telefon)) {
+    			throw new PodaciNisuValidniException("Telefon nije ispravno unesen. (Telefon smije samo da se sastoji od brojeva.)");
+    		}
+    		
+    		if(!VALIDATOR.jeNazivValidan(nazivProdajnogMjesta)) {
+    			throw new PodaciNisuValidniException("Naziv prodajnog mjesta nije ispravno unesen. (Ne smije po\u010dinjati sa praznim mjestom i mora se satojati samo od slova, brojeva i praznih mjesta.)");
+    		}
+    		
+    		if(!VALIDATOR.jeNazivValidan(adresaProdajnogMjesta)) {
+    			throw new PodaciNisuValidniException("Adresa prodajnog mjesta nije ispravno unesena. (Ne smije po\u010dinjati sa praznim mjestom i mora se satojati samo od slova, brojeva i praznih mjesta.)");
     		}
     	}
 	}

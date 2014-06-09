@@ -2,6 +2,7 @@ package controllers;
 
 import entities.Klijent;
 import entities.ProdajnoMjesto;
+import exceptions.PodaciNisuValidniException;
 import utilities.Baza;
 import utilities.JComboBoxItem;
 import views.RacunovodstvoKlijentiJPanel;
@@ -111,24 +112,29 @@ public class RacunovodstvoKlijentiController {
 						    	}
 						 }
 						 if(!imaklijent) {
-						Klijent noviKlijent = racunovodstvoKlijentiJPanel.dajPodatkeONovomKlijentu();
-					   // Baza baza = Baza.getBaza();
-					    baza.spasiUBazu(noviKlijent);
-					    
-					    List<Klijent> sviKlijenti2 = baza.dajSveNeobrisano(Klijent.class);
-					    long idPrvogKlijenta = 0;
-					    if (sviKlijenti2.size() > 0) {
-					        idPrvogKlijenta = sviKlijenti2.get(0).getId();
-					    }
-					    
-					    racunovodstvoKlijentiJPanel.popuniSaPodacima(sviKlijenti2, idPrvogKlijenta);
-					    brojKlikova2=0;
-					    racunovodstvoKlijentiJPanel.prikaziDugmad();
-					    JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Uspje\u0161no ste dodali klijenta: " + noviKlijent.getIme());
-						 }
-						 else{
-					    		JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(),"Postoji klijent sa tim podacima!");
-				    			}
+							Klijent noviKlijent;
+							try {
+								noviKlijent = racunovodstvoKlijentiJPanel.dajPodatkeONovomKlijentu();
+								// Baza baza = Baza.getBaza();
+							    baza.spasiUBazu(noviKlijent);
+							    
+							    List<Klijent> sviKlijenti2 = baza.dajSveNeobrisano(Klijent.class);
+							    long idPrvogKlijenta = 0;
+							    if (sviKlijenti2.size() > 0) {
+							        idPrvogKlijenta = sviKlijenti2.get(0).getId();
+							    }
+							    
+							    racunovodstvoKlijentiJPanel.popuniSaPodacima(sviKlijenti2, idPrvogKlijenta);
+							    brojKlikova2=0;
+							    racunovodstvoKlijentiJPanel.prikaziDugmad();
+							    JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Uspje\u0161no ste dodali klijenta: " + noviKlijent.getIme());
+							} catch (PodaciNisuValidniException e) {
+								JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel, e.getMessage());
+							}
+						}
+						else{
+					    	JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(),"Postoji klijent sa tim podacima!");
+				    	}
 					}
 				} catch (IllegalArgumentException e) {					
 				    JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), e.getMessage());

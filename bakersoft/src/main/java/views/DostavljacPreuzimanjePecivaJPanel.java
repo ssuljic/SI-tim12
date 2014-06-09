@@ -2,9 +2,11 @@ package views;
 
 import controllers.DostavljacPreuzimanjePecivaController;
 import entities.*;
+import exceptions.PodaciNisuValidniException;
 import utilities.Baza;
 import utilities.GuiUtilities;
 import utilities.JComboBoxItem;
+import utilities.Validator;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -28,6 +30,8 @@ public class DostavljacPreuzimanjePecivaJPanel extends JPanel {
     private JComboBox dostavaZaJComboBox;
     private JLabel dostavaZaJLabel;
 
+    private static final Validator VALIDATOR = Validator.instancirajValidatora();
+    
     /**
      * Create the panel.
      */
@@ -364,11 +368,22 @@ public class DostavljacPreuzimanjePecivaJPanel extends JPanel {
         osvjeziJPanel();
     }
 
-    public void osvjeziPecivaUDostaviTabelu() {
+    private void validirajUnesenePodatke() throws PodaciNisuValidniException {
+		String nazivDostave = nazivDostaveJTextField.getText();
+		
+		if(nazivDostave != null) {
+			if(!VALIDATOR.jeNazivValidan(nazivDostave)) {
+				throw new PodaciNisuValidniException("Naziv dostave nije ispravno unesen. (Mora se sastojati samo od velikih, malih slova, brojeva i razmacima izme\u0111u rije\u010di, ali ne smije po\u010dinjati praznim mjestom.)");
+			}
+		}
+	}
+
+	public void osvjeziPecivaUDostaviTabelu() {
         ((PreuzimanjeDostavePecivaUDostaviTableModel)pecivaUDostaviJTable.getModel()).fireTableDataChanged();
     }
 
-    public Dostava napraviDostavu() {
+    public Dostava napraviDostavu() throws PodaciNisuValidniException {
+    	validirajUnesenePodatke();
         Baza baza = Baza.getBaza();
         Dostava dostava = new Dostava();
         dostava.setJeIsporuceno(false);
