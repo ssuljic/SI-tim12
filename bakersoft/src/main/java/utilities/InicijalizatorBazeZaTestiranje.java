@@ -163,7 +163,7 @@ public class InicijalizatorBazeZaTestiranje {
         pecivo1.setCijena(0.20);
         pecivo1.setJeUProdaji(true);
         pecivo1.setSifra("kifloni-11");
-        pecivo1.setTezina(1);
+        pecivo1.setTezina(0.05);
         pecivo1.setPecivaUDostavi(new ArrayList<PecivoUDostavi>());
         pecivo1.getPecivaUDostavi().add(pecivoUDostavi1);
         pecivo1.getPecivaUDostavi().add(pecivoUDostavi11);
@@ -172,7 +172,7 @@ public class InicijalizatorBazeZaTestiranje {
         pecivo2.setCijena(1.20);
         pecivo2.setJeUProdaji(true);
         pecivo2.setSifra("krofna-192");
-        pecivo2.setTezina(2);
+        pecivo2.setTezina(0.10);
         pecivo2.setPecivaUDostavi(new ArrayList<PecivoUDostavi>());
         pecivo2.getPecivaUDostavi().add(pecivoUDostavi22);
 
@@ -180,21 +180,21 @@ public class InicijalizatorBazeZaTestiranje {
         pecivo3.setCijena(1.00);
         pecivo3.setJeUProdaji(true);
         pecivo3.setSifra("hljeb-123");
-        pecivo3.setTezina(4);
+        pecivo3.setTezina(0.5);
         pecivo3.setPecivaUDostavi(new ArrayList<PecivoUDostavi>());
         
         pecivo4.setNaziv("Lisnato");
         pecivo4.setCijena(1.20);
         pecivo4.setJeUProdaji(true);
         pecivo4.setSifra("lisnato-20");
-        pecivo4.setTezina(2);
+        pecivo4.setTezina(0.2);
         pecivo4.setPecivaUDostavi(new ArrayList<PecivoUDostavi>());
         
         pecivo5.setNaziv("Kolac");
         pecivo5.setCijena(2.00);
         pecivo5.setJeUProdaji(true);
         pecivo5.setSifra("kolac-102");
-        pecivo5.setTezina(1);
+        pecivo5.setTezina(0.25);
         pecivo5.setPecivaUDostavi(new ArrayList<PecivoUDostavi>());
         
         // Peciva u dostavi
@@ -205,16 +205,16 @@ public class InicijalizatorBazeZaTestiranje {
         pecivoUDostavi2.setDostava(dostava1);
         pecivoUDostavi2.setPecivo(pecivo2);
         pecivoUDostavi2.setKolicinaPreuzetogPeciva(92);
-        pecivoUDostavi2.setKolicinaVracenogPeciva(0.0);
+        pecivoUDostavi2.setKolicinaVracenogPeciva(0);
 
         pecivoUDostavi11.setDostava(dostava2);
         pecivoUDostavi11.setPecivo(pecivo1);
         pecivoUDostavi11.setKolicinaPreuzetogPeciva(20);
-        pecivoUDostavi11.setKolicinaVracenogPeciva(0.0);
+        pecivoUDostavi11.setKolicinaVracenogPeciva(0);
         pecivoUDostavi22.setDostava(dostava2);
         pecivoUDostavi22.setPecivo(pecivo2);
         pecivoUDostavi22.setKolicinaPreuzetogPeciva(45);
-        pecivoUDostavi22.setKolicinaVracenogPeciva(5.0);
+        pecivoUDostavi22.setKolicinaVracenogPeciva(5);
 
         // Dostave
         dostava1.setDatum(new Date());
