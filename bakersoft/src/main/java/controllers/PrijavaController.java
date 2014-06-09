@@ -36,7 +36,7 @@ public class PrijavaController implements ActionListener {
         String lozinka = String.valueOf(prijavaJFrame.getPrijavaJPanel().getLozinkaJPasswordField().getPassword());
 
         if (!prijavaUtilities.jeKorisnikValidan(korisnickoIme, lozinka)) {
-            JOptionPane.showMessageDialog(prijavaJFrame, "Korisnièko ime ili lozinka pogrešno uneseni.");
+            JOptionPane.showMessageDialog(prijavaJFrame, "Korisni\u010dko ime ili lozinka pogre\u0161no uneseni.");
             return;
         }
 		

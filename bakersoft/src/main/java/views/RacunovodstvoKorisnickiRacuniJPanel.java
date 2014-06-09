@@ -81,7 +81,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
      * Create the panel.
      */
     public RacunovodstvoKorisnickiRacuniJPanel() {
-        setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Korisnièki raèuni:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Korisni\u010dki ra\u010duni:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[]{0, 0};
         gridBagLayout.rowHeights = new int[]{0, 0, 0, 0};
@@ -103,7 +103,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         gbl_traziJPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
         traziJPanel.setLayout(gbl_traziJPanel);
 
-        JLabel traziJLabel = new JLabel("Traži:");
+        JLabel traziJLabel = new JLabel("Tra\u017ei:");
         traziJLabel.setHorizontalAlignment(SwingConstants.TRAILING);
         GridBagConstraints gbc_traziJLabel = new GridBagConstraints();
         gbc_traziJLabel.fill = GridBagConstraints.BOTH;
@@ -170,7 +170,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         gbc_prezimeJTextField.gridy = 1;
         podaciOKorisnikuJPanel.add(prezimeJTextField, gbc_prezimeJTextField);
 
-        korisnickoImeJLabel = new JLabel("Korisnièko ime:");
+        korisnickoImeJLabel = new JLabel("Korisni\u010dko ime:");
         korisnickoImeJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         GridBagConstraints gbc_korisnickoImeJLabel = new GridBagConstraints();
         gbc_korisnickoImeJLabel.insets = new Insets(0, 0, 5, 5);
@@ -274,7 +274,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         podaciOKorisnikuJPanel.add(adresaJTextField, gbc_adresaJTextField);
         adresaJTextField.setColumns(10);
 
-        datumRodjenjaJLabel = new JLabel("Datum roðenja:");
+        datumRodjenjaJLabel = new JLabel("Datum ro\u0111enja:");
         GridBagConstraints gbc_datumRodjenjaJLabel = new GridBagConstraints();
         gbc_datumRodjenjaJLabel.insets = new Insets(0, 0, 5, 5);
         gbc_datumRodjenjaJLabel.gridx = 0;
@@ -335,7 +335,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         gbl_dugmadJPanel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
         dugmadJPanel.setLayout(gbl_dugmadJPanel);
 
-        obrisiJButton = new JButton("Obriši");
+        obrisiJButton = new JButton("Obri\u0161i");
         GridBagConstraints gbc_obrisiJButton = new GridBagConstraints();
         gbc_obrisiJButton.anchor = GridBagConstraints.SOUTH;
         gbc_obrisiJButton.fill = GridBagConstraints.HORIZONTAL;
@@ -344,7 +344,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         gbc_obrisiJButton.gridy = 0;
         dugmadJPanel.add(obrisiJButton, gbc_obrisiJButton);
 
-        azurirajJButton = new JButton("Ažuriraj");
+        azurirajJButton = new JButton("A\u017euriraj");
         GridBagConstraints gbc_azurirajJButton = new GridBagConstraints();
         gbc_azurirajJButton.fill = GridBagConstraints.HORIZONTAL;
         gbc_azurirajJButton.insets = new Insets(0, 0, 5, 0);
@@ -528,8 +528,8 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
         }
 
         if (selektovaniKorisnik == null) {
-            throw new NePostojiUBaziStavkaSaDatomIdVrijednosti("Pokusavate popuniti formu za " +
-                    "upravljanje korisnickim racunima. Id koji ste proslijedili ne postoji u bazi. " +
+            throw new NePostojiUBaziStavkaSaDatomIdVrijednosti("Poku\u0161avate popuniti formu za " +
+                    "upravljanje korisni\u010dkim racunima. Id koji ste proslijedili ne postoji u bazi. " +
                     "Taj id je: " + idSelektovanogKorisnika);
         }
 
@@ -639,7 +639,7 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
 					throw new PodaciNisuValidniException("Prezime nije ispravno uneseno.(Mora biti statavljeno samo od malih, velikih slova i brojeva)");
 				}
 				if(!validator.jeImeValidno(korisnickoImeJTextField.getText())){
-					throw new PodaciNisuValidniException("Korisnièko ime nije ispravno uneseno. (Mora biti statavljeno samo od malih, velikih slova i brojeva)");
+					throw new PodaciNisuValidniException("Korisniï¿½ko ime nije ispravno uneseno. (Mora biti statavljeno samo od malih, velikih slova i brojeva)");
 				}
 				if(!validator.jePasswordValidan(new String(lozinkaJPasswordField.getPassword()))) {
 					throw new PodaciNisuValidniException("Lozinka nije ispravno unesena. (Mora imati najmanje 6 znakova)");
@@ -648,10 +648,10 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
 					throw new PodaciNisuValidniException("Email nije ispravno unesen.");
 				}
 				if(!validator.jeTelefonValidan(telefonJTextField.getText())) {
-					throw new PodaciNisuValidniException("Telefon nije ispravno unesen. (Dozvoljeno je samo unositi brojeve, bez ikakvih crtica i slicno)");
+					throw new PodaciNisuValidniException("Telefon nije ispravno unesen. (Dozvoljeno je samo unositi brojeve, bez ikakvih crtica i sli\u010dno)");
 				}
 				if(!validator.jeTelefonValidan(mobitelJTextField.getText())) {
-					throw new PodaciNisuValidniException("Mobitel nije ispravno unesen. (Dozvoljeno je samo unositi brojeve, bez ikakvih crtica i slicno)");
+					throw new PodaciNisuValidniException("Mobitel nije ispravno unesen. (Dozvoljeno je samo unositi brojeve, bez ikakvih crtica i sli\u010dno)");
 				}
 				if(!validator.jeDatumRodjenjaValidan((Date)datumRodjenjaJSpinner.getValue())) {
 					throw new PodaciNisuValidniException("Datum nije ispravno unesen. (Dozvoljeno je samo unositi datum koji je prije trenutnog kalendarskog datuma i poslije 1930. godine)");

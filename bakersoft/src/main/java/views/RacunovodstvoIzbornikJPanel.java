@@ -20,16 +20,16 @@ public class RacunovodstvoIzbornikJPanel extends JPanel {
         setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Izbornik:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
         setLayout(new GridLayout(9, 1, 0, 0));
 
-        korisnickiRacuniJButton = new JButton("Korisnièki raèuni");
+        korisnickiRacuniJButton = new JButton("Korisni\u010dki ra\u010duni");
         add(korisnickiRacuniJButton);
 
         klijentiJButton = new JButton("Klijenti");
         add(klijentiJButton);
 
-        obracunavanjeJButton = new JButton("Obraèunavanje");
+        obracunavanjeJButton = new JButton("Obra\u010dunavanje");
         add(obracunavanjeJButton);
 
-        spaseniObracuniJButton = new JButton("Spašeni obraèuni");
+        spaseniObracuniJButton = new JButton("Spa\u0161eni obra\u010duni");
         add(spaseniObracuniJButton);
 
         evidencijaPecivaJButton = new JButton("Evidencija peciva");

@@ -86,7 +86,7 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
                 new Object[][]{
                 },
                 new String[]{
-                        "Pecivo", "Šifra", "Kolièina dostavljenog peciva"
+                        "Pecivo", "\u0160ifra", "Koli\u010dina dostavljenog peciva"
                 }
         ) {
             boolean[] columnEditables = new boolean[]{
@@ -99,7 +99,7 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
         });
         pecivaUDostaviJScrollPane.setViewportView(pecivaUDostaviJTable);
 
-        dostavaIzvrsenaJButton = new JButton("Dostava izvršena");
+        dostavaIzvrsenaJButton = new JButton("Dostava izvr\u0161ena");
         GridBagConstraints gbc_dostavaIzvrsenaJButton = new GridBagConstraints();
         gbc_dostavaIzvrsenaJButton.fill = GridBagConstraints.BOTH;
         gbc_dostavaIzvrsenaJButton.gridx = 0;
@@ -427,9 +427,9 @@ public class DostavljacPotvrdaDostaveJPanel extends JPanel {
                 case 0:
                     return "Pecivo";
                 case 1:
-                    return "Šifra";
+                    return "\u0160ifra";
                 case 2:
-                    return "Kolièina dostavljenog peciva";
+                    return "Koli\u010dina dostavljenog peciva";
                 default:
                     return null;
             }

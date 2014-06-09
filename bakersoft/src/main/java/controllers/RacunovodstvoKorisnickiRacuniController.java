@@ -70,7 +70,7 @@ public class RacunovodstvoKorisnickiRacuniController {
 								.getKorisnik();
 						if (prijavljeniKorisnik.getId() == korisnik.getId()) {
 							throw new IllegalArgumentException(
-									"Korisnik kojeg pokušavate obrisati je trenutno prijavljen na sistem, tako da niste u moguænosti to uraditi.");
+									"Korisnik kojeg poku\u0161avate obrisati je trenutno prijavljen na sistem, tako da niste u mogu\u0107nosti to uraditi.");
 						}
 						korisnik.setObrisano(true);
 						Baza.getBaza().azuriraj(korisnik);
@@ -79,7 +79,7 @@ public class RacunovodstvoKorisnickiRacuniController {
 										racunovodstvoKorisnickiRacuniJPanel
 												.getParent(), "Korisnik "
 												+ korisnik.getIme()
-												+ " je uspješno obrisan.");
+												+ " je uspje\u0161no obrisan.");
 					}
 
 					// Uzmi id prvog korisnika kojem je zastavica "obrisan"
@@ -109,7 +109,7 @@ public class RacunovodstvoKorisnickiRacuniController {
 							.showMessageDialog(
 									racunovodstvoKorisnickiRacuniJPanel
 											.getParent(),
-									"Korisnik kojeg pokušavate obrisati je trenutno prijavljen na sistem, tako da niste u moguænosti to uraditi.");
+									"Korisnik kojeg poku\u0161avate obrisati je trenutno prijavljen na sistem, tako da niste u mogu\u0107nosti to uraditi.");
 				}
 			}
 		};
@@ -133,7 +133,7 @@ public class RacunovodstvoKorisnickiRacuniController {
 								.showMessageDialog(
 										racunovodstvoKorisnickiRacuniJPanel
 												.getParent(),
-										"Sada možete unijeti podatke za novog korisnika");
+										"Sada mo\u017eete unijeti podatke za novog korisnika");
 					} else {
 						Korisnik noviKorisnik;
 						try {
@@ -146,7 +146,7 @@ public class RacunovodstvoKorisnickiRacuniController {
 								if (k.getKorisnickoIme().equals(
 										noviKorisnik.getKorisnickoIme())) {
 									throw new IllegalArgumentException(
-											"Korisnik sa ovim korisnièkim imenom veæ postoji u bazi, molimo promjenite.");
+											"Korisnik sa ovim korisni\u010dkim imenom ve\u0107 postoji u bazi, molimo promjenite.");
 								}
 							}
 							baza.spasiUBazu(noviKorisnik);
@@ -154,7 +154,7 @@ public class RacunovodstvoKorisnickiRacuniController {
 							JOptionPane.showMessageDialog(
 									racunovodstvoKorisnickiRacuniJPanel
 											.getParent(),
-									"Novi korisnik je uspješno dodan.");
+									"Novi korisnik je uspje\u0161no dodan.");
 							brojKlikova2 = 0;
 
 							long idSelektiranogKorisnika = ((JComboBoxItem) racunovodstvoKorisnickiRacuniJPanel
@@ -210,13 +210,13 @@ public class RacunovodstvoKorisnickiRacuniController {
 							JOptionPane.showMessageDialog(
 									racunovodstvoKorisnickiRacuniJPanel
 											.getParent(),
-									"Ažuriranje korisnika je uspješno.");
+									"A\u017euriranje korisnika je uspje\u0161no.");
 						} else {
 							JOptionPane
 									.showMessageDialog(
 											racunovodstvoKorisnickiRacuniJPanel
 													.getParent(),
-											"Ne može se ažurirati korisnik. Nema selektiranih korisnika.");
+											"Ne mo\u017ee se a\u017eurirati korisnik. Nema selektiranih korisnika.");
 						}
 					} catch (PodaciNisuValidniException e) {
 						JOptionPane

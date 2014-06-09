@@ -55,7 +55,7 @@ public class RacunovodstvoKlijentiController {
 					List<ProdajnoMjesto> svaProdajnaMjesta = baza.dajSveNeobrisano(ProdajnoMjesto.class);
 					
 					if(svaProdajnaMjesta.size() == 1)
-					    throw new IllegalArgumentException("Ne možete obrisati posljednjeg i jedinog klijenta.");
+					    throw new IllegalArgumentException("Ne mo\u017eete obrisati posljednjeg i jedinog klijenta.");
 
 					
 					for(ProdajnoMjesto pm : svaProdajnaMjesta){
@@ -78,7 +78,7 @@ public class RacunovodstvoKlijentiController {
 					}
 					
 					racunovodstvoKlijentiJPanel.popuniSaPodacima(sviKlijenti2, idPrvogKlijenta); 
-					JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Uspješno ste izbrisali klijenta!");
+					JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Uspje\u0161no ste izbrisali klijenta!");
 				} catch (IllegalArgumentException e) {
 					// TODO Auto-generated catch block
 				    JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), e.getMessage());
@@ -97,7 +97,7 @@ public class RacunovodstvoKlijentiController {
 						racunovodstvoKlijentiJPanel.ocistiGornjiDioPanela();
 					    racunovodstvoKlijentiJPanel.sakrijDugmad();
 						brojKlikova2=1;
-					    JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Sada možete unijeti podatke za novog klijenta");
+					    JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Sada mo\u017eete unijeti podatke za novog klijenta");
 
 					}
 					else{
@@ -124,7 +124,7 @@ public class RacunovodstvoKlijentiController {
 					    racunovodstvoKlijentiJPanel.popuniSaPodacima(sviKlijenti2, idPrvogKlijenta);
 					    brojKlikova2=0;
 					    racunovodstvoKlijentiJPanel.prikaziDugmad();
-					    JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Uspješno ste dodali klijenta: " + noviKlijent.getIme());
+					    JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Uspje\u0161no ste dodali klijenta: " + noviKlijent.getIme());
 						 }
 						 else{
 					    		JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(),"Postoji klijent sa tim podacima!");
@@ -147,7 +147,7 @@ public class RacunovodstvoKlijentiController {
             	
             	String redniBrojPolje = racunovodstvoKlijentiJPanel.getLblBroj().getText();
             	int id; 
-            	if(redniBrojPolje.equals("Kliknite dugme Sljedeæi") ){
+            	if(redniBrojPolje.equals("Kliknite dugme Sljede\u0107i") ){
             		id=1;
             	}
             	else{
@@ -182,7 +182,7 @@ public class RacunovodstvoKlijentiController {
 					if(brojKlikova == 0 && !racunovodstvoKlijentiJPanel.getProdajnoMjestoNazivJTextField().getText().isEmpty() && !racunovodstvoKlijentiJPanel.getProdajnoMjestoAdresaJTextField().getText().isEmpty()){
 						racunovodstvoKlijentiJPanel.ocistiDonjiDioPanela();
 						brojKlikova=1;
-					    JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Sada možete unijeti podatke za novo prodajno mjesto odabranog klijenta");
+					    JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Sada mo\u017eete unijeti podatke za novo prodajno mjesto odabranog klijenta");
 					}
 					else if((racunovodstvoKlijentiJPanel.getProdajnoMjestoNazivJTextField().getText().isEmpty() || racunovodstvoKlijentiJPanel.getProdajnoMjestoAdresaJTextField().getText().isEmpty()) && brojKlikova==1){
 						brojKlikova=0;
@@ -220,13 +220,13 @@ public class RacunovodstvoKlijentiController {
 						baza.spasiUBazu(pm);
 						brojKlikova = 0;
 						racunovodstvoKlijentiJPanel.getLblBroj().setText("" + id + "");
-						JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(),"Uspješno ste dodali prodajno mjesto: "
+						JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(),"Uspje\u0161no ste dodali prodajno mjesto: "
 										+ pm.getMjesto() + " sa adresom: "
 										+ pm.getAdresa()); 
 					
 						    		}
 						    		else{
-							    		JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(),"Prodajno mjesto veæ postoji!");
+							    		JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(),"Prodajno mjesto veï¿½ postoji!");
 						    			}
 					 
 					}} catch (IllegalArgumentException e) {
@@ -242,8 +242,8 @@ public class RacunovodstvoKlijentiController {
             public void actionPerformed(ActionEvent actionEvent) {
 
 				try {
-					if(racunovodstvoKlijentiJPanel.getLblBroj().getText().equals("Kliknite dugme Sljedeæi") && racunovodstvoKlijentiJPanel.prodajnoMjestoNazivJTextField.getText().isEmpty() && racunovodstvoKlijentiJPanel.prodajnoMjestoAdresaJTextField.getText().isEmpty())
-					    throw new IllegalArgumentException("Morate kliknuti dugme sljedeÄ‡i kao Å¡to piÅ¡e iznad.");
+					if(racunovodstvoKlijentiJPanel.getLblBroj().getText().equals("Kliknite dugme Sljede\u0107i") && racunovodstvoKlijentiJPanel.prodajnoMjestoNazivJTextField.getText().isEmpty() && racunovodstvoKlijentiJPanel.prodajnoMjestoAdresaJTextField.getText().isEmpty())
+					    throw new IllegalArgumentException("Morate kliknuti dugme sljede\u0107i kao \u0161to pi\u0161e iznad.");
 
 					long idSelektiranogKlijenta = ((JComboBoxItem) racunovodstvoKlijentiJPanel.getTraziJComboBox().getSelectedItem()).getId();
 					Baza baza = Baza.getBaza();
@@ -263,15 +263,15 @@ public class RacunovodstvoKlijentiController {
 						indexUlisti=0;
 					
 					if(klijentovaProdajnaMjesta.size()==1)
-					    throw new IllegalArgumentException("Svaki klijent mora imati barem jedno prodajno mjesto, tako da ne možete obrisati njegovo zadnje.");
+					    throw new IllegalArgumentException("Svaki klijent mora imati barem jedno prodajno mjesto, tako da ne mo\u017eete obrisati njegovo zadnje.");
 
 					klijentovaProdajnaMjesta.get(indexUlisti).setObrisano(true);
 					baza.azuriraj(klijentovaProdajnaMjesta.get(indexUlisti));
 
-					racunovodstvoKlijentiJPanel.getLblBroj().setText("Kliknite dugme Sljedeæi");
+					racunovodstvoKlijentiJPanel.getLblBroj().setText("Kliknite dugme Sljede\u0107i");
 					racunovodstvoKlijentiJPanel.ocistiDonjiDioPanela();            	
 
-					JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Uspješno ste izbrisali prodajno mjesto.");
+					JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), "Uspje\u0161no ste izbrisali prodajno mjesto.");
 				} catch (IllegalArgumentException e) {
 					// TODO Auto-generated catch block
 					JOptionPane.showMessageDialog(racunovodstvoKlijentiJPanel.getParent(), e.getMessage());

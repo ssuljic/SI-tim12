@@ -6,6 +6,7 @@ import entities.ProdajnoMjesto;
 import entities.Status;
 import entities.Tip;
 import exceptions.NePostojiUBaziStavkaSaDatomIdVrijednosti;
+import exceptions.PodaciNisuValidniException;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -14,6 +15,7 @@ import javax.swing.border.TitledBorder;
 import utilities.Baza;
 import utilities.GuiUtilities;
 import utilities.JComboBoxItem;
+import utilities.Validator;
 import controllers.RacunovodstvoKlijentiController;
 
 import java.awt.*;
@@ -37,7 +39,7 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
 	private JLabel lblRb;
     private JLabel lblBroj;
     
-
+    private static final Validator VALIDATOR = Validator.instancirajValidatora();
 
 
 	/**
@@ -165,7 +167,7 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
         gbc_lblBroj.gridy = 0;
         prodajnoMjestoJPanel.add(lblBroj, gbc_lblBroj);
         
-        btnSljedece = new JButton("Sljedeæi");
+        btnSljedece = new JButton("Sljede\u0107i");
         GridBagConstraints gbc_btnSljedece = new GridBagConstraints();
         gbc_btnSljedece.fill = GridBagConstraints.HORIZONTAL;
         gbc_btnSljedece.anchor = GridBagConstraints.EAST;
@@ -212,7 +214,7 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
         gbc_prodajnoMjestoAdresaJTextField.gridy = 2;
         prodajnoMjestoJPanel.add(prodajnoMjestoAdresaJTextField, gbc_prodajnoMjestoAdresaJTextField);
 
-        obrisiProdajnoMjestoJButton = new JButton("Obriši prodajno mjesto");
+        obrisiProdajnoMjestoJButton = new JButton("Obri\u0161i prodajno mjesto");
         GridBagConstraints gbc_obrisiProdajnoMjestoJButton = new GridBagConstraints();
         gbc_obrisiProdajnoMjestoJButton.fill = GridBagConstraints.HORIZONTAL;
         gbc_obrisiProdajnoMjestoJButton.insets = new Insets(0, 0, 0, 5);
@@ -244,7 +246,7 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
         gbl_dugmadJPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
         dugmadJPanel.setLayout(gbl_dugmadJPanel);
 
-        obrisiKlijentaJButton = new JButton("Obriši klijenta");
+        obrisiKlijentaJButton = new JButton("Obri\u0161i klijenta");
         GridBagConstraints gbc_obrisiKlijentaJButton = new GridBagConstraints();
         gbc_obrisiKlijentaJButton.anchor = GridBagConstraints.SOUTH;
         gbc_obrisiKlijentaJButton.fill = GridBagConstraints.HORIZONTAL;
@@ -373,8 +375,8 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
         }
 
         if (selektovaniKlijent == null) {
-            throw new NePostojiUBaziStavkaSaDatomIdVrijednosti("Pokusavate popuniti formu za " +
-                    "upravljanje korisnickim racunima. Id koji ste proslijedili ne postoji u bazi. " +
+            throw new NePostojiUBaziStavkaSaDatomIdVrijednosti("Poku\u0161avate popuniti formu za " +
+                    "upravljanje korisni\u010dkim racunima. Id koji ste proslijedili ne postoji u bazi. " +
                     "Taj id je: " + idSelektovanogKlijenta);
         }
 
@@ -393,6 +395,7 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
     }
 
     public Klijent dajPodatkeONovomKlijentu() {
+    	validirajPodatke();
     	Klijent klijent = new Klijent();
         klijent.setIme(getNazivFirmeJTextField().getText());
         klijent.setTelefon(getTelefonJTextField().getText());
@@ -408,7 +411,22 @@ public class RacunovodstvoKlijentiJPanel extends JPanel {
         else throw new IllegalArgumentException("Pri dodavanju novog klijenta morate odmah dodati i barem jedno prodajno mjesto.");
     }
     
-    public void ocistiDonjiDioPanela() {
+    private void validirajPodatke() throws PodaciNisuValidniException {
+    	String nazivFirme = nazivFirmeJTextField.getText();
+    	String telefon = telefonJTextField.getText();
+    	String nazivProdajnogMjesta = prodajnoMjestoNazivJTextField.getText();
+    	String adresaProdajnogMjesta = prodajnoMjestoAdresaJTextField.getText();
+    	if(nazivFirme != null &&
+    			telefon != null &&
+    			nazivProdajnogMjesta != null &&
+    			adresaProdajnogMjesta != null) {
+    		if(!VALIDATOR.jeImeValidno(nazivFirme)) {
+    			throw new PodaciNisuValidniException("Naziv firme mora da se sastoji od znakova, brojeva i praznih prostora. (Ne smije po\u010dinjati sa praznim mjestom.");
+    		}
+    	}
+	}
+
+	public void ocistiDonjiDioPanela() {
     	prodajnoMjestoNazivJTextField.setText("");
     	prodajnoMjestoAdresaJTextField.setText("");
     }

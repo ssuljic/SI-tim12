@@ -112,10 +112,10 @@ public class RacunovodstvoObracunavanjeController {
 	                    baza.spasiUBazu(noviRacun);
 	                    baza.azuriraj(klijent);
 	                    baza.azuriraj(obracunavaoc);
-	                    JOptionPane.showMessageDialog(racunovodstvoObracunavanjeJPanel.getParent(), "Uspješno ste napravili obraèun. Napravljeni obraèun možete vidjeti na formi za spašene obraèune.");
+	                    JOptionPane.showMessageDialog(racunovodstvoObracunavanjeJPanel.getParent(), "Uspje\u0161no ste napravili obra\u010dun. Napravljeni obra\u010dun mo\u017eete vidjeti na formi za spa\u0161ene obra\u010dune.");
 	                    }
                     } else {
-                    	JOptionPane.showMessageDialog(racunovodstvoObracunavanjeJPanel.getParent(), "Neispravno napravljen obraèun.");
+                    	JOptionPane.showMessageDialog(racunovodstvoObracunavanjeJPanel.getParent(), "Neispravno napravljen obra\u010dun.");
                     }
                     }
                     else

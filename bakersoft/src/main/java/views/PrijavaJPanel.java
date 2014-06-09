@@ -34,7 +34,7 @@ public class PrijavaJPanel extends JPanel {
         prijavaFormaSadrzajniJPanel.add(prijavaFormaJPanel);
         prijavaFormaJPanel.setLayout(new GridLayout(6, 1, 0, 0));
 
-        JLabel korisnickoImeJLabel = new JLabel("Korisnièko ime:");
+        JLabel korisnickoImeJLabel = new JLabel("Korisni\u010dko ime:");
         korisnickoImeJLabel.setVerticalAlignment(SwingConstants.BOTTOM);
         korisnickoImeJLabel.setHorizontalAlignment(SwingConstants.LEFT);
         prijavaFormaJPanel.add(korisnickoImeJLabel);

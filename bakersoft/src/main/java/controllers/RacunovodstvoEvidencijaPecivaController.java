@@ -51,14 +51,14 @@ public class RacunovodstvoEvidencijaPecivaController
 								.showMessageDialog(
 										racunovodstvoEvidencijaPecivaJPanel
 												.getParent(),
-										"Pecivo je uspješno dodano.");
+										"Pecivo je uspje\u0161no dodano.");
 						racunovodstvoEvidencijaPecivaJPanel.osvjeziPanel();
 					} else {
 						JOptionPane
 								.showMessageDialog(
 										racunovodstvoEvidencijaPecivaJPanel
 												.getParent(),
-										"Pecivo sa unesenom šifrom veæ postoji!");
+										"Pecivo sa unesenom \u0161ifrom ve\u0107 postoji!");
 					}
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(

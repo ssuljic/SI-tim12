@@ -93,7 +93,7 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
         	new Object[][] {
         	},
         	new String[] {
-        		"Šifra", "Naziv", "Cijena", "Težina", "U prodaji"
+        		"\u0160ifra", "Naziv", "Cijena", "Te\u017eina", "U prodaji"
         	}
         ) {
         	Class[] columnTypes = new Class[] {
@@ -119,7 +119,7 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
         gbl_dugmadJPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         dugmadJPanel.setLayout(gbl_dugmadJPanel);
         
-        lblNewLabel = new JLabel("Šifra");
+        lblNewLabel = new JLabel("\u0160ifra");
         GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
         gbc_lblNewLabel.anchor = GridBagConstraints.EAST;
         gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
@@ -170,7 +170,7 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
         dugmadJPanel.add(CijenatextField, gbc_CijenatextField);
         CijenatextField.setColumns(10);
         
-        lblNewLabel_4 = new JLabel("Težina");
+        lblNewLabel_4 = new JLabel("Te\u017eina");
         GridBagConstraints gbc_lblNewLabel_4 = new GridBagConstraints();
         gbc_lblNewLabel_4.anchor = GridBagConstraints.EAST;
         gbc_lblNewLabel_4.insets = new Insets(0, 0, 0, 5);
@@ -260,13 +260,13 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
     	    public String getColumnName(int columnIndex) {
     	        switch (columnIndex) {
     	            case 0:
-    	                return "Šifra";
+    	                return "\u0160ifra";
     	            case 1:
     	                return "Naziv";
     	            case 2:
     	                return "Cijena";
     	            case 3:
-    	                return "Težina";
+    	                return "Te\u017eina";
     	            case 4:
     	            	return "U prodaji";
     	            default:
@@ -360,19 +360,19 @@ public class RacunovodstvoEvidencijaPecivaJPanel extends JPanel {
     		p.setJeUProdaji(true);
     		
         	if(getNazivtextField().getText().isEmpty()) {
-        		throw new IllegalArgumentException("Polje Naziv ne može biti prazno.");
+        		throw new IllegalArgumentException("Polje Naziv ne mo\u017ee biti prazno.");
         	}
         	if(getSifratextField().getText().isEmpty()) {
-        		throw new IllegalArgumentException("Polje Šifra ne može biti prazno.");
+        		throw new IllegalArgumentException("Polje \u0161ifra ne mo\u017ee biti prazno.");
         	}
         	if(getTezinatextField().getText().isEmpty()) {
-        		throw new IllegalArgumentException("Polje Težina ne može biti prazno.");
+        		throw new IllegalArgumentException("Polje Te\u017eina ne mo\u017ee biti prazno.");
         	}
         	if(getCijenatextField().getText().isEmpty()) {
-        		throw new IllegalArgumentException("Polje Cijena ne može biti prazno.");
+        		throw new IllegalArgumentException("Polje Cijena ne mo\u017ee biti prazno.");
         	}
     		if(getTezinatextField().getText().equals("0")) {
-        		throw new IllegalArgumentException("Polje Težina ne može imati vrijednost 0.");
+        		throw new IllegalArgumentException("Polje Te\u017eina ne mo\u017ee imati vrijednost 0.");
         	}
     			
     		
