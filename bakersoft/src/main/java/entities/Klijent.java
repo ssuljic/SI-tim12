@@ -65,9 +65,9 @@ public class Klijent {
     	if(telefon2.isEmpty()) {
     		throw new IllegalArgumentException("Polje Telefon ne može biti prazno.");
     	}
-    	else if(!telefon2.matches("^\\d{3}/\\d{3}-\\d{3}$")) {
+    	/*else if(!telefon2.matches("^\\d{3}/\\d{3}-\\d{3}$")) {
     		throw new IllegalArgumentException("Telefon nije u pravilnom formatu, pravilan format je xxx/xxx-xxx.");
-    	}
+    	}*/
     	else
         this.telefon = telefon2;
 

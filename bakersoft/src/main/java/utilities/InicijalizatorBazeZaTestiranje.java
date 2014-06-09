@@ -63,14 +63,14 @@ public class InicijalizatorBazeZaTestiranje {
         // Korisnici
         korisnik1.setIme("Mujo");
         korisnik1.setPrezime("Mujkic");
-        korisnik1.setBrojMobitela("061\222-333");
-        korisnik1.setBrojTelefona("033\234-345");
+        korisnik1.setBrojMobitela("061222333");
+        korisnik1.setBrojTelefona("033234345");
         korisnik1.setDatumRodjenja(new Date(1987, 9, 12));
         korisnik1.setKorisnickoIme("mujo");
         HashFunction hashFunkcija2 = Hashing.md5();
         HashCode hashKodLozinke2 = hashFunkcija2.newHasher().putString("m", Charsets.UTF_8).hash();
         korisnik1.setLozinka(new String(hashKodLozinke2.asBytes()));
-        korisnik1.setEmail("mujo.mujkic@hotmail.com");
+        korisnik1.setEmail("mujomujkic@hotmail.com");
         korisnik1.setAdresa("Titova 11");
         korisnik1.setTip(tipKorisnika2);
         korisnik1.setStatus(statusKorisnika1);
@@ -82,14 +82,14 @@ public class InicijalizatorBazeZaTestiranje {
 
         korisnik2.setIme("Fata");
         korisnik2.setPrezime("Fatimovic");
-        korisnik2.setBrojMobitela("061/456-958");
-        korisnik2.setBrojTelefona("033/234-345");
+        korisnik2.setBrojMobitela("061456958");
+        korisnik2.setBrojTelefona("033234345");
         korisnik2.setDatumRodjenja(new Date(1989, 6, 25));
         korisnik2.setKorisnickoIme("fata");
         HashFunction hashFunkcija = Hashing.md5();
         HashCode hashKodLozinke = hashFunkcija.newHasher().putString("f", Charsets.UTF_8).hash();
         korisnik2.setLozinka(new String(hashKodLozinke.asBytes()));
-        korisnik2.setEmail("fata.fatimovic@gmail.com");
+        korisnik2.setEmail("fatafatimovic@gmail.com");
         korisnik2.setAdresa("Marin Dvor 23");
         korisnik2.setTip(tipKorisnika1);
         korisnik2.setStatus(statusKorisnika1);
@@ -100,7 +100,7 @@ public class InicijalizatorBazeZaTestiranje {
         
         // Klijenti
         klijent1.setIme("Mesnica Kengur");
-        klijent1.setTelefon("062/274-040");
+        klijent1.setTelefon("062274040");
         klijent1.setDostave(new ArrayList<Dostava>());
         klijent1.getDostave().add(dostava1);
         klijent1.getDostave().add(dostava2);
@@ -111,7 +111,7 @@ public class InicijalizatorBazeZaTestiranje {
         klijent1.getRacuni().add(racun1);
 
         klijent2.setIme("Mesnica Noj");
-        klijent2.setTelefon("062/225-883");
+        klijent2.setTelefon("062225883");
         klijent2.setProdajnaMjesta(new ArrayList<ProdajnoMjesto>());
         klijent2.setDostave(new ArrayList<Dostava>());
         
@@ -163,7 +163,7 @@ public class InicijalizatorBazeZaTestiranje {
         pecivo1.setCijena(0.20);
         pecivo1.setJeUProdaji(true);
         pecivo1.setSifra("kifloni-11");
-        pecivo1.setTezina(0.05);
+        pecivo1.setTezina(1);
         pecivo1.setPecivaUDostavi(new ArrayList<PecivoUDostavi>());
         pecivo1.getPecivaUDostavi().add(pecivoUDostavi1);
         pecivo1.getPecivaUDostavi().add(pecivoUDostavi11);
@@ -172,7 +172,7 @@ public class InicijalizatorBazeZaTestiranje {
         pecivo2.setCijena(1.20);
         pecivo2.setJeUProdaji(true);
         pecivo2.setSifra("krofna-192");
-        pecivo2.setTezina(0.2);
+        pecivo2.setTezina(2);
         pecivo2.setPecivaUDostavi(new ArrayList<PecivoUDostavi>());
         pecivo2.getPecivaUDostavi().add(pecivoUDostavi22);
 
@@ -180,40 +180,40 @@ public class InicijalizatorBazeZaTestiranje {
         pecivo3.setCijena(1.00);
         pecivo3.setJeUProdaji(true);
         pecivo3.setSifra("hljeb-123");
-        pecivo3.setTezina(0.4);
+        pecivo3.setTezina(4);
         pecivo3.setPecivaUDostavi(new ArrayList<PecivoUDostavi>());
         
         pecivo4.setNaziv("Lisnato");
         pecivo4.setCijena(1.20);
         pecivo4.setJeUProdaji(true);
         pecivo4.setSifra("lisnato-20");
-        pecivo4.setTezina(0.2);
+        pecivo4.setTezina(2);
         pecivo4.setPecivaUDostavi(new ArrayList<PecivoUDostavi>());
         
         pecivo5.setNaziv("Kolac");
         pecivo5.setCijena(2.00);
         pecivo5.setJeUProdaji(true);
         pecivo5.setSifra("kolac-102");
-        pecivo5.setTezina(0.4);
+        pecivo5.setTezina(1);
         pecivo5.setPecivaUDostavi(new ArrayList<PecivoUDostavi>());
         
         // Peciva u dostavi
         pecivoUDostavi1.setDostava(dostava1);
         pecivoUDostavi1.setPecivo(pecivo1);
-        pecivoUDostavi1.setKolicinaPreuzetogPeciva(132.6);
-        pecivoUDostavi1.setKolicinaVracenogPeciva(30.3);
+        pecivoUDostavi1.setKolicinaPreuzetogPeciva(132);
+        pecivoUDostavi1.setKolicinaVracenogPeciva(30);
         pecivoUDostavi2.setDostava(dostava1);
         pecivoUDostavi2.setPecivo(pecivo2);
-        pecivoUDostavi2.setKolicinaPreuzetogPeciva(92.6);
+        pecivoUDostavi2.setKolicinaPreuzetogPeciva(92);
         pecivoUDostavi2.setKolicinaVracenogPeciva(0.0);
 
         pecivoUDostavi11.setDostava(dostava2);
         pecivoUDostavi11.setPecivo(pecivo1);
-        pecivoUDostavi11.setKolicinaPreuzetogPeciva(20.3);
+        pecivoUDostavi11.setKolicinaPreuzetogPeciva(20);
         pecivoUDostavi11.setKolicinaVracenogPeciva(0.0);
         pecivoUDostavi22.setDostava(dostava2);
         pecivoUDostavi22.setPecivo(pecivo2);
-        pecivoUDostavi22.setKolicinaPreuzetogPeciva(45.3);
+        pecivoUDostavi22.setKolicinaPreuzetogPeciva(45);
         pecivoUDostavi22.setKolicinaVracenogPeciva(5.0);
 
         // Dostave

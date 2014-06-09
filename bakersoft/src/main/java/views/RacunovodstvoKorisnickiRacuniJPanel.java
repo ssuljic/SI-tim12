@@ -620,42 +620,48 @@ public class RacunovodstvoKorisnickiRacuniJPanel extends JPanel {
     }
     
     public void validirajPodatke() throws PodaciNisuValidniException {
-    	if(imeJTextField != null &&
-    			prezimeJTextField != null &&
-    			korisnickoImeJTextField != null &&
-    			lozinkaJLabel != null &&
-    			emailJTextField != null &&
-    			telefonJTextField != null &&
-    			mobitelJTextField != null &&
-    			adresaJTextField != null &&
-    			datumRodjenjaJSpinner != null &&
-    			statusJComboBox != null &&
-    			privilegijeJComboBox != null) {
-    		if(!validator.jeImeValidno(imeJTextField.getText())) {
-    			throw new PodaciNisuValidniException("Ime nije ispravno uneseno.(Mora biti statavljeno samo od malih, velikih slova i brojeva)");
-    		}
-    		if(!validator.jeImeValidno(prezimeJTextField.getText())){
-    			throw new PodaciNisuValidniException("Prezime nije ispravno uneseno.(Mora biti statavljeno samo od malih, velikih slova i brojeva)");
-    		}
-    		if(!validator.jeImeValidno(prezimeJTextField.getText())){
-    			throw new PodaciNisuValidniException("Korisni\u010dko ime nije ispravno uneseno. (Mora biti statavljeno samo od malih, velikih slova i brojeva)");
-    		}
-    		if(!validator.jePasswordValidan(new String(lozinkaJPasswordField.getPassword()))) {
-    			throw new PodaciNisuValidniException("Lozinka nije ispravno unesena. (Mora imati najmanje 6 znakova)");
-    		}
-    		if(!validator.jeEmailValidan(emailJTextField.getText())) {
-    			throw new PodaciNisuValidniException("Email nije ispravno unesen.");
-    		}
-    		if(!validator.jeTelefonValidan(telefonJTextField.getText())) {
-    			throw new PodaciNisuValidniException("Telefon nije ispravno unesen. (Dozvoljeno je samo unositi brojeve)");
-    		}
-    		if(!validator.jeTelefonValidan(mobitelJTextField.getText())) {
-    			throw new PodaciNisuValidniException("Mobitel nije ispravno unesen. (Dozvoljeno je samo unositi brojeve)");
-    		}
-    		if(!validator.jeDatumRodjenjaValidan((Date)datumRodjenjaJSpinner.getValue())) {
-    			throw new PodaciNisuValidniException("Datum nije ispravno unesen. (Dozvoljeno je samo unositi datum koji je prije trenutnog kalendarskog datuma i poslije 1930. godine)");
-    		}
-    	}
+    	try {
+			if(imeJTextField != null &&
+					prezimeJTextField != null &&
+					korisnickoImeJTextField != null &&
+					lozinkaJLabel != null &&
+					emailJTextField != null &&
+					telefonJTextField != null &&
+					mobitelJTextField != null &&
+					adresaJTextField != null &&
+					datumRodjenjaJSpinner != null &&
+					statusJComboBox != null &&
+					privilegijeJComboBox != null) {
+				if(!validator.jeImeValidno(imeJTextField.getText())) {
+					throw new PodaciNisuValidniException("Ime nije ispravno uneseno.(Mora biti statavljeno samo od malih, velikih slova i brojeva)");
+				}
+				if(!validator.jeImeValidno(prezimeJTextField.getText())){
+					throw new PodaciNisuValidniException("Prezime nije ispravno uneseno.(Mora biti statavljeno samo od malih, velikih slova i brojeva)");
+				}
+				if(!validator.jeImeValidno(korisnickoImeJTextField.getText())){
+					throw new PodaciNisuValidniException("Korisnièko ime nije ispravno uneseno. (Mora biti statavljeno samo od malih, velikih slova i brojeva)");
+				}
+				if(!validator.jePasswordValidan(new String(lozinkaJPasswordField.getPassword()))) {
+					throw new PodaciNisuValidniException("Lozinka nije ispravno unesena. (Mora imati najmanje 6 znakova)");
+				}
+				if(!validator.jeEmailValidan(emailJTextField.getText())) {
+					throw new PodaciNisuValidniException("Email nije ispravno unesen.");
+				}
+				if(!validator.jeTelefonValidan(telefonJTextField.getText())) {
+					throw new PodaciNisuValidniException("Telefon nije ispravno unesen. (Dozvoljeno je samo unositi brojeve, bez ikakvih crtica i slicno)");
+				}
+				if(!validator.jeTelefonValidan(mobitelJTextField.getText())) {
+					throw new PodaciNisuValidniException("Mobitel nije ispravno unesen. (Dozvoljeno je samo unositi brojeve, bez ikakvih crtica i slicno)");
+				}
+				if(!validator.jeDatumRodjenjaValidan((Date)datumRodjenjaJSpinner.getValue())) {
+					throw new PodaciNisuValidniException("Datum nije ispravno unesen. (Dozvoljeno je samo unositi datum koji je prije trenutnog kalendarskog datuma i poslije 1930. godine)");
+				}
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(
+					getParent(),
+					e.getMessage());
+		}
     }
 
 	public void popuniSaSvimPodacimaIzBaze(Korisnik trenutni) {

@@ -179,10 +179,10 @@ public class RacunovodstvoKorisnickiRacuniController {
 							e.printStackTrace();
 						}
 					}
-				} catch (IllegalArgumentException e) {
-					JOptionPane.showMessageDialog(
+				} catch (Exception e) {
+					/*JOptionPane.showMessageDialog(
 							racunovodstvoKorisnickiRacuniJPanel.getParent(),
-							e.getMessage());
+							e.getMessage());*/
 				}
 			}
 		};
@@ -224,10 +224,10 @@ public class RacunovodstvoKorisnickiRacuniController {
 										racunovodstvoKorisnickiRacuniJPanel
 												.getParent(), e.getMessage());
 					}
-				} catch (IllegalArgumentException e) {
-					JOptionPane.showMessageDialog(
+				} catch (Exception e) {
+					/*JOptionPane.showMessageDialog(
 							racunovodstvoKorisnickiRacuniJPanel.getParent(),
-							e.getMessage());
+							e.getMessage());*/
 				}
 			}
 		};
