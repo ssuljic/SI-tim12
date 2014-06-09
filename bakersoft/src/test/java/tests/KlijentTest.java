@@ -9,7 +9,7 @@ import entities.Klijent;
 public class KlijentTest {
 	
 	//Kapiram da je receno da se ne testiraju getteri i setteri, ali ovi su bitni jer je validacija 
-	//sadrzana u njima, tj u ova dva xD ... samo cemo testirat nepravilan unos
+	//sadrzana u njima, tj u ova dva xD ... samo cemo testirat nepravilan unos 
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testSetIme() {
