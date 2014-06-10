@@ -19,7 +19,7 @@
             <property name="javax.persistence.jdbc.password" value="" />
 
             <!-- Hibernate should create the database schema automatically -->
-            <property name="hibernate.hbm2ddl.auto" value="create-drop" />
+            <property name="hibernate.hbm2ddl.auto" value="update" />
         </properties>
     </persistence-unit>
 </persistence>
